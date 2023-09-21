@@ -44,8 +44,8 @@ class AI:
 
     def __call__(self, text) -> str | None:
         res = self.ai(text).content
-        if self.name == "ibis_birdbrain":
-            self.console.print(f"ibis_birdbrain:\n\n", style="bold violet blink", end="")
+        if self.name == "birdbrain":
+            self.console.print(f"birdbrain:\n\n", style="bold violet blink", end="")
             self.console.print(res)
         else:
             return res
