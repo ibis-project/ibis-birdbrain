@@ -11,12 +11,12 @@ from ibis_birdbrain.commands.ai import ai_run
 from ibis_birdbrain.commands.testing import testing_run
 
 # load .env file
-load_dotenv(os.path.expanduser("~/.ibis_birdbrain/.env"))
+load_dotenv(os.path.expanduser("~/.birdbrain/.env"))
 marvin.settings.llm_model = "azure_openai/gpt-4-32k"
 
 # load config
 try:
-    config = toml.load(os.path.expanduser("~/.ibis_birdbrain/config.toml"))
+    config = toml.load(os.path.expanduser("~/.birdbrain/config.toml"))
 except FileNotFoundError:
     config = {}
 
