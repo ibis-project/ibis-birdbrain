@@ -36,5 +36,5 @@ dependencies = [
 "Bug Tracker" = "https://github.com/lostmygithubaccount/ibis-birdbrain/issues"
 
 [project.scripts]
-birdbrain = "birdbrain.app:app"
+birdbrain = "ibis_birdbrain.app:app"
 

@@ -2,18 +2,18 @@
 from ibis_birdbrain import AI
 
 from ibis_birdbrain.tools import tools
-from ibis_birdbrain.states import ibis_birdbrainState
+from ibis_birdbrain.states import BirdbrainState
 from ibis_birdbrain.systems import (
-    ibis_birdbrainSystem,
+    BirdbrainSystem,
     FixesSystem,
     CiteSourceSystem,
     UserPreferencesSystem,
 )
 
 # variables
-state = ibis_birdbrainState()
+state = BirdbrainState()
 prompts = [FixesSystem(), CiteSourceSystem(), UserPreferencesSystem()]
-description = ibis_birdbrainSystem().content
+description = BirdbrainSystem().content
 
 
 # create bot

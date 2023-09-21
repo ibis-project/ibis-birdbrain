@@ -17,7 +17,7 @@ def ai_run(state={}, interactive=False, learn_spanish=False):
 
         from rich import print
 
-        from ibis_birdbrain.tools.ibis_birdbrain import con, tables
+        from ibis_birdbrain.tools.birdbrain import con, tables
 
         ibis.options.interactive = True
 
