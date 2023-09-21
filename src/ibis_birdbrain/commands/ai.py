@@ -7,7 +7,7 @@ def ai_run(state={}, interactive=False, learn_spanish=False):
         bot.ai.additional_prompts.append(LearnSpanishSystem())
 
     console = Console()
-    console.print(f"ibis_birdbrain: ", style="bold violet blink")
+    console.print(f"birdbrain: ", style="bold violet blink")
     console.print(f"access to: {bot.name}")
     console.print(f"state: {state}")
 
