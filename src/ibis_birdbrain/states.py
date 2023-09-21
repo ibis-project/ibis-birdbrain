@@ -3,11 +3,11 @@ from pydantic import BaseModel
 
 
 # states
-class BirdbrainState(BaseModel):
-    """State of birdbrain"""
+class ibis_birdbrainState(BaseModel):
+    """State of ibis_birdbrain"""
 
     # info about bot
-    name: str = "birdbrain"
+    name: str = "ibis_birdbrain"
     creator: str = "Ibis developers"
     version: str = "infinity"
 
@@ -16,7 +16,7 @@ class BirdbrainState(BaseModel):
     ibis_github: str = "https://github.com/ibis-project/ibis"
     marvin_docs: str = "https://www.askmarvin.ai/components/overview"
     marvin_github: str = "https://github.com/prefectHQ/marvin"
-    self_source_code: str = "https://github.com/ibis-project/ibis-birdbrain"
+    self_source_code: str = "https://github.com/ibis-project/ibis-ibis_birdbrain"
 
     # additional links
     additional_links: list[str] = []

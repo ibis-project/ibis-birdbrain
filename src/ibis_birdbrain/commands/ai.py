@@ -1,13 +1,13 @@
 def ai_run(state={}, interactive=False, learn_spanish=False):
-    from birdbrain import Console
-    from birdbrain.ai import bot
-    from birdbrain.systems import LearnSpanishSystem
+    from ibis_birdbrain import Console
+    from ibis_birdbrain.ai import bot
+    from ibis_birdbrain.systems import LearnSpanishSystem
 
     if learn_spanish:
         bot.ai.additional_prompts.append(LearnSpanishSystem())
 
     console = Console()
-    console.print(f"birdbrain: ", style="bold violet blink")
+    console.print(f"ibis_birdbrain: ", style="bold violet blink")
     console.print(f"access to: {bot.name}")
     console.print(f"state: {state}")
 
@@ -17,7 +17,7 @@ def ai_run(state={}, interactive=False, learn_spanish=False):
 
         from rich import print
 
-        from birdbrain.tools.birdbrain import con, tables
+        from ibis_birdbrain.tools.ibis_birdbrain import con, tables
 
         ibis.options.interactive = True
 

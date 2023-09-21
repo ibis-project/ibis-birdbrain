@@ -4,7 +4,7 @@ import requests
 from itertools import islice
 from html2text import html2text
 
-from birdbrain.tools import tool
+from ibis_birdbrain.tools import tool
 
 
 # tools

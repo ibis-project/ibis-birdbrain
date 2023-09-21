@@ -1,10 +1,10 @@
 # imports
 from typing import Callable
 
-from birdbrain.tools import tool
-from birdbrain.tools.internet import webpage_to_str
-from birdbrain.tools.text import summarize_text, Summary
-from birdbrain.tools.filesystem import read_file, write_file
+from ibis_birdbrain.tools import tool
+from ibis_birdbrain.tools.internet import webpage_to_str
+from ibis_birdbrain.tools.text import summarize_text, Summary
+from ibis_birdbrain.tools.filesystem import read_file, write_file
 
 
 # tools

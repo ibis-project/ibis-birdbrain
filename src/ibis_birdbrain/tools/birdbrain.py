@@ -1,8 +1,8 @@
 # imports
 import ibis
 
-from birdbrain.tools import tool
-from birdbrain.functions import choose_table_name, gen_sql_query, fix_sql_query
+from ibis_birdbrain.tools import tool
+from ibis_birdbrain.functions import choose_table_name, gen_sql_query, fix_sql_query
 
 # setup Ibis
 con = ibis.connect("duckdb://imdb.ddb")

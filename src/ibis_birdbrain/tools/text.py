@@ -1,7 +1,7 @@
 # imports
-from birdbrain.models import Summary, Translate
+from ibis_birdbrain.models import Summary, Translate
 
-from birdbrain.tools import tool
+from ibis_birdbrain.tools import tool
 
 
 # tools

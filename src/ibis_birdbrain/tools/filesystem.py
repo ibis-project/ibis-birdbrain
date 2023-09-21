@@ -2,7 +2,7 @@
 import os
 import fnmatch
 
-from birdbrain.tools import tool
+from ibis_birdbrain.tools import tool
 
 
 # helpers
@@ -25,7 +25,7 @@ def read_file(path: str) -> str:
     """Reads a file and returns its content."""
     # TODO: fix hack
     if path.startswith("https://") or path.startswith("http://"):
-        from birdbrain.tools.internet import webpage_to_str
+        from ibis_birdbrain.tools.internet import webpage_to_str
 
         return webpage_to_str(path)
     path = os.path.expanduser(path)

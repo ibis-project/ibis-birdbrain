@@ -1,8 +1,8 @@
 # imports
 from typing import Callable
 
-from birdbrain.tools import tool
-from birdbrain.tools.code import text_to_python, run_python_code
+from ibis_birdbrain.tools import tool
+from ibis_birdbrain.tools.code import text_to_python, run_python_code
 
 
 # tools
