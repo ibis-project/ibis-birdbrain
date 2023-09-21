@@ -1,0 +1,28 @@
+project:
+  type: website
+
+website:
+  title: "ibis-birdbrain"
+  site-url: https://ibis-project.org/birdbrain
+  description: "ibis-birdbrain, your AI data assistant"
+  favicon: brians.png
+
+
+  navbar:
+    logo: brians.png
+    left:
+      - href: index.qmd
+        text: home
+      - about.qmd
+
+format:
+  html:
+    theme: vapor
+    fontcolor: fuchsia
+    linkcolor: fuchsia
+    css: styles.css
+    toc: true
+
+# resources
+resources:
+  - CNAME
