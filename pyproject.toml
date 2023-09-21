@@ -32,8 +32,8 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/lostmygithubaccount/ibis-birdbrain"
-"Bug Tracker" = "https://github.com/lostmygithubaccount/ibis-birdbrain/issues"
+"Homepage" = "https://github.com/ibis-project/ibis-birdbrain"
+"Bug Tracker" = "https://github.com/ibis-project/ibis-birdbrain/issues"
 
 [project.scripts]
 birdbrain = "ibis_birdbrain.app:app"
