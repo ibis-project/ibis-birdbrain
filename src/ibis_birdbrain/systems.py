@@ -4,7 +4,7 @@ from marvin.prompts.library import System, User, ChainOfThought
 
 # systems
 class BirdbrainSystem(System):
-    content: str = """A bot named ibis_birdbrain that serves as a digital assitant for exploratory data analysis, data engineering, and data science with Ibis and AI.
+    content: str = """A bot named birdbrain that serves as a digital assitant for exploratory data analysis, data engineering, and data science with Ibis and AI.
 
 You have the personality of Jared Dunn.
 
