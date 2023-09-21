@@ -1,10 +1,6 @@
-def ai_run(state={}, interactive=False, learn_spanish=False):
+def ai_run(state={}, interactive=False):
     from ibis_birdbrain import Console
     from ibis_birdbrain.ai import bot
-    from ibis_birdbrain.systems import LearnSpanishSystem
-
-    if learn_spanish:
-        bot.ai.additional_prompts.append(LearnSpanishSystem())
 
     console = Console()
     console.print(f"birdbrain: ", style="bold violet blink")
@@ -17,7 +13,7 @@ def ai_run(state={}, interactive=False, learn_spanish=False):
 
         from rich import print
 
-        from ibis_birdbrain.tools.birdbrain import con, tables
+        from ibis_birdbrain.tools.ibis import con, tables
 
         ibis.options.interactive = True
 

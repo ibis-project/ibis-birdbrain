@@ -6,13 +6,13 @@ from ibis_birdbrain.states import BirdbrainState
 from ibis_birdbrain.systems import (
     BirdbrainSystem,
     FixesSystem,
-    CiteSourceSystem,
+    CiteSourcesSystem,
     UserPreferencesSystem,
 )
 
 # variables
 state = BirdbrainState()
-prompts = [FixesSystem(), CiteSourceSystem(), UserPreferencesSystem()]
+prompts = [FixesSystem(), CiteSourcesSystem(), UserPreferencesSystem()]
 description = BirdbrainSystem().content
 
 

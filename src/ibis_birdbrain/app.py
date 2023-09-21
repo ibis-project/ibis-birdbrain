@@ -10,10 +10,6 @@ from typing_extensions import Annotated
 from ibis_birdbrain.commands.ai import ai_run
 from ibis_birdbrain.commands.testing import testing_run
 
-# load .env file
-load_dotenv(os.path.expanduser("~/.birdbrain/.env"))
-marvin.settings.llm_model = "azure_openai/gpt-4-32k"
-
 # load config
 try:
     config = toml.load(os.path.expanduser("~/.birdbrain/config.toml"))
@@ -49,14 +45,11 @@ def ai(
     interactive: Annotated[
         bool, typer.Option("--interactive", "-i", help="run ai in interactivce mode")
     ] = False,
-    learn_spanish: Annotated[
-        bool, typer.Option("--learn-spanish", "-l", help="run in learn Spanish mode")
-    ] = False,
 ):
     """
     ai
     """
-    ai_run(state=state, interactive=interactive, learn_spanish=learn_spanish)
+    ai_run(state=state, interactive=interactive)
 
 
 # main

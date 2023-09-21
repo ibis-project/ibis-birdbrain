@@ -6,7 +6,7 @@ from ibis_birdbrain.functions import choose_table_name, gen_sql_query, fix_sql_q
 
 # setup Ibis
 con = ibis.connect("duckdb://imdb.ddb")
-tables = list(set(con.list_tables()))
+tables = sorted(list(set(con.list_tables())))
 
 
 # tools
@@ -21,7 +21,7 @@ def get_table_schema(table_name: str) -> str:
 @tool
 def list_tables() -> list[str]:
     """Returns a list of available tables to query"""
-    return list(set(con.list_tables()))
+    return sorted(list(set(con.list_tables())))
 
 
 @tool

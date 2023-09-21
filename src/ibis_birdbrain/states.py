@@ -21,6 +21,9 @@ class BirdbrainState(BaseModel):
     # additional links
     additional_links: list[str] = []
 
+    # sql query hitory
+    sql_history: list[str] = []
+
     # research info
     analysis_topic: str = "data"
     analysis_description: str = ""

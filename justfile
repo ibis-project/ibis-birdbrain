@@ -10,6 +10,10 @@ alias fmt := format
 default:
     just --list
 
+# ai
+ai *args:
+    birdbrain ai -i {{ args }}
+
 # setup
 setup:
     @pip install -r dev-requirements.txt

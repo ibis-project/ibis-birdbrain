@@ -58,7 +58,11 @@ class AI:
 
     def sql(self, text):
         import ibis
-        from ibis_birdbrain.functions import choose_table_name, gen_sql_query, fix_sql_query
+        from ibis_birdbrain.functions import (
+            choose_table_name,
+            gen_sql_query,
+            fix_sql_query,
+        )
 
         con = ibis.connect("duckdb://imdb.ddb")
 
