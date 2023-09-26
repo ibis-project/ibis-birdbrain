@@ -36,7 +36,7 @@ def read_file(path: str) -> str:
 @tool
 def list_files_and_dirs(
     path: str = ".", depth: int = -1, additional_ignore_dirs: list = []
-):
+) -> list[str]:
     """Lists all files and directories in a directory."""
     path = os.path.expanduser(path)
     files_dirs_list = []

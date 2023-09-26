@@ -53,38 +53,4 @@ class AI:
     def __repr__(self):
         return f"<AI {self.name}>"
 
-    def read_excel(self, filename):
-        pass
-
-    def sql(self, text):
-        import ibis
-        from ibis_birdbrain.functions import (
-            choose_table_name,
-            gen_sql_query,
-            fix_sql_query,
-        )
-
-        con = ibis.connect("duckdb://imdb.ddb")
-
-        tables = list(set(con.list_tables()))
-        table_name = choose_table_name(text, options=tables)
-        table_schema = str(con.table(table_name).schema())
-
-        if table_name not in tables:
-            raise ValueError(f"Table {table_name} not found in {tables}")
-        sql = gen_sql_query(table_name, table_schema, text).strip(";")
-        res = None
-        try:
-            res = con.table(table_name, database="imdb").sql(sql)
-        except Exception as e:
-            sql = fix_sql_query(table_name, table_schema, sql, str(e)).strip(";")
-            try:
-                res = con.table(table_name, database="imdb").sql(res)
-            except Exception as e:
-                raise ValueError(f"Could not execute SQL: {res} with error: {e}")
-
-        self.console.print(f"ran SQL:\n{sql}", style="bold violet")
-        return res
-
-
 __all__ = ["AI", "Bot", "Console"]

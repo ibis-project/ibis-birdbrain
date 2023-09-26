@@ -7,7 +7,8 @@ class BirdbrainState(BaseModel):
     """State of birdbrain"""
 
     # info about bot
-    name: str = "birdbrain"
+    preferred_name: str = "birdbrain"
+    full_name: str = "Ibis Birdbrain"
     creator: str = "Ibis developers"
     version: str = "infinity"
 
@@ -18,6 +19,9 @@ class BirdbrainState(BaseModel):
     marvin_github: str = "https://github.com/prefectHQ/marvin"
     self_source_code: str = "https://github.com/ibis-project/ibis-birdbrain"
 
+    # local files
+    local_data_files: list[str] = []
+
     # additional links
     additional_links: list[str] = []
 
@@ -25,7 +29,7 @@ class BirdbrainState(BaseModel):
     sql_history: list[str] = []
 
     # research info
-    analysis_topic: str = "data"
+    analysis_topic: str = ""
     analysis_description: str = ""
     analysis_abstract: str = ""
     analysis_references: list[str] = []

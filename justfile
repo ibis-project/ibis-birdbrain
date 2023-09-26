@@ -17,7 +17,6 @@ ai *args:
 # setup
 setup:
     @pip install -r dev-requirements.txt
-    @python example_data.py
 
 # build
 build:

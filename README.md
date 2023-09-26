@@ -1,6 +1,6 @@
 # ibis-birdbrain
 
-An AI assistant for your data project, powered by [Ibis](https://ibis-project.org/) and Marvin(https://github.com/prefectHQ/marvin).
+An AI assistant for your data project, powered by [Ibis](https://ibis-project.org) and [Marvin](https://github.com/prefectHQ/marvin).
 
 ## demo
 

@@ -18,5 +18,9 @@ description = BirdbrainSystem().content
 
 # create bot
 bot = AI(
-    name=state.name, description=description, tools=tools, prompts=prompts, state=state
+    name=state.preferred_name,
+    description=description,
+    tools=tools,
+    prompts=prompts,
+    state=state,
 )

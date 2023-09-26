@@ -9,7 +9,13 @@ from ibis_birdbrain.tools.internet import (
 from ibis_birdbrain.tools.text import summarize_text, translate_text
 from ibis_birdbrain.tools.code import text_to_python, fix_python_error, run_python_code
 from ibis_birdbrain.tools.filesystem import read_file, list_files_and_dirs, write_file
-from ibis_birdbrain.tools.ibis import list_tables, query_table, get_table_schema
+from ibis_birdbrain.tools.ibis import (
+    list_tables,
+    query_table,
+    get_table_schema,
+    read_delta_table,
+    read_excel_file
+)
 from ibis_birdbrain.tools.advanced import (
     read_files_and_summarize,
     read_webpage_and_summarize,
@@ -34,10 +40,12 @@ tools = [
     text_to_python,
     fix_python_error,
     run_python_code,
-    # data
+    # Ibis
     list_tables,
     query_table,
     get_table_schema,
+    read_delta_table,
+    read_excel_file,
     # advanced
     read_files_and_summarize,
     read_webpage_and_summarize,

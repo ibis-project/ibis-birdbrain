@@ -1,21 +1,27 @@
 # imports
 import ibis
 
+import polars as pl
+
+import ibis.expr.datatypes as dt
+
+from ibis.expr.schema import Schema
+from ibis.expr.types.relations import Table
+
 from ibis_birdbrain.tools import tool
 from ibis_birdbrain.functions import choose_table_name, gen_sql_query, fix_sql_query
 
 # setup Ibis
-con = ibis.connect("duckdb://imdb.ddb")
-tables = sorted(list(set(con.list_tables())))
+con = ibis.connect("duckdb://")
 
 
 # tools
 @tool
-def get_table_schema(table_name: str) -> str:
+def get_table_schema(table_name: str) -> Schema:
     """Returns the schema of a table"""
-    if table_name not in tables:
-        raise ValueError(f"Table {table_name} not found in {tables}")
-    return str(con.table(table_name).schema())
+    if table_name not in list_tables():
+        raise ValueError(f"Table {table_name} not found in {list_tables()}")
+    return con.table(table_name).schema()
 
 
 @tool
@@ -25,12 +31,42 @@ def list_tables() -> list[str]:
 
 
 @tool
-def query_table(question: str) -> str:
+def read_delta_table(filepath: str) -> Table:
+    """Reads a Delta Lake table directory from the full filepath
+
+    filepath should be of the form: <path>/<table_name>
+    """
+    t = con.read_delta(filepath)
+    view_name = t.get_name()
+    # extract the table name from the filepath
+    table_name = filepath.split("/")[-1]
+    t = con.create_table(table_name, t, overwrite=True)
+    con.drop_view(view_name)
+    return t
+
+@tool
+def read_excel_file(filepath: str, sheet_name: str = "Sheet1") -> Table:
+    """Reads an Excel file from the full filepath
+
+    filepath should be of the form: <path>/<table_name>.<extension>
+    """
+    df = pl.read_excel(filepath, sheet_name=sheet_name)
+    t = ibis.memtable(df.to_arrow())
+    view_name = t.get_name()
+    # extract the table name from the filepath
+    table_name = filepath.split("/")[-1]
+    t = con.create_table(table_name, t, overwrite=True)
+    con.drop_view(view_name)
+    return t
+
+
+@tool
+def query_table(question: str) -> Table:
     """Queries the table in the database to answer the question"""
-    table_name = choose_table_name(question, options=tables)
+    table_name = choose_table_name(question, options=list_tables())
     table_schema = get_table_schema(table_name)
-    if table_name not in tables:
-        raise ValueError(f"Table {table_name} not found in {tables}")
+    if table_name not in list_tables():
+        raise ValueError(f"Table {table_name} not found in {list_tables}")
     sql = gen_sql_query(table_name, table_schema, question).strip(";")
     try:
         res = con.table(table_name).sql(sql)

@@ -1,0 +1,44 @@
+# Justfile
+# load environment variables
+set dotenv-load
+
+# variables
+project := "dag"
+
+# aliases
+alias ai := ipy
+alias eda := ipy
+alias run := job
+
+# list justfile recipes
+default:
+    just --list
+
+# setup
+setup:
+    @pip install -r requirements.txt
+
+# dagster
+dag:
+    @dagster dev -m {{project}}
+
+# open dag
+open:
+    open http://localhost:3000/asset-groups
+
+# run dag
+job:
+    @dagster job execute -j all_assets -m {{project}}
+
+# SQL
+sql:
+    @duckdb
+
+# ipy
+ipy:
+    @birdbrain ai -i
+
+# clean
+clean:
+    @rm -rf *.ddb* || true
+    @rm -rf data || true
