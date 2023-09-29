@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Docs
         run: |
-          pushd web
+          pushd docs
           # quartodoc build # TODO: API docs
           quarto render
           popd
@@ -38,4 +38,4 @@ jobs:
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./web/_site
+          publish_dir: ./docs/_site
