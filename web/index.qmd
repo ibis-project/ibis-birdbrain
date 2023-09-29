@@ -1,3 +1,8 @@
-# ibis-birdbrain
+---
+title: "Ibis Birdbrain"
+about:
+  template: jolla
+  image: images/brians.png
+---
 
 **under construction by slow humans**

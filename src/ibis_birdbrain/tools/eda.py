@@ -9,10 +9,21 @@ from ibis.expr.schema import Schema
 from ibis.expr.types.relations import Table
 
 from ibis_birdbrain.tools import tool
-from ibis_birdbrain.functions import choose_table_name, gen_sql_query, fix_sql_query
+from ibis_birdbrain.functions.code import (
+    choose_table_name,
+    gen_sql_query,
+    fix_sql_query,
+)
+
+from ibis_birdbrain.utils import read_config
+
+config = read_config(config_section="eda")
 
 # setup Ibis
-con = ibis.connect("duckdb://")
+if "backend_uri" in config:
+    con = ibis.connect(config["backend_uri"])
+else:
+    con = ibis.connect("duckdb://")
 
 
 # tools
@@ -44,6 +55,7 @@ def read_delta_table(filepath: str) -> Table:
     con.drop_view(view_name)
     return t
 
+
 @tool
 def read_excel_file(filepath: str, sheet_name: str = "Sheet1") -> Table:
     """Reads an Excel file from the full filepath
@@ -54,7 +66,8 @@ def read_excel_file(filepath: str, sheet_name: str = "Sheet1") -> Table:
     t = ibis.memtable(df.to_arrow())
     view_name = t.get_name()
     # extract the table name from the filepath
-    table_name = filepath.split("/")[-1]
+    file_name = filepath.split("/")[-1]
+    table_name = file_name.split(".")[0]
     t = con.create_table(table_name, t, overwrite=True)
     con.drop_view(view_name)
     return t

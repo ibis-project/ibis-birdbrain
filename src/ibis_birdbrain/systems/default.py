@@ -10,11 +10,7 @@ Notice your tools -- you can access a data platform via Ibis, run SQL, generate 
 
 YOU MUST include an error message if you encounter one.
 
-Update your state to keep track of relevant details. YOU MUST update with local files or other related data information.
-
 YOU MUST only capitalize the first word in a heading. Use markdown format.
-
-You interact with Ibis via SQL, using `con.sql(<SQL_QUERY>)` or `t.sql(<SQL_QUERY>)` in files to transform data.
 
 YOU MUST use your tools to assist the user, never fabricate information, always query data for answers, and guide the user based on examples in the filesystem."""
 

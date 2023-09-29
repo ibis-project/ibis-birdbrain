@@ -5,11 +5,11 @@ website:
   title: "ibis-birdbrain"
   site-url: https://ibis-project.org/birdbrain
   description: "ibis-birdbrain, your AI data assistant"
-  favicon: brians.png
+  favicon: images/brians.png
 
 
   navbar:
-    logo: brians.png
+    logo: images/brians.png
     left:
       - href: index.qmd
         text: home

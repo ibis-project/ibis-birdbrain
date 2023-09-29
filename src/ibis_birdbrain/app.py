@@ -10,11 +10,10 @@ from typing_extensions import Annotated
 from ibis_birdbrain.commands.ai import ai_run
 from ibis_birdbrain.commands.testing import testing_run
 
+from ibis_birdbrain.utils import read_config
+
 # load config
-try:
-    config = toml.load(os.path.expanduser("~/.birdbrain/config.toml"))
-except FileNotFoundError:
-    config = {}
+config = read_config()
 
 # typer config
 app = typer.Typer(no_args_is_help=True)

@@ -4,7 +4,7 @@ from ibis_birdbrain.tools import tool
 from io import StringIO
 from contextlib import redirect_stdout, redirect_stderr
 
-from ibis_birdbrain.functions import (
+from ibis_birdbrain.functions.code import (
     gen_python_code,
     fix_python_code,
 )
