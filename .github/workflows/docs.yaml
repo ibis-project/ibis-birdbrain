@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Docs
         run: |
-          pushd docs
+          pushd web
           quartodoc build
           quarto render
           popd
