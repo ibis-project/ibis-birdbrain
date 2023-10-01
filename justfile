@@ -43,7 +43,7 @@ release:
 
 # quarto stuff
 preview:
-    @quarto preview web
+    @quarto preview docs
 
 # streamlit stuff
 app:

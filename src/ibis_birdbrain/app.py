@@ -4,23 +4,13 @@ import toml
 import typer
 import marvin
 
-from dotenv import load_dotenv
 from typing_extensions import Annotated
 
 from ibis_birdbrain.commands.ai import ai_run
 from ibis_birdbrain.commands.testing import testing_run
 
-from ibis_birdbrain.utils import read_config
-
-# load config
-config = read_config()
-
 # typer config
 app = typer.Typer(no_args_is_help=True)
-
-# global state
-state = {"config": config}
-
 
 # global options
 def version(value: bool):
@@ -48,7 +38,7 @@ def ai(
     """
     ai
     """
-    ai_run(state=state, interactive=interactive)
+    ai_run(interactive=interactive)
 
 
 # main

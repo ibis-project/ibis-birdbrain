@@ -1,8 +1,100 @@
 ---
 title: "Ibis Birdbrain"
+description: "the portable Python AI-powered data bot"
+repo-actions: false
+code-annotations: hover
+format:
+  html:
+    toc: false
 about:
+  id: about
   template: jolla
-  image: images/brians.png
+  image: images/logo.png
+  links:
+    - icon: info-circle
+      text: Why?
+      href: why.qmd
+    - icon: download
+      text: Installation
+      href: install.qmd
+    - icon: book
+      text: Tutorial
+      href: tutorials/cli.qmd
+    - icon: github
+      text: GitHub
+      href: https://github.com/ibis-project/ibis-birdbrain
+    - icon: slack
+      text: Chat
+      href: https://ibis-project.zulipchat.com
+    - icon: rss
+      text: RSS
+      href: https://ibis-project.org/posts.xml
 ---
 
-**under construction by slow humans**
+::: {#about}
+:::
+
+::: {.callout-warning}
+Ibis Birdbrain is currently under construction by slow humans and is highly experimental. Please check back soon!
+:::
+
+<div class="d-grid gap-2"><a class="btn btn-lg btn-primary" data-bs-toggle="collapse" href="#collapseDemo" role="button" aria-expanded="false" aria-controls="collapseDemo"  margin="100px">Show demo</a></div>
+
+###
+
+::: {#collapseDemo .collapse .multi-collapse}
+
+## Demo
+
+To get started...
+
+```{.python}
+from ibis_birdbrain.bots.birdbrain import bot
+
+bot("who're you and what can you do?")
+```
+
+```html
+birdbrain:
+
+Hello! I'm known as 'birdbrain', but my full name is 'Ibis Birdbrain'. I was
+created by the Ibis developers to assist data practitioners with their projects.
+I have a variety of tools at my disposal. Here are some of the things I can do:
+
+1. Access a data platform via Ibis.
+2. Run SQL queries.
+3. Generate and execute Python code.
+4. Search the internet and summarize information.
+5. Read files and summarize them.
+
+My purpose is to facilitate your data analysis process and provide assistance
+with tools like Ibis, SQL, and Python. Please let me know how I can assist you
+today!
+
+For more detailed information, you can check my documentation and source code:
+
+- Ibis Documentation: [Ibis Docs](https://www.ibis-project.org)
+- Birdbrain Source Code: (https://github.com/ibis-project/ibis-birdbrain)
+
+Note that I always rely on factual and queried data for the information I
+provide, and I will always cite my sources.
+```
+
+```{.python}
+bot("what's the meaning of life?")
+```
+
+```html
+birdbrain:
+
+The meaning of life, according to my current state, is 42! This might be a
+reference to "The Hitchhiker's Guide to the Galaxy" by Douglas Adams, where the
+"Answer to the Ultimate Question of Life, The Universe, and Everything" is
+humorously stated as 42. However, the true meaning of life might be different
+for each individual and could be found in personal growth, relationships,
+helping others, or in the pursuit of knowledge. Always a fascinating topic to
+ponder upon!
+```
+
+:::
+

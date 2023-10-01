@@ -1,0 +1,165 @@
+---
+title: "An introduction to LLMs, Marvin, and Ibis"
+author: "Cody Peterson"
+date: "2023-10-01"
+categories:
+    - "LLMs and data"
+---
+
+## Introduction
+
+In this "LLMs and data" series, we'll explore how to apply large-language models (LLMs) to data analytics. We'll show the steps to build up to [Ibis Birdbrain](https://github.com/ibis-project/ibis-birdbrain), an open-source project for building next-generation natural language interfaces to data.
+
+Throughout the series, we'll be using Ibis and [Marvin](https://www.askmarvin.ai/welcome/overview/). A brief introduction to each is provided below.
+
+## Marvin
+
+[Marvin](https://www.askmarvin.ai/welcome/overview/) is an AI engineering framework that makes it easy to build up to an interactive conversational application, command-line interface (CLI), or REST API. 
+
+```{.python}
+import marvin  # <1>
+
+from rich import print  # <1>
+from dotenv import load_dotenv  # <1>
+
+load_dotenv()  # <2>
+
+marvin.settings.llm_model = "openai/gpt-4"  # <3>
+
+test_str = "working with data and LLMs on 18+ data platforms is easy!"  # <4>
+```
+
+1. Import the libraries we need.
+2. Load the environment variable to setup Marvin to call our OpenAI account.
+3. Configure the LLM model to use.
+4. Some text to test on
+
+### Functions
+
+```{.python}
+@marvin.ai_fn(model="openai/gpt-4")
+def translate(text: str, from_: str = "English", to: str = "Spanish") -> str:
+    """translates the text"""
+
+
+translate(translate(test_str), from_="Spanish", to="English")
+```
+
+### Models
+
+```{.python}
+from pydantic import BaseModel, Field
+
+
+@marvin.ai_model(
+    model="openai/gpt-3.5-turbo-16k", instructions="from English to Spanish"
+)
+class Translate(BaseModel):
+    """Translates text"""
+
+    from_: str = Field(..., description="The language to translate from.")
+    to: str = Field(..., description="The language to translate to.")
+    input_text: str = Field(..., description="The text to translate.")
+    output_text: str = Field(..., description="The translated text.")
+
+
+Translate(test_str)
+```
+
+### Classifiers
+
+```{.python}
+from enum import Enum
+
+
+@marvin.ai_classifier(model="openai/gpt-3.5-turbo-16k", temperature=0)
+class IdentifyLanguage(Enum):
+    """Identifies the language of the text"""
+
+    english = "English"
+    spanish = "Spanish"
+
+
+IdentifyLanguage(test_str)
+```
+
+```{.python}
+IdentifyLanguage(Translate(test_str).output_text)
+```
+
+## Ibis
+
+```{.python}
+# | code-fold: true
+import ibis  # <1>
+
+con = ibis.connect("duckdb://penguins.ddb")  # <2>
+t = ibis.examples.penguins.fetch()  # <2>
+t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <2>
+```
+
+1. Import the libraries we need.
+2. Setup the demo datain an Ibis backend.
+
+```{.python}
+import ibis  # <1>
+
+ibis.options.interactive = True  # <2>
+
+con = ibis.connect("duckdb://penguins.ddb")  # <3>
+t = con.table("penguins")  # <3>
+```
+
+1. Import Ibis.
+2. Configure Ibis (interactive).
+3. Connect to the data and load a table into a variable.
+
+### Backend
+
+```{.python}
+con
+```
+
+```{.python}
+backends = [entrypoint.name for entrypoint in ibis.util.backend_entry_points()]
+backends
+```
+
+### Table
+
+```{.python}
+t
+```
+
+### Schema
+
+```{.python}
+t.schema()
+```
+
+## LLMs and data: Marvin and Ibis
+
+```{.python}
+from ibis.expr.schema import Schema
+from ibis.expr.types.relations import Table
+
+@marvin.ai_fn(model="openai/gpt-4")
+def sql_select(text: str, table_name: str = t.get_name(), schema: Schema = t.schema()) -> str:
+    """writes the SQL SELECT statement to query the table according to the text"""
+
+query = "the unique combination of species and islands"
+sql = sql_select(query)
+sql
+```
+
+```{.python}
+t.sql(sql)
+```
+
+```{.python}
+t.sql(sql_select(query + " and include their counts in from highest to lowest"))
+```
+
+## Next steps
+
+You can get involved with [Ibis Birdbrain](https://github.com/ibis-project/ibis-birdbrain), our open-source data & AI project for building next-generation natural language interfaces to data.

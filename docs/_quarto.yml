@@ -1,28 +1,102 @@
+# project
 project:
   type: website
 
+# website
 website:
-  title: "ibis-birdbrain"
-  site-url: https://ibis-project.org/birdbrain
-  description: "ibis-birdbrain, your AI data assistant"
-  favicon: images/brians.png
 
+  # basics
+  title: "Ibis Birdbrain"
+  site-url: https://ibis-project.github.io/ibis-birdbrain
+  description: "AI for your data project"
+  favicon: images/logo.png
 
+  # options
+  reader-mode: false
+  twitter-card: true
+  back-to-top-navigation: true
+  repo-url: https://github.com/ibis-project/ibis-birdbrain
+  repo-actions: [edit, issue]
+  repo-subdir: docs
+  issue-url: https://github.com/ibis-project/ibis-birdbrain/issues/new/choose
+
+  # footer
+  page-footer:
+    border: false
+    left: ""
+    right:
+      - icon: github
+        href: https://github.com/ibis-project/ibis-birdbrain
+
+  # search
+  search:
+    location: navbar
+    type: overlay
+
+  # navbar
   navbar:
-    logo: images/brians.png
-    left:
-      - href: index.qmd
-        text: home
-      - about.qmd
+    logo: images/logo.png
+    tools:
+      - icon: github
+        menu:
+          - text: Source code
+            url: https://github.com/ibis-project/ibis-birdbrain
+          - text: Report an issue
+            url: https://github.com/ibis-project/ibis-birdbrain/issues/new
+          - text: Ask for help
+            url: https://github.com/ibis-project/ibis-birdbrain/discussions/new?category=q-a
 
+    left:
+      - sidebar:getting-started
+      - sidebar:concepts
+      - sidebar:how-to
+
+    right:
+      - posts.qmd
+      #- release_notes.md # TODO: release notes
+      - sidebar:contribute
+
+  # sidebar
+  sidebar:
+    - id: ""
+    - id: getting-started
+      title: "Getting started"
+      style: "docked"
+      collapse-level: 2
+      contents:
+        - install.qmd
+        - auto: tutorials/*.qmd
+    - id: concepts
+      title: "Concepts"
+      style: "docked"
+      collapse-level: 2
+      contents:
+        - why.qmd
+        - auto: concepts/*.qmd
+    - id: how-to
+      title: "How-to"
+      style: "docked"
+      collapse-level: 2
+      contents:
+        - auto: "how-to/input-output"
+    - id: contribute
+      title: "Contribute"
+      style: "docked"
+      collapse-level: 2
+      contents:
+        - auto: contribute
+
+# format
 format:
   html:
-    theme: vapor
-    fontcolor: fuchsia
-    linkcolor: fuchsia
+    #theme: vapor
+    theme: darkly
+    #fontcolor: fuchsia
+    #linkcolor: fuchsia
     css: styles.css
     toc: true
 
 # resources
 resources:
   - CNAME
+

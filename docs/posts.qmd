@@ -1,0 +1,14 @@
+---
+title: "Posts"
+listing:
+  contents: posts
+  sort: "date desc"
+  image-placeholder: images/logo.png
+  #type: default
+  type: grid
+  categories: true
+  sort-ui: true
+  filter-ui: true
+  feed: true
+page-layout: full
+---

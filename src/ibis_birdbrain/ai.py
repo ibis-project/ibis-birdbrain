@@ -1,6 +1,7 @@
 # imports
 import ibis
 import uuid
+import marvin
 import datetime
 
 from marvin import AIApplication

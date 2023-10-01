@@ -1,6 +1,5 @@
-# ibis-birdbrain
+# Ibis Birdbrain
 
-AI for your data project, powered by [Ibis](https://ibis-project.org) and [Marvin](https://github.com/prefectHQ/marvin).
+The portable Python AI-powered data bot for your data project. Currently under construction by slow humans and highly experimental.
 
-**work in proress -- under construction by slow humans**
-
+Powered by [Ibis](https://ibis-project.org), your data platform, [Marvin](https://github.com/prefectHQ/marvin), and your AI platform.

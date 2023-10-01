@@ -1,0 +1,120 @@
+---
+title: "Auxiliary tools"
+author: "Cody Peterson"
+date: "2023-10-05"
+categories:
+    - "LLMs and data"
+---
+
+## Introduction
+
+```{.python}
+# | code-fold: true
+import ibis  # <1>
+import marvin  # <1>
+
+from dotenv import load_dotenv  # <1>
+
+load_dotenv()  # <2>
+
+con = ibis.connect("duckdb://penguins.ddb")  # <3>
+t = ibis.examples.penguins.fetch()  # <3>
+t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <3>
+```
+
+1. Import the libraries we need.
+2. Load the environment variable to setup Marvin to call our OpenAI account.
+3. Setup the demo datain an Ibis backend.
+
+```{.python}
+import ibis  # <1>
+import marvin  # <1>
+
+from ibis.expr.schema import Schema  # <1>
+from ibis.expr.types.relations import Table  # <1>
+
+ibis.options.interactive = True  # <2>
+marvin.settings.llm_model = "openai/gpt-4"  # <2>
+
+con = ibis.connect("duckdb://penguins.ddb")  # <3>
+t = con.table("penguins")  # <3>
+```
+
+1. Import Ibis and Marvin.
+2. Configure Ibis (interactive) and Marvin (GPT-4).
+3. Connect to the data and load a table into a variable.
+
+```{.python}
+@marvin.ai_fn  # <1>
+def _generate_sql_select(
+    text: str, table_name: str, table_schema: Schema
+) -> str:  # <1>
+    """Generate SQL SELECT from text."""  # <1>
+
+
+def sql_from_text(text: str, t: Table) -> Table:  # <2>
+    """Run SQL from text."""  # <2>
+    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(";"))  # <2>
+```
+
+1. A non-deterministic, LLM-powered AI function.
+2. A deterministic, human-authored function that calls the AI function.
+
+```{.python}
+t2 = sql_from_text("the unique combination of species and islands", t)
+t2
+```
+
+```{.python}
+t3 = sql_from_text(
+    "the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'",
+    t,
+)
+t3
+```
+
+## Summary
+
+To summarize this post:
+
+```{.python}
+from rich import print
+from pydantic import BaseModel, Field
+
+with open("index.qmd", "r") as f:
+    self_text = f.read()
+
+# save some money and avoid rate limiting
+marvin.settings.llm_model = "openai/gpt-3.5-turbo-16k"  # <2>
+
+@marvin.ai_model
+class Summary(BaseModel):
+    """Summary of text."""
+
+    summary_line: str = Field(..., description="The one-line summary of the text.")
+    summary_paragraph: str = Field(
+        ..., description="The one-paragraph summary of the text."
+    )
+    conclusion: str = Field(
+        ..., description="The conclusion the reader should draw from the text."
+    )
+    key_points: list[str] = Field(..., description="The key points of the text.")
+    critiques: list[str] = Field(
+        ..., description="Professional, fair critiques of the text."
+    )
+    suggested_improvements: list[str] = Field(
+        ..., description="Suggested improvements for the text."
+    )
+    sentiment: float = Field(..., description="The sentiment of the text.")
+    sentiment_label: str = Field(..., description="The sentiment label of the text.")
+    author_bias: str = Field(..., description="The author bias of the text.")
+
+
+print(Summary(self_text))
+```
+
+## Next steps
+
+You can get involved with [Ibis
+Birdbrain](https://github.com/ibis-project/ibis-birdbrain), our open-source data
+& AI project for building next-generation natural language interfaces to data.

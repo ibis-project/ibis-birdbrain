@@ -12,6 +12,9 @@ class BirdbrainState(BaseModel):
     creator: str = "Ibis developers"
     version: str = "infinity"
 
+    # meaning of life
+    meaning_of_life: int = 42
+
     # links to open
     ibis_docs: str = "https://www.ibis-project.org"
     ibis_github: str = "https://github.com/ibis-project/ibis"

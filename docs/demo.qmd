@@ -1,0 +1,11 @@
+---
+title: "demo"
+format: 
+  html:
+    page-layout: full
+---
+
+```{=html}
+<iframe class="streamlit-app-inner" width="100%" height="100%" src="https://squawk-bot-for-gil.streamlit.app/?embedded=true"></iframe>
+```
+

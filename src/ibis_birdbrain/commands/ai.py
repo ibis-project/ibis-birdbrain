@@ -1,4 +1,6 @@
-def ai_run(state={}, interactive=False):
+def ai_run(interactive=False):
+    import marvin
+
     from ibis_birdbrain.ai import Console
     from ibis_birdbrain.bots.birdbrain import bot
 
@@ -10,7 +12,7 @@ def ai_run(state={}, interactive=False):
     console = Console()
     console.print(f"access to: ", end="")
     console.print(f"{bot.name}", style="bold violet blink")
-    console.print(f"state: {state}")
+    console.print(f"model: {marvin.settings.llm_model}", style="bold blue")
 
     if interactive:
         import ibis

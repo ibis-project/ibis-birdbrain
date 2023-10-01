@@ -1,0 +1,19 @@
+# Installation and setup
+
+This page describes how to install and setup Ibis Birdbrain.
+
+## Install from PyPI
+
+```bash
+pip install ibis-birdbrain
+```
+
+## Data platform setup
+
+Only DuckDB supported for now. All 18+ Ibis backends coming soon.
+
+## AI platform setup
+
+Only OpenAI models work well due to the logit bias trick.
+
+TODO: document setup.
