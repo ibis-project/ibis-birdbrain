@@ -15,6 +15,7 @@ website:
   reader-mode: false
   twitter-card: true
   back-to-top-navigation: true
+  site-url: https://ibis-project.github.io/ibis-birdbrain
   repo-url: https://github.com/ibis-project/ibis-birdbrain
   repo-actions: [edit, issue]
   repo-subdir: docs
