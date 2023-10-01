@@ -1,3 +1,15 @@
 # Large language models
 
-Large language models (LLMs) represent decades of research and development of neural networks.
+Large language models (LLMs) represent decades of research and development of neural networks. While relatively impressive LLMs have been around for years, recent innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user.
+
+We are primarily concerned with applying LLMs to data, but we'll take a brief look at how they work and why we should use them.
+
+## What is a neural network?
+
+## What is a language model?
+
+## What are the inputs and outputs?
+
+## What do LLMs work well for?
+
+## What are the limitations and considerations?

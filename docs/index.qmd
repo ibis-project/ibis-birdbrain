@@ -28,7 +28,7 @@ about:
       href: https://ibis-project.zulipchat.com
     - icon: rss
       text: RSS
-      href: https://ibis-project.org/posts.xml
+      href: https://ibis-project.github.io/ibis-birdbrain/posts.xml
 ---
 
 ::: {#about}

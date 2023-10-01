@@ -1,32 +1,41 @@
 ---
-title: "An introduction to LLMs, Marvin, and Ibis"
+title: "An introduction to Marvin and Ibis"
 author: "Cody Peterson"
-date: "2023-10-01"
+date: "2023-10-12"
+execute: 
+  warning: false
 categories:
     - "LLMs and data"
 ---
 
 ## Introduction
 
-In this "LLMs and data" series, we'll explore how to apply large-language models (LLMs) to data analytics. We'll show the steps to build up to [Ibis Birdbrain](https://github.com/ibis-project/ibis-birdbrain), an open-source project for building next-generation natural language interfaces to data.
+In this "LLMs and data" series, we'll explore how to apply large-language models (LLMs) to data analytics. We'll walk through the steps to build Ibis Birdbrain.
 
-Throughout the series, we'll be using Ibis and [Marvin](https://www.askmarvin.ai/welcome/overview/). A brief introduction to each is provided below.
+Throughout the series, we'll be using [Marvin](https://www.askmarvin.ai/welcome/overview/) and [Ibis](https://ibis-project.org). A brief introduction to each is provided below.
 
 ## Marvin
 
-[Marvin](https://www.askmarvin.ai/welcome/overview/) is an AI engineering framework that makes it easy to build up to an interactive conversational application, command-line interface (CLI), or REST API. 
+[Marvin](https://www.askmarvin.ai/welcome/overview/) is an AI engineering framework that makes it easy to build up to an interactive conversational application. Using additionalpython open-source tools, we can apply this to the command-line interface (CLI) and REST API services.
 
-```{.python}
+Marvin makes calls to an AI platform. You typically use an API key set as an environment variable -- in this case, we'll load a `.env` file that contians secrets for the AI platform that Marvin will use. We also set the large language model model.
+
+```{python}
 import marvin  # <1>
 
 from rich import print  # <1>
+from time import sleep  # <1>
 from dotenv import load_dotenv  # <1>
 
 load_dotenv()  # <2>
 
+# increase accuracy
 marvin.settings.llm_model = "openai/gpt-4"  # <3>
+# decrease cost
+# marvin.settings.llm_model = "openai/gpt-3.5-turbo"  # <3>
 
 test_str = "working with data and LLMs on 18+ data platforms is easy!"  # <4>
+test_str
 ```
 
 1. Import the libraries we need.
@@ -36,43 +45,79 @@ test_str = "working with data and LLMs on 18+ data platforms is easy!"  # <4>
 
 ### Functions
 
-```{.python}
-@marvin.ai_fn(model="openai/gpt-4")
+AI functions are one of the building blocks in Marvin and allow yout to specify a typedpython function with no code -- only a docstring -- to achieve a wide variety of tasks.
+
+We'll demonstrate this with an AI function that trnaslates text:
+
+```{python}
+@marvin.ai_fn
 def translate(text: str, from_: str = "English", to: str = "Spanish") -> str:
     """translates the text"""
 
+translate(test_str)
+```
 
+```{python}
+# | code-fold: true
+sleep(1) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
+```{python}
 translate(translate(test_str), from_="Spanish", to="English")
 ```
 
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
 ### Models
 
-```{.python}
+AI models are another building block for generatingpython classes from input text. It's a great way to build structured data from unstructured data that can be customized for your needs. 
+
+We'll demosntrate this with an AI model that translates text:
+
+```{python}
 from pydantic import BaseModel, Field
 
+# decrease cost
+marvin.settings.llm_model = "openai/gpt-3.5-turbo"
 
-@marvin.ai_model(
-    model="openai/gpt-3.5-turbo-16k", instructions="from English to Spanish"
-)
-class Translate(BaseModel):
-    """Translates text"""
+@marvin.ai_model
+class ExtractParts(BaseModel):
+    """Extracts parts of a sentence"""
+    subject: str = Field(..., description="The subject of the sentence.")
+    predicate: str = Field(..., description="The predicate of the sentence.")
+    objects: list[str] = Field(..., description="The objects of the sentence.")
+    modifiers: list[str] = Field(..., description="The modifiers of the sentence.")
 
-    from_: str = Field(..., description="The language to translate from.")
-    to: str = Field(..., description="The language to translate to.")
-    input_text: str = Field(..., description="The text to translate.")
-    output_text: str = Field(..., description="The translated text.")
-
-
-Translate(test_str)
+ExtractParts(test_str)
 ```
+
+```{python}
+# | code-fold: true
+sleep(1) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
 
 ### Classifiers
 
-```{.python}
+AI classifiers are another building block for generatingpython classes from input text. It's the most efficient (time and cost) method for applying LLMs as it only results in a single output token, selecting an output in a specified Enum.
+
+We'll demonstrate this by classifying the language of some text:
+
+```{python}
 from enum import Enum
 
+# increase accuracy
+marvin.settings.llm_model = "openai/gpt-4"
 
-@marvin.ai_classifier(model="openai/gpt-3.5-turbo-16k", temperature=0)
+@marvin.ai_classifier
 class IdentifyLanguage(Enum):
     """Identifies the language of the text"""
 
@@ -80,17 +125,34 @@ class IdentifyLanguage(Enum):
     spanish = "Spanish"
 
 
-IdentifyLanguage(test_str)
+IdentifyLanguage(test_str).value
 ```
 
-```{.python}
-IdentifyLanguage(Translate(test_str).output_text)
+```{python}
+# | code-fold: true
+sleep(1) # <1>
 ```
+
+1. Avoid rate-limiting by waiting.
+
+```{python}
+IdentifyLanguage(translate(test_str)).value
+```
+
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
 
 ## Ibis
 
-```{.python}
-# | code-fold: true
+[Ibis](https://ibis-project.org) is the portable Python dataframe library that is modular and composable.
+
+Ibis makes calls to a data platform, providing an API but pushing the compute to (local or remote) query engines and storage. DuckDB is the default and we'll typically use it for demo puroses. You can work with an in-memory instance, but we'll often create a database file from example data:
+
+```{python}
 import ibis  # <1>
 
 con = ibis.connect("duckdb://penguins.ddb")  # <2>
@@ -101,7 +163,9 @@ t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <2>
 1. Import the libraries we need.
 2. Setup the demo datain an Ibis backend.
 
-```{.python}
+You will typically connect to an existing data platform via your corresponding Ibis backend and have access to a number of tables:
+
+```{python}
 import ibis  # <1>
 
 ibis.options.interactive = True  # <2>
@@ -116,50 +180,84 @@ t = con.table("penguins")  # <3>
 
 ### Backend
 
-```{.python}
+A backend provides the connection and basic management of the data platform. Above, we created the `con` variable that is an instance of a DuckDB backend:
+
+```{python}
 con
 ```
 
-```{.python}
+It usually contains some tables:
+
+```{python}
+con.list_tables()
+```
+
+We can access some internals of Ibis to see what backends are available:
+
+::: {.callout-tip}
+Don't rely on accessing internals of Ibis in production.
+:::
+
+```{python}
 backends = [entrypoint.name for entrypoint in ibis.util.backend_entry_points()]
 backends
 ```
 
 ### Table
 
-```{.python}
+You typically work with a table, conventionally named `t` for demo or exploratory purposes:
+
+```{python}
 t
 ```
 
+When working with many tables, you should name them descriptively.
+
 ### Schema
 
-```{.python}
+A table has a schema that Ibis maps to the data platform's data types:
+
+```{python}
 t.schema()
 ```
 
 ## LLMs and data: Marvin and Ibis
 
-```{.python}
+You can use Marvin and Ibis together to easily apply LLMs to data.
+
+```{python}
 from ibis.expr.schema import Schema
 from ibis.expr.types.relations import Table
 
-@marvin.ai_fn(model="openai/gpt-4")
-def sql_select(text: str, table_name: str = t.get_name(), schema: Schema = t.schema()) -> str:
+@marvin.ai_fn
+def sql_select(
+    text: str, table_name: str = t.get_name(), schema: Schema = t.schema()
+) -> str:
     """writes the SQL SELECT statement to query the table according to the text"""
 
+
 query = "the unique combination of species and islands"
-sql = sql_select(query)
+sql = sql_select(query).strip(";")
 sql
 ```
 
-```{.python}
+```{python}
 t.sql(sql)
 ```
 
-```{.python}
-t.sql(sql_select(query + " and include their counts in from highest to lowest"))
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
+```{python}
+t.sql(sql_select(query + " and include their counts in from highest to lowest").strip(";"))
 ```
 
 ## Next steps
 
 You can get involved with [Ibis Birdbrain](https://github.com/ibis-project/ibis-birdbrain), our open-source data & AI project for building next-generation natural language interfaces to data.
+
+[Read the next post in this series](../llms-and-data-pt1).

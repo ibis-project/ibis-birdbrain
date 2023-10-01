@@ -7,6 +7,9 @@ freeze: auto
 # Enable banner style title blocks
 title-block-banner: true
 
+execute: 
+  warning: false
+
 # code annoations
 code-annotations: hover
 

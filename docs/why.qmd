@@ -2,7 +2,7 @@
 
 [Ibis](https://ibis-project.org) is the portable Python dataframe library.
 
-Ibis Birdbrain is the portable Python AI-powered data bot, powered by Ibis and thus supporting all data platforms Ibis supports. Birdbrain is also built on [Marvin](https://github.com/PrefectHQ/marvin), thus supporting all AI platform providers Marvin supports. While this list is currently low, we expect to support a wide breadth of data and AI platforms in Ibis Birdbrain.
+Ibis Birdbrain is the portable Python AI-powered data bot, built on Ibis with support for all data platforms Ibis's 18+ backends support. Ibis Birdbrain is also built on [Marvin](https://github.com/PrefectHQ/marvin) with support for all AI platforms Marvin supports.
 
 ## Standards
 
@@ -14,5 +14,7 @@ Ibis Birdbrain is the portable Python AI-powered data bot, powered by Ibis and t
 
 ## Composable data systems are MICE
 
-[Composable data systems are MICE: modular, interoperable, customizable, and extensible](https://voltrondata.com/codex/standards-over-silos). Ibis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.
+[Composable data systems are MICE: modular, interoperable, customizable, and extensible](https://voltrondata.com/codex/standards-over-silos).
+
+Ibis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.
 

@@ -1,34 +1,40 @@
 ---
 title: "Three approaches"
 author: "Cody Peterson"
-date: "2023-10-02"
+date: "2023-10-13"
+execute: 
+  warning: false
 categories:
     - "LLMs and data"
 ---
 
 ## Introduction
 
-While large-language models (LLMs) have been around for years, recent versions and innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user. The thought of using natural language to transform and analyze data is appealing.
+The thought of using natural language to transform and analyze data is appealing. This post assumes familiarity with Marvin and Ibis -- [read the preivous post in the series for a quick overview](../llms-and-data-pt0).
 
 ## Approaches
 
-When discussed internally at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:
+When discussed at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:
 
-1. LLM writes SQL
-2. LLM writes a subroutine (Python UDF or another language)
-3. Use LLM in a subroutine
+1. LLM writes an analytic code
+2. LLM writes an analytic subroutine
+3. Use LLM in an analytic subroutine
 
-While these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and [Marvin](https://www.askmarvin.ai/welcome/what_is_marvin/), an AI engineering framework for building natural language interfaces. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends. But first, let's demonstrate the three approaches in code.
+While these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and Marvin. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends.
 
-### Approach 1: LLM writes SQL
+But first, let's demonstrate the three approaches in code.
+
+### Approach 1: LLM writes analytic code
 
 State of the art (SoTA) LLMs are decent at generating SQL out of the box. We can be clever to handle errors, retries, and more, but in its simplest form:
 
-```{.python}
+```{python}
 # | code-fold: true
 import ibis  # <1>
 import marvin  # <1>
 
+from rich import print # <1>
+from time import sleep  # <1>
 from dotenv import load_dotenv  # <1>
 
 load_dotenv()  # <2>
@@ -42,25 +48,22 @@ t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <3>
 2. Load the environment variable to setup Marvin to call our OpenAI account.
 3. Setup the demo datain an Ibis backend.
 
-```{.python}
+```{python}
 import ibis  # <1>
 import marvin  # <1>
 
 from ibis.expr.schema import Schema  # <1>
 from ibis.expr.types.relations import Table  # <1>
 
-ibis.options.interactive = True  # <2>
-marvin.settings.llm_model = "openai/gpt-4"  # <2>
 
-con = ibis.connect("duckdb://penguins.ddb")  # <3>
-t = con.table("penguins")  # <3>
+ibis.options.interactive = True # <2>
+marvin.settings.llm_model = "openai/gpt-4"  # <2>
 ```
 
 1. Import Ibis and Marvin.
-2. Configure Ibis (interactive) and Marvin (GPT-4).
-3. Connect to the data and load a table into a variable.
+2. Configure Ibis and Marvin
 
-```{.python}
+```{python}
 @marvin.ai_fn  # <1>
 def _generate_sql_select(
     text: str, table_name: str, table_schema: Schema
@@ -76,12 +79,19 @@ def sql_from_text(text: str, t: Table) -> Table:  # <2>
 1. A non-deterministic, LLM-powered AI function.
 2. A deterministic, human-authored function that calls the AI function.
 
-```{.python}
+```{python}
 t2 = sql_from_text("the unique combination of species and islands", t)
 t2
 ```
 
-```{.python}
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
+```{python}
 t3 = sql_from_text(
     "the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'",
     t,
@@ -89,13 +99,24 @@ t3 = sql_from_text(
 t3
 ```
 
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
 This works well-enough for simple cases and can be expanded to handle complex ones. In many scenarios, it may be easier to express a query in English or another language than to write it in SQL, especially if working across multiple SQL dialects.
 
-### Approach 2: LLM writes a subroutine
+SQL isn't a proper standard, with many dialects that can complicate the issue. Ibis works around this in a standard Python API for transformation code, but still makes compromises to support many backends. Substrait is a new project that aims to solve this problem by providing a standard, portable, and extensible API for data transformation code. Substrait is still in the early stages of development, but it's worth keeping an eye on and will be adopted in Ibis once supported across many data platforms.
 
-If more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages. Many data platforms support user-defined functions (UDFs) in Python or some other language. We'll stick to scalar Python UDFs via DuckDB to demonstrate the concept:
+For now, we'll focus on generating SQL and Python analytical code with LLMs.
 
-```{.python}
+### Approach 2: LLM writes an analytical subroutine
+
+If more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages that are used in analytical subroutines. Many data platforms support user-defined functions (UDFs) in Python or some other language. We'll stick to scalar Python UDFs via DuckDB to demonstrate the concept:
+
+```{python}
 @marvin.ai_fn  # <1>
 def _generate_python_function(text: str) -> str:  # <1>
     """Generate a simple, typed, correct Python function from text."""  # <1>
@@ -114,7 +135,7 @@ import ibis
 1. A non-deterministic, LLM-powered AI function.
 2. A deterministic, human-authored function that calls the AI function.
 
-```{.python}
+```{python}
 udf = create_udf_from_text(
     "a function named count_vowels that given an input string, returns an int w/ the number of vowels (y_included as a boolean option defaulted to False)"
 )
@@ -122,7 +143,14 @@ print(udf)
 exec(udf)
 ```
 
-```{.python}
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
+```{python}
 t4 = t3.mutate(
     species_vowel_count=count_vowels(t3.species),
     island_vowel_count=count_vowels(t3.island),
@@ -130,18 +158,25 @@ t4 = t3.mutate(
 t4
 ```
 
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
 In this case, there's no reason not to have a human in the loop
 reviewing the output code and committing it for production use. This could be useful for quick prototyping or, given a box of tools in the form of UDFs,
 working through a natural language interface.
 
-### Approach 3: Use LLM in a subroutine
+### Approach 3: Use LLM in an analytical subroutine
 
 We can also call the LLM once-per-row in the table via a subroutine. For variety, we'll use an [AI model](https://www.askmarvin.ai/components/ai_model/) instead of an [AI function](https://www.askmarvin.ai/components/ai_function/):
 
-```{.python}
+```{python}
 from pydantic import BaseModel, Field  # <1>
 
-# save some money and avoid rate limiting
+# decrease cost
 marvin.settings.llm_model = "openai/gpt-3.5-turbo-16k"  # <2>
 
 
@@ -169,7 +204,7 @@ VowelCounter("hello world")  # <4>
 
 Then we'll have the LLM write the UDF, just to be fancy:
 
-```{.python}
+```{python}
 udf = create_udf_from_text(
     "a function named count_vowels_ai that given an input string, calls VowelCounter on it and returns the num_total attribute of that result"
 )
@@ -177,7 +212,14 @@ print(udf)
 exec(udf)
 ```
 
-```{.python}
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
+```{python}
 t5 = t3.mutate(
     species_vowel_count=count_vowels_ai(t3.species),
     island_vowel_count=count_vowels_ai(t3.island),
@@ -187,16 +229,25 @@ t5
 
 Notice that in this UDF, unlike in the previous example, a LLM is being called (possibly several times) for each row in the table. This is a very expensive operation and we'll need to be careful about how we use it in practice.
 
+```{python}
+# | code-fold: true
+sleep(3) # <1>
+```
+
+1. Avoid rate-limiting by waiting.
+
 ## Summary
 
 To summarize this post:
 
-```{.python}
+```{python}
 from rich import print
 
 with open("index.qmd", "r") as f:
     self_text = f.read()
 
+# increease accuracy
+marvin.settings.llm_model = "openai/gpt-4"
 
 @marvin.ai_model
 class Summary(BaseModel):
@@ -227,3 +278,5 @@ print(Summary(self_text))
 ## Next steps
 
 You can get involved with [Ibis Birdbrain](https://github.com/ibis-project/ibis-birdbrain), our open-source data & AI project for building next-generation natural language interfaces to data.
+
+[Read the next post in this series](../llms-and-data-pt2).

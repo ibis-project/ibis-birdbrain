@@ -1,2 +1,10 @@
 # LLMOps, MLOps, DevOps
 
+The ML landscape is plagued by "the toy problem" -- building something cool is easy, putting something in production is hard.
+
+## The original MLOps paper
+
+
+## Learnings from industry
+
+

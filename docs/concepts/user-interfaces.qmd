@@ -1,2 +1,12 @@
 # User interfaces
 
+A user interface (UI) in our context is the mechanism by which a human interacts with software.
+
+## Command-line interface (CLI)
+
+## Python (interactive)
+
+## REST API
+
+## Language user interface (LUI)
+

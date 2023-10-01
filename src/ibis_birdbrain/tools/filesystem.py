@@ -48,7 +48,7 @@ def list_files_and_dirs(
     else:
         gitignore_patterns = []
 
-    ignore_dirs = [".git"] + additional_ignore_dirs
+    ignore_dirs = [".git", "_site", "_output", "_freeze", ".quarto"] + additional_ignore_dirs
 
     for root, dirs, files in os.walk(path):
         if root.count(os.sep) >= depth and depth != -1:

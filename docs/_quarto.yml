@@ -90,7 +90,9 @@ website:
 format:
   html:
     #theme: vapor
-    theme: darkly
+    theme:
+      dark: darkly
+      light: darkly
     #fontcolor: fuchsia
     #linkcolor: fuchsia
     css: styles.css

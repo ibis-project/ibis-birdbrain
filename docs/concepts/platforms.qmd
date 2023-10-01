@@ -1,3 +1,8 @@
 # Data and AI platforms
 
+Data and AI platforms are...
+
+## Data platforms
+
+## AI platforms
 
