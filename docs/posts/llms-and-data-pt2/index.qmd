@@ -8,7 +8,12 @@ categories:
 
 ## Introduction
 
-```{.python}
+The Generative AI hype cycle has led to a new wave of terminology to understand. In this post, we'll use basic programming language to explain and explore 
+the concepts of "chains" of LLMs and retrieval-augmented generation (RAG) approaches to working with data.
+
+This post assumes [basic familiarity with Marvin and Ibis](../llms-and-data-pt0) and [the three approaches to applying LLMs to data](../llms-and-data-pt1).
+
+```{python}
 # | code-fold: true
 import ibis  # <1>
 import marvin  # <1>
@@ -26,7 +31,8 @@ t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <3>
 2. Load the environment variable to setup Marvin to call our OpenAI account.
 3. Setup the demo datain an Ibis backend.
 
-```{.python}
+
+```{python}
 import ibis  # <1>
 import marvin  # <1>
 
@@ -44,7 +50,15 @@ t = con.table("penguins")  # <3>
 2. Configure Ibis (interactive) and Marvin (GPT-4).
 3. Connect to the data and load a table into a variable.
 
-```{.python}
+## Calls and computations
+
+When an AI platform's large language model API is called, it returns text as the result of some computation on input text. See the [LLM concept article](/concepts/llms.qmd) for details.
+
+### Calls
+
+A call is just that -- a call to **something**. In Python, this is typically always something else in Python, that itself may make calls to other programming languages or external services.
+
+```{python}
 @marvin.ai_fn  # <1>
 def _generate_sql_select(
     text: str, table_name: str, table_schema: Schema
@@ -60,58 +74,15 @@ def sql_from_text(text: str, t: Table) -> Table:  # <2>
 1. A non-deterministic, LLM-powered AI function.
 2. A deterministic, human-authored function that calls the AI function.
 
-```{.python}
-t2 = sql_from_text("the unique combination of species and islands", t)
-t2
-```
 
-```{.python}
-t3 = sql_from_text(
-    "the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'",
-    t,
-)
-t3
-```
+
+### Computations
+
+A computation is just that -- a computation of **something**. In general, a computation is represented by a system that takes an input and returns an output.
+
+## Comparison to MLOps and DevOps
 
 ## Summary
-
-To summarize this post:
-
-```{.python}
-from rich import print
-from pydantic import BaseModel, Field
-
-with open("index.qmd", "r") as f:
-    self_text = f.read()
-
-# save some money and avoid rate limiting
-marvin.settings.llm_model = "openai/gpt-3.5-turbo-16k"  # <2>
-
-@marvin.ai_model
-class Summary(BaseModel):
-    """Summary of text."""
-
-    summary_line: str = Field(..., description="The one-line summary of the text.")
-    summary_paragraph: str = Field(
-        ..., description="The one-paragraph summary of the text."
-    )
-    conclusion: str = Field(
-        ..., description="The conclusion the reader should draw from the text."
-    )
-    key_points: list[str] = Field(..., description="The key points of the text.")
-    critiques: list[str] = Field(
-        ..., description="Professional, fair critiques of the text."
-    )
-    suggested_improvements: list[str] = Field(
-        ..., description="Suggested improvements for the text."
-    )
-    sentiment: float = Field(..., description="The sentiment of the text.")
-    sentiment_label: str = Field(..., description="The sentiment label of the text.")
-    author_bias: str = Field(..., description="The author bias of the text.")
-
-
-print(Summary(self_text))
-```
 
 ## Next steps
 

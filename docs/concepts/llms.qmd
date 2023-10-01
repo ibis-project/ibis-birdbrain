@@ -4,12 +4,36 @@ Large language models (LLMs) represent decades of research and development of ne
 
 We are primarily concerned with applying LLMs to data, but we'll take a brief look at how they work and why we should use them.
 
-## What is a neural network?
+## What is an artificial neural network?
 
-## What is a language model?
+An artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model's performance.
+
+An instance of a neural network (and many other ML architectures) is called a **model**. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.
+
+## What is a (large) language model?
+
+A large language model is a neural network trained on vast amounts of text data.
 
 ## What are the inputs and outputs?
 
+A LLM takes text as input and produces text as output.
+
 ## What do LLMs work well for?
 
+Text in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:
+
+- text-based ML tasks (like classification, clustering)
+- text-based entity extraction (named entity regognition)
+- text-based generation (like summarization, translation, and question answering)
+- other text-based tasks
+
+LLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.
+
 ## What are the limitations and considerations?
+
+Some limitations include:
+
+- cost
+- latency
+- accuracy
+- ...

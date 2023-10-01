@@ -1,8 +1,0 @@
-# Tutorial: REST API
-
-## Prerequisites
-
-TBD
-
-## Overview
-

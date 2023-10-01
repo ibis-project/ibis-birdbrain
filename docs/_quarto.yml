@@ -49,12 +49,12 @@ website:
     left:
       - sidebar:getting-started
       - sidebar:concepts
-      - sidebar:how-to
+      #- sidebar:how-to
 
     right:
       - posts.qmd
       #- release_notes.md # TODO: release notes
-      - sidebar:contribute
+      #- sidebar:contribute
 
   # sidebar
   sidebar:

@@ -16,7 +16,7 @@ Throughout the series, we'll be using [Marvin](https://www.askmarvin.ai/welcome/
 
 ## Marvin
 
-[Marvin](https://www.askmarvin.ai/welcome/overview/) is an AI engineering framework that makes it easy to build up to an interactive conversational application. Using additionalpython open-source tools, we can apply this to the command-line interface (CLI) and REST API services.
+[Marvin](https://www.askmarvin.ai/welcome/overview/) is an AI engineering framework that makes it easy to build up to an interactive conversational application.
 
 Marvin makes calls to an AI platform. You typically use an API key set as an environment variable -- in this case, we'll load a `.env` file that contians secrets for the AI platform that Marvin will use. We also set the large language model model.
 
@@ -148,7 +148,7 @@ sleep(3) # <1>
 
 ## Ibis
 
-[Ibis](https://ibis-project.org) is the portable Python dataframe library that is modular and composable.
+[Ibis](https://ibis-project.org) is the portable Python dataframe library that enables Ibis Birdbrain to work on many data platforms at native scale.
 
 Ibis makes calls to a data platform, providing an API but pushing the compute to (local or remote) query engines and storage. DuckDB is the default and we'll typically use it for demo puroses. You can work with an in-memory instance, but we'll often create a database file from example data:
 
