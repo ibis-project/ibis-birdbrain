@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Cody Peterson">
-<meta name="dcterms.date" content="2023-10-02">
+<meta name="dcterms.date" content="2023-10-13">
 
 <title>Ibis Birdbrain - Three approaches</title>
 <style>
@@ -72,10 +72,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -96,6 +98,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -226,6 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </li>
       </ul>
     </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -255,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 2, 2023</p>
+        <p class="date">October 13, 2023</p>
       </div>
     </div>
     
@@ -274,9 +280,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#approaches" id="toc-approaches" class="nav-link" data-scroll-target="#approaches">Approaches</a>
   <ul class="collapse">
-  <li><a href="#approach-1-llm-writes-sql" id="toc-approach-1-llm-writes-sql" class="nav-link" data-scroll-target="#approach-1-llm-writes-sql">Approach 1: LLM writes SQL</a></li>
-  <li><a href="#approach-2-llm-writes-a-subroutine" id="toc-approach-2-llm-writes-a-subroutine" class="nav-link" data-scroll-target="#approach-2-llm-writes-a-subroutine">Approach 2: LLM writes a subroutine</a></li>
-  <li><a href="#approach-3-use-llm-in-a-subroutine" id="toc-approach-3-use-llm-in-a-subroutine" class="nav-link" data-scroll-target="#approach-3-use-llm-in-a-subroutine">Approach 3: Use LLM in a subroutine</a></li>
+  <li><a href="#approach-1-llm-writes-analytic-code" id="toc-approach-1-llm-writes-analytic-code" class="nav-link" data-scroll-target="#approach-1-llm-writes-analytic-code">Approach 1: LLM writes analytic code</a></li>
+  <li><a href="#approach-2-llm-writes-an-analytical-subroutine" id="toc-approach-2-llm-writes-an-analytical-subroutine" class="nav-link" data-scroll-target="#approach-2-llm-writes-an-analytical-subroutine">Approach 2: LLM writes an analytical subroutine</a></li>
+  <li><a href="#approach-3-use-llm-in-an-analytical-subroutine" id="toc-approach-3-use-llm-in-an-analytical-subroutine" class="nav-link" data-scroll-target="#approach-3-use-llm-in-an-analytical-subroutine">Approach 3: Use LLM in an analytical subroutine</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
@@ -291,71 +297,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>While large-language models (LLMs) have been around for years, recent versions and innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user. The thought of using natural language to transform and analyze data is appealing.</p>
+<p>The thought of using natural language to transform and analyze data is appealing. This post assumes familiarity with Marvin and Ibis – <a href="../llms-and-data-pt0">read the preivous post in the series for a quick overview</a>.</p>
 </section>
 <section id="approaches" class="level2">
 <h2 class="anchored" data-anchor-id="approaches">Approaches</h2>
-<p>When discussed internally at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:</p>
+<p>When discussed at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:</p>
 <ol type="1">
-<li>LLM writes SQL</li>
-<li>LLM writes a subroutine (Python UDF or another language)</li>
-<li>Use LLM in a subroutine</li>
+<li>LLM writes an analytic code</li>
+<li>LLM writes an analytic subroutine</li>
+<li>Use LLM in an analytic subroutine</li>
 </ol>
-<p>While these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and <a href="https://www.askmarvin.ai/welcome/what_is_marvin/">Marvin</a>, an AI engineering framework for building natural language interfaces. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends. But first, let’s demonstrate the three approaches in code.</p>
-<section id="approach-1-llm-writes-sql" class="level3">
-<h3 class="anchored" data-anchor-id="approach-1-llm-writes-sql">Approach 1: LLM writes SQL</h3>
+<p>While these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and Marvin. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends.</p>
+<p>But first, let’s demonstrate the three approaches in code.</p>
+<section id="approach-1-llm-writes-analytic-code" class="level3">
+<h3 class="anchored" data-anchor-id="approach-1-llm-writes-analytic-code">Approach 1: LLM writes analytic code</h3>
 <p>State of the art (SoTA) LLMs are decent at generating SQL out of the box. We can be clever to handle errors, retries, and more, but in its simplest form:</p>
-<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># | code-fold: true</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
-<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> marvin</span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
-<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-9" class="code-annotation-target"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="st">"duckdb://penguins.ddb"</span>)</span>
-<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> ibis.examples.penguins.fetch()</span>
-<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> con.create_table(<span class="st">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op">=</span><span class="va">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4dbad9ab" class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> marvin</span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="st">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> con.create_table(<span class="st">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op">=</span><span class="va">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="2,3,5" data-code-annotation="1">Import the libraries we need.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="1,2,4,5,6">Import the libraries we need.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="8">Load the environment variable to setup Marvin to call our OpenAI account.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="9,10,11" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="3" data-code-lines="10,11,12">Setup the demo datain an Ibis backend.</span>
 </dd>
 </dl>
-<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
+</div>
+</div>
+<div id="6ee06345" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> marvin</span>
 <span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.schema <span class="im">import</span> Schema</span>
 <span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.types.relations <span class="im">import</span> Table</span>
 <span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-7" class="code-annotation-target"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>ibis.options.interactive <span class="op">=</span> <span class="va">True</span></span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>marvin.settings.llm_model <span class="op">=</span> <span class="st">"openai/gpt-4"</span></span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-10" class="code-annotation-target"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="st">"duckdb://penguins.ddb"</span>)</span>
-<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> con.table(<span class="st">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-8" class="code-annotation-target"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>ibis.options.interactive <span class="op">=</span> <span class="va">True</span></span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>marvin.settings.llm_model <span class="op">=</span> <span class="st">"openai/gpt-4"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1,2,4,5" data-code-annotation="1">Import Ibis and Marvin.</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="1,2,4,5">Import Ibis and Marvin.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="7,8" data-code-annotation="2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
-</dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="10,11" data-code-annotation="3">Connect to the data and load a table into a variable.</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="8,9">Configure Ibis and Marvin</span>
 </dd>
 </dl>
-<div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_fn</span></span>
+</div>
+</div>
+<div id="bd1608a6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_fn</span></span>
 <span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _generate_sql_select(</span>
 <span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>    text: <span class="bu">str</span>, table_name: <span class="bu">str</span>, table_schema: Schema</span>
 <span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
@@ -365,156 +379,394 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sql_from_text(text: <span class="bu">str</span>, t: Table) <span class="op">-&gt;</span> Table:</span>
 <span id="annotated-cell-3-9"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Run SQL from text."""</span></span>
 <span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="1,4,5" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="1,4,5">A non-deterministic, LLM-powered AI function.</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="8,9,10" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="2" data-code-lines="8,9,10">A deterministic, human-authored function that calls the AI function.</span>
 </dd>
 </dl>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>t2 <span class="op">=</span> sql_from_text(<span class="st">"the unique combination of species and islands"</span>, t)</span>
+</div>
+</div>
+<div id="232d08a1" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>t2 <span class="op">=</span> sql_from_text(<span class="st">"the unique combination of species and islands"</span>, t)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>t2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>t3 <span class="op">=</span> sql_from_text(</span>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │
+├───────────┼───────────┤
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Gentoo   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Chinstrap</span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │
+└───────────┴───────────┘
+</pre>
+</div>
+</div>
+<div id="afc96b18" class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-1" class="code-annotation-target"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div id="a450873d" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>t3 <span class="op">=</span> sql_from_text(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    t,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>t3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This works well-enough for simple cases and can be expanded to handle complex ones. In many scenarios, it may be easier to express a query in English or another language than to write it in SQL, especially if working across multiple SQL dialects.</p>
-</section>
-<section id="approach-2-llm-writes-a-subroutine" class="level3">
-<h3 class="anchored" data-anchor-id="approach-2-llm-writes-a-subroutine">Approach 2: LLM writes a subroutine</h3>
-<p>If more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages. Many data platforms support user-defined functions (UDFs) in Python or some other language. We’ll stick to scalar Python UDFs via DuckDB to demonstrate the concept:</p>
-<div class="sourceCode" id="annotated-cell-6"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-1" class="code-annotation-target"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_fn</span></span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _generate_python_function(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate a simple, typed, correct Python function from text."""</span></span>
-<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-6" class="code-annotation-target"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_udf_from_text(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a UDF from text."""</span></span>
-<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"""</span></span>
-<span id="annotated-cell-6-9"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a><span class="ss">import ibis</span></span>
-<span id="annotated-cell-6-10"><a href="#annotated-cell-6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-6-11"><a href="#annotated-cell-6-11" aria-hidden="true" tabindex="-1"></a><span class="ss">@ibis.udf.scalar.python</span></span>
-<span id="annotated-cell-6-12"><a href="#annotated-cell-6-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>_generate_python_function(text)<span class="sc">}</span></span>
-<span id="annotated-cell-6-13"><a href="#annotated-cell-6-13" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span>.strip()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓
+┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃<span style="font-weight: bold"> count </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span> │
+├───────────┼───────────┼───────┤
+│ <span style="color: #008000; text-decoration-color: #008000">Gentoo   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">124</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Chinstrap</span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">68</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">56</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">52</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">44</span> │
+└───────────┴───────────┴───────┘
+</pre>
+</div>
+</div>
+<div id="ca82c7bd" class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="1,2,3" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
-</dd>
-<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="6,7,13" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>udf <span class="op">=</span> create_udf_from_text(</span>
+</div>
+</div>
+<p>This works well-enough for simple cases and can be expanded to handle complex ones. In many scenarios, it may be easier to express a query in English or another language than to write it in SQL, especially if working across multiple SQL dialects.</p>
+<p>SQL isn’t a proper standard, with many dialects that can complicate the issue. Ibis works around this in a standard Python API for transformation code, but still makes compromises to support many backends. Substrait is a new project that aims to solve this problem by providing a standard, portable, and extensible API for data transformation code. Substrait is still in the early stages of development, but it’s worth keeping an eye on and will be adopted in Ibis once supported across many data platforms.</p>
+<p>For now, we’ll focus on generating SQL and Python analytical code with LLMs.</p>
+</section>
+<section id="approach-2-llm-writes-an-analytical-subroutine" class="level3">
+<h3 class="anchored" data-anchor-id="approach-2-llm-writes-an-analytical-subroutine">Approach 2: LLM writes an analytical subroutine</h3>
+<p>If more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages that are used in analytical subroutines. Many data platforms support user-defined functions (UDFs) in Python or some other language. We’ll stick to scalar Python UDFs via DuckDB to demonstrate the concept:</p>
+<div id="6229ee00" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_fn</span></span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _generate_python_function(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate a simple, typed, correct Python function from text."""</span></span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-6" class="code-annotation-target"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_udf_from_text(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a UDF from text."""</span></span>
+<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"""</span></span>
+<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a><span class="ss">import ibis</span></span>
+<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a><span class="ss">@ibis.udf.scalar.python</span></span>
+<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>_generate_python_function(text)<span class="sc">}</span></span>
+<span id="annotated-cell-8-13"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span>.strip()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-annotation="1" data-code-lines="1,2,3">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-annotation="2" data-code-lines="6,7,13">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div id="09122006" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>udf <span class="op">=</span> create_udf_from_text(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a function named count_vowels that given an input string, returns an int w/ the number of vowels (y_included as a boolean option defaulted to False)"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(udf)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span>(udf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>t4 <span class="op">=</span> t3.mutate(</span>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">import ibis
+
+@ibis.udf.scalar.python
+def <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">count_vowels</span><span style="font-weight: bold">(</span>input_string: str, y_included: bool = <span style="color: #ff0000; text-decoration-color: #ff0000; font-style: italic">False</span><span style="font-weight: bold">)</span> -&gt; int:
+    vowels = <span style="color: #008000; text-decoration-color: #008000">'aeiou'</span>
+    if y_included:
+        vowels += <span style="color: #008000; text-decoration-color: #008000">'y'</span>
+    return <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">sum</span><span style="font-weight: bold">(</span><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> for char in input_string if <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">char.lower</span><span style="font-weight: bold">()</span> in vowels<span style="font-weight: bold">)</span>
+</pre>
+</div>
+</div>
+<div id="01d23661" class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div id="7e1da03e" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>t4 <span class="op">=</span> t3.mutate(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    species_vowel_count<span class="op">=</span>count_vowels(t3.species),</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    island_vowel_count<span class="op">=</span>count_vowels(t3.island),</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>t4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this case, there’s no reason not to have a human in the loop reviewing the output code and committing it for production use. This could be useful for quick prototyping or, given a box of tools in the form of UDFs, working through a natural language interface.</p>
-</section>
-<section id="approach-3-use-llm-in-a-subroutine" class="level3">
-<h3 class="anchored" data-anchor-id="approach-3-use-llm-in-a-subroutine">Approach 3: Use LLM in a subroutine</h3>
-<p>We can also call the LLM once-per-row in the table via a subroutine. For variety, we’ll use an <a href="https://www.askmarvin.ai/components/ai_model/">AI model</a> instead of an <a href="https://www.askmarvin.ai/components/ai_function/">AI function</a>:</p>
-<div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, Field</span>
-<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># save some money and avoid rate limiting</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>marvin.settings.llm_model <span class="op">=</span> <span class="st">"openai/gpt-3.5-turbo-16k"</span></span>
-<span id="annotated-cell-9-5"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3">3</button><span id="annotated-cell-9-7" class="code-annotation-target"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_model</span></span>
-<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VowelCounter(BaseModel):</span>
-<span id="annotated-cell-9-9"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Count vowels in a string."""</span></span>
-<span id="annotated-cell-9-10"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-9-11"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a>    include_y: <span class="bu">bool</span> <span class="op">=</span> Field(<span class="va">False</span>, description<span class="op">=</span><span class="st">"Include 'y' as a vowel."</span>)</span>
-<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_a: int = Field(..., description="The number of 'a' vowels.")</span></span>
-<span id="annotated-cell-9-13"><a href="#annotated-cell-9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_e: int = Field(..., description="The number of 'e' vowels.")</span></span>
-<span id="annotated-cell-9-14"><a href="#annotated-cell-9-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_i: int = Field(..., description="The number of 'i' vowels.")</span></span>
-<span id="annotated-cell-9-15"><a href="#annotated-cell-9-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_o: int = Field(..., description="The number of 'o' vowels.")</span></span>
-<span id="annotated-cell-9-16"><a href="#annotated-cell-9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_u: int = Field(..., description="The number of 'u' vowels.")</span></span>
-<span id="annotated-cell-9-17"><a href="#annotated-cell-9-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_y: int = Field(..., description="The number of 'y' vowels.")</span></span>
-<span id="annotated-cell-9-18"><a href="#annotated-cell-9-18" aria-hidden="true" tabindex="-1"></a>    num_total: <span class="bu">int</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The total number of vowels."</span>)</span>
-<span id="annotated-cell-9-19"><a href="#annotated-cell-9-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-9-20"><a href="#annotated-cell-9-20" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="4">4</button><span id="annotated-cell-9-21" class="code-annotation-target"><a href="#annotated-cell-9-21" aria-hidden="true" tabindex="-1"></a>VowelCounter(<span class="st">"hello world"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃<span style="font-weight: bold"> count </span>┃<span style="font-weight: bold"> species_vowel_count </span>┃<span style="font-weight: bold"> island_vowel_count </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━┩
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span> │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span>               │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span>              │
+├───────────┼───────────┼───────┼─────────────────────┼────────────────────┤
+│ <span style="color: #008000; text-decoration-color: #008000">Gentoo   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">124</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Chinstrap</span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">68</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">56</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">52</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">44</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │
+└───────────┴───────────┴───────┴─────────────────────┴────────────────────┘
+</pre>
+</div>
+</div>
+<div id="cf81a0ad" class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1">Additional imports for Pydantic.</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="4" data-code-annotation="2">Configure Marvin to use a cheaper model.</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="7,8,9,11,12,13,14,15,16,17,18" data-code-annotation="3">A non-deterministic, LLM-powered AI model.</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="21" data-code-annotation="4">Call the AI model on some text.</span>
+<span data-code-cell="annotated-cell-12" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
+</div>
+</div>
+<p>In this case, there’s no reason not to have a human in the loop reviewing the output code and committing it for production use. This could be useful for quick prototyping or, given a box of tools in the form of UDFs, working through a natural language interface.</p>
+</section>
+<section id="approach-3-use-llm-in-an-analytical-subroutine" class="level3">
+<h3 class="anchored" data-anchor-id="approach-3-use-llm-in-an-analytical-subroutine">Approach 3: Use LLM in an analytical subroutine</h3>
+<p>We can also call the LLM once-per-row in the table via a subroutine. For variety, we’ll use an <a href="https://www.askmarvin.ai/components/ai_model/">AI model</a> instead of an <a href="https://www.askmarvin.ai/components/ai_function/">AI function</a>:</p>
+<div id="67b51ad7" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, Field</span>
+<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># decrease cost</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2">2</button><span id="annotated-cell-13-4" class="code-annotation-target"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>marvin.settings.llm_model <span class="op">=</span> <span class="st">"openai/gpt-3.5-turbo-16k"</span></span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3">3</button><span id="annotated-cell-13-7" class="code-annotation-target"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_model</span></span>
+<span id="annotated-cell-13-8"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VowelCounter(BaseModel):</span>
+<span id="annotated-cell-13-9"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Count vowels in a string."""</span></span>
+<span id="annotated-cell-13-10"><a href="#annotated-cell-13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-11"><a href="#annotated-cell-13-11" aria-hidden="true" tabindex="-1"></a>    include_y: <span class="bu">bool</span> <span class="op">=</span> Field(<span class="va">False</span>, description<span class="op">=</span><span class="st">"Include 'y' as a vowel."</span>)</span>
+<span id="annotated-cell-13-12"><a href="#annotated-cell-13-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_a: int = Field(..., description="The number of 'a' vowels.")</span></span>
+<span id="annotated-cell-13-13"><a href="#annotated-cell-13-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_e: int = Field(..., description="The number of 'e' vowels.")</span></span>
+<span id="annotated-cell-13-14"><a href="#annotated-cell-13-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_i: int = Field(..., description="The number of 'i' vowels.")</span></span>
+<span id="annotated-cell-13-15"><a href="#annotated-cell-13-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_o: int = Field(..., description="The number of 'o' vowels.")</span></span>
+<span id="annotated-cell-13-16"><a href="#annotated-cell-13-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_u: int = Field(..., description="The number of 'u' vowels.")</span></span>
+<span id="annotated-cell-13-17"><a href="#annotated-cell-13-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># num_y: int = Field(..., description="The number of 'y' vowels.")</span></span>
+<span id="annotated-cell-13-18"><a href="#annotated-cell-13-18" aria-hidden="true" tabindex="-1"></a>    num_total: <span class="bu">int</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The total number of vowels."</span>)</span>
+<span id="annotated-cell-13-19"><a href="#annotated-cell-13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-20"><a href="#annotated-cell-13-20" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="4">4</button><span id="annotated-cell-13-21" class="code-annotation-target"><a href="#annotated-cell-13-21" aria-hidden="true" tabindex="-1"></a>VowelCounter(<span class="st">"hello world"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-annotation="1" data-code-lines="1">Additional imports for Pydantic.</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-annotation="2" data-code-lines="4">Configure Marvin to use a cheaper model.</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-annotation="3" data-code-lines="7,8,9,11,12,13,14,15,16,17,18">A non-deterministic, LLM-powered AI model.</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-annotation="4" data-code-lines="21">Call the AI model on some text.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>VowelCounter(include_y=False, num_total=3)</code></pre>
+</div>
+</div>
 <p>Then we’ll have the LLM write the UDF, just to be fancy:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>udf <span class="op">=</span> create_udf_from_text(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a function named count_vowels_ai that given an input string, calls VowelCounter on it and returns the num_total attribute of that result"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(udf)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span>(udf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>t5 <span class="op">=</span> t3.mutate(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    species_vowel_count<span class="op">=</span>count_vowels_ai(t3.species),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    island_vowel_count<span class="op">=</span>count_vowels_ai(t3.island),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>t5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="eab151e4" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>udf <span class="op">=</span> create_udf_from_text(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a function named count_vowels_ai that given an input string, calls VowelCounter on it and returns the num_total attribute of that result"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(udf)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span>(udf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">import ibis
+
+@ibis.udf.scalar.python
+def <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">count_vowels_ai</span><span style="font-weight: bold">(</span>input_string: str<span style="font-weight: bold">)</span> -&gt; int:
+    result = <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">VowelCounter</span><span style="font-weight: bold">(</span>input_string<span style="font-weight: bold">)</span>
+    return result.num_total
+</pre>
+</div>
+</div>
+<div id="3e0ed5d1" class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-1" class="code-annotation-target"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div id="97d96c53" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>t5 <span class="op">=</span> t3.mutate(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    species_vowel_count<span class="op">=</span>count_vowels_ai(t3.species),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    island_vowel_count<span class="op">=</span>count_vowels_ai(t3.island),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>t5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃<span style="font-weight: bold"> count </span>┃<span style="font-weight: bold"> species_vowel_count </span>┃<span style="font-weight: bold"> island_vowel_count </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━┩
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span> │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span>               │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span>              │
+├───────────┼───────────┼───────┼─────────────────────┼────────────────────┤
+│ <span style="color: #008000; text-decoration-color: #008000">Gentoo   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">124</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Chinstrap</span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">68</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">56</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">52</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">44</span> │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │                  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span> │
+└───────────┴───────────┴───────┴─────────────────────┴────────────────────┘
+</pre>
+</div>
+</div>
 <p>Notice that in this UDF, unlike in the previous example, a LLM is being called (possibly several times) for each row in the table. This is a very expensive operation and we’ll need to be careful about how we use it in practice.</p>
+<div id="1f9ca1ac" class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1">1</button><span id="annotated-cell-17-1" class="code-annotation-target"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
+</dd>
+</dl>
+</div>
+</div>
 </section>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>To summarize this post:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"index.qmd"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    self_text <span class="op">=</span> f.read()</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_model</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Summary(BaseModel):</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Summary of text."""</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    summary_line: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The one-line summary of the text."</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    summary_paragraph: <span class="bu">str</span> <span class="op">=</span> Field(</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"The one-paragraph summary of the text."</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    conclusion: <span class="bu">str</span> <span class="op">=</span> Field(</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"The conclusion the reader should draw from the text."</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    key_points: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The key points of the text."</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    critiques: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> Field(</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"Professional, fair critiques of the text."</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    suggested_improvements: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> Field(</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"Suggested improvements for the text."</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    sentiment: <span class="bu">float</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The sentiment of the text."</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    sentiment_label: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The sentiment label of the text."</span>)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    author_bias: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The author bias of the text."</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Summary(self_text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e8692b89" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"index.qmd"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    self_text <span class="op">=</span> f.read()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># increease accuracy</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>marvin.settings.llm_model <span class="op">=</span> <span class="st">"openai/gpt-4"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_model</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Summary(BaseModel):</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Summary of text."""</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    summary_line: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The one-line summary of the text."</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    summary_paragraph: <span class="bu">str</span> <span class="op">=</span> Field(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"The one-paragraph summary of the text."</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    conclusion: <span class="bu">str</span> <span class="op">=</span> Field(</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"The conclusion the reader should draw from the text."</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    key_points: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The key points of the text."</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    critiques: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> Field(</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"Professional, fair critiques of the text."</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    suggested_improvements: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> Field(</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        ..., description<span class="op">=</span><span class="st">"Suggested improvements for the text."</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    sentiment: <span class="bu">float</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The sentiment of the text."</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    sentiment_label: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The sentiment label of the text."</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    author_bias: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The author bias of the text."</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Summary(self_text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #800080; text-decoration-color: #800080; font-weight: bold">Summary</span><span style="font-weight: bold">(</span>
+    <span style="color: #808000; text-decoration-color: #808000">summary_line</span>=<span style="color: #008000; text-decoration-color: #008000">'The text is a blog post by Cody Peterson published on 13th October 2023, discussing three </span>
+<span style="color: #008000; text-decoration-color: #008000">distinct approaches to applying Language Learning Models (LLMs) to data analytics through Marvin and Ibis </span>
+<span style="color: #008000; text-decoration-color: #008000">open-source tools.'</span>,
+    <span style="color: #808000; text-decoration-color: #808000">summary_paragraph</span>=<span style="color: #008000; text-decoration-color: #008000">"The author, Cody Peterson, elaborates on three different methods of applying Language </span>
+<span style="color: #008000; text-decoration-color: #008000">Learning Models (LLMs) to data analytics. These include: LLM writing an analytic code, LLM writing an analytic </span>
+<span style="color: #008000; text-decoration-color: #008000">subroutine, and using LLM in an analytic subroutine. He further demonstrates each approach through code examples. </span>
+<span style="color: #008000; text-decoration-color: #008000">These methods have been discussed at Voltron Data and can be implemented today. The tools used for these </span>
+<span style="color: #008000; text-decoration-color: #008000">implementations are Marvin and Ibis, which are open-source. The text also suggests that a natural language </span>
+<span style="color: #008000; text-decoration-color: #008000">interface for data analytics can be built using these methods. The post concludes with a call to involvement with </span>
+<span style="color: #008000; text-decoration-color: #008000">the open-source project 'Ibis Birdbrain'."</span>,
+    <span style="color: #808000; text-decoration-color: #808000">conclusion</span>=<span style="color: #008000; text-decoration-color: #008000">"The three methods discussed for applying LLMs to data analytics offer valuable techniques for </span>
+<span style="color: #008000; text-decoration-color: #008000">transforming and analyzing data. These methods can be readily implemented with the open-source tools Marvin and </span>
+<span style="color: #008000; text-decoration-color: #008000">Ibis. The author encourages readers to participate in the 'Ibis Birdbrain' open-source project for further </span>
+<span style="color: #008000; text-decoration-color: #008000">exploration of natural language interfaces to data."</span>,
+    <span style="color: #808000; text-decoration-color: #808000">key_points</span>=<span style="font-weight: bold">[</span>
+        <span style="color: #008000; text-decoration-color: #008000">'The post discusses three distinct approaches to applying LLMs to data analytics.'</span>,
+        <span style="color: #008000; text-decoration-color: #008000">'The first approach involves writing an analytic code using LLM, and the second approach involves writing </span>
+<span style="color: #008000; text-decoration-color: #008000">an analytic subroutine through LLM.'</span>,
+        <span style="color: #008000; text-decoration-color: #008000">'The third approach is to use LLM in an analytic subroutine.'</span>,
+        <span style="color: #008000; text-decoration-color: #008000">'The author uses Marvin and Ibis for implementing these approaches.'</span>,
+        <span style="color: #008000; text-decoration-color: #008000">'The text suggests that these methods can be used to build a natural language interface for data analytics </span>
+<span style="color: #008000; text-decoration-color: #008000">supporting 18+ backends.'</span>,
+        <span style="color: #008000; text-decoration-color: #008000">"The author encourages readers to participate in the 'Ibis Birdbrain' open-source project."</span>
+    <span style="font-weight: bold">]</span>,
+    <span style="color: #808000; text-decoration-color: #808000">critiques</span>=<span style="font-weight: bold">[</span>
+        <span style="color: #008000; text-decoration-color: #008000">'The author could have expanded on the potential limitations or challenges of implementing these </span>
+<span style="color: #008000; text-decoration-color: #008000">approaches.'</span>,
+        <span style="color: #008000; text-decoration-color: #008000">'Frequent use of technical jargon might make the content difficult for beginners or non-technical readers </span>
+<span style="color: #008000; text-decoration-color: #008000">to comprehend.'</span>
+    <span style="font-weight: bold">]</span>,
+    <span style="color: #808000; text-decoration-color: #808000">suggested_improvements</span>=<span style="font-weight: bold">[</span>
+        <span style="color: #008000; text-decoration-color: #008000">'A glossary of the technical terms used throughout the text could be included to assist readers from </span>
+<span style="color: #008000; text-decoration-color: #008000">non-technical backgrounds.'</span>,
+        <span style="color: #008000; text-decoration-color: #008000">'The author could include more real-world examples or case studies to demonstrate the effectiveness of </span>
+<span style="color: #008000; text-decoration-color: #008000">these approaches.'</span>
+    <span style="font-weight: bold">]</span>,
+    <span style="color: #808000; text-decoration-color: #808000">sentiment</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.7</span>,
+    <span style="color: #808000; text-decoration-color: #808000">sentiment_label</span>=<span style="color: #008000; text-decoration-color: #008000">'Positive'</span>,
+    <span style="color: #808000; text-decoration-color: #808000">author_bias</span>=<span style="color: #008000; text-decoration-color: #008000">'The author seems to have a favorable bias towards the use of LLMs in data analytics, and </span>
+<span style="color: #008000; text-decoration-color: #008000">open-source tools Marvin and Ibis.'</span>
+<span style="font-weight: bold">)</span>
+</pre>
+</div>
+</div>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
 <p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+<p><a href="../llms-and-data-pt2">Read the next post in this series</a>.</p>
 
 
 </section>
@@ -540,6 +792,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {

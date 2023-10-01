@@ -36,10 +36,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -187,6 +189,7 @@ ul.task-list li input[type="checkbox"] {
           </li>
       </ul>
     </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -248,7 +251,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#large-language-models" id="toc-large-language-models" class="nav-link active" data-scroll-target="#large-language-models">Large language models</a></li>
+  <li><a href="#large-language-models" id="toc-large-language-models" class="nav-link active" data-scroll-target="#large-language-models">Large language models</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-neural-network" id="toc-what-is-a-neural-network" class="nav-link" data-scroll-target="#what-is-a-neural-network">What is a neural network?</a></li>
+  <li><a href="#what-is-a-language-model" id="toc-what-is-a-language-model" class="nav-link" data-scroll-target="#what-is-a-language-model">What is a language model?</a></li>
+  <li><a href="#what-are-the-inputs-and-outputs" id="toc-what-are-the-inputs-and-outputs" class="nav-link" data-scroll-target="#what-are-the-inputs-and-outputs">What are the inputs and outputs?</a></li>
+  <li><a href="#what-do-llms-work-well-for" id="toc-what-do-llms-work-well-for" class="nav-link" data-scroll-target="#what-do-llms-work-well-for">What do LLMs work well for?</a></li>
+  <li><a href="#what-are-the-limitations-and-considerations" id="toc-what-are-the-limitations-and-considerations" class="nav-link" data-scroll-target="#what-are-the-limitations-and-considerations">What are the limitations and considerations?</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/concepts/llms.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -259,9 +269,25 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="large-language-models" class="level1">
 <h1>Large language models</h1>
-<p>Large language models (LLMs) represent decades of research and development of neural networks.</p>
+<p>Large language models (LLMs) represent decades of research and development of neural networks. While relatively impressive LLMs have been around for years, recent innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user.</p>
+<p>We are primarily concerned with applying LLMs to data, but we’ll take a brief look at how they work and why we should use them.</p>
+<section id="what-is-a-neural-network" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-neural-network">What is a neural network?</h2>
+</section>
+<section id="what-is-a-language-model" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-language-model">What is a language model?</h2>
+</section>
+<section id="what-are-the-inputs-and-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-the-inputs-and-outputs">What are the inputs and outputs?</h2>
+</section>
+<section id="what-do-llms-work-well-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-do-llms-work-well-for">What do LLMs work well for?</h2>
+</section>
+<section id="what-are-the-limitations-and-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-the-limitations-and-considerations">What are the limitations and considerations?</h2>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -285,6 +311,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
