@@ -1,16 +1,394 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "about",
+    "objectID": "how-to/input-output/basics.html",
+    "href": "how-to/input-output/basics.html",
+    "title": "Basic input/output",
     "section": "",
-    "text": "I am birdbrain."
+    "text": "You can…"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html",
+    "href": "posts/llms-and-data-pt1/index.html",
+    "title": "Three approaches",
+    "section": "",
+    "text": "While large-language models (LLMs) have been around for years, recent versions and innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user. The thought of using natural language to transform and analyze data is appealing."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#introduction",
+    "href": "posts/llms-and-data-pt1/index.html#introduction",
+    "title": "Three approaches",
+    "section": "",
+    "text": "While large-language models (LLMs) have been around for years, recent versions and innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user. The thought of using natural language to transform and analyze data is appealing."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#approaches",
+    "href": "posts/llms-and-data-pt1/index.html#approaches",
+    "title": "Three approaches",
+    "section": "Approaches",
+    "text": "Approaches\nWhen discussed internally at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:\n\nLLM writes SQL\nLLM writes a subroutine (Python UDF or another language)\nUse LLM in a subroutine\n\nWhile these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and Marvin, an AI engineering framework for building natural language interfaces. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends. But first, let’s demonstrate the three approaches in code.\n\nApproach 1: LLM writes SQL\nState of the art (SoTA) LLMs are decent at generating SQL out of the box. We can be clever to handle errors, retries, and more, but in its simplest form:\n# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3\nThis works well-enough for simple cases and can be expanded to handle complex ones. In many scenarios, it may be easier to express a query in English or another language than to write it in SQL, especially if working across multiple SQL dialects.\n\n\nApproach 2: LLM writes a subroutine\nIf more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages. Many data platforms support user-defined functions (UDFs) in Python or some other language. We’ll stick to scalar Python UDFs via DuckDB to demonstrate the concept:\n1@marvin.ai_fn\ndef _generate_python_function(text: str) -&gt; str:\n    \"\"\"Generate a simple, typed, correct Python function from text.\"\"\"\n\n\n2def create_udf_from_text(text: str) -&gt; str:\n    \"\"\"Create a UDF from text.\"\"\"\n    return f\"\"\"\nimport ibis\n\n@ibis.udf.scalar.python\n{_generate_python_function(text)}\n\"\"\".strip()\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nudf = create_udf_from_text(\n    \"a function named count_vowels that given an input string, returns an int w/ the number of vowels (y_included as a boolean option defaulted to False)\"\n)\nprint(udf)\nexec(udf)\nt4 = t3.mutate(\n    species_vowel_count=count_vowels(t3.species),\n    island_vowel_count=count_vowels(t3.island),\n)\nt4\nIn this case, there’s no reason not to have a human in the loop reviewing the output code and committing it for production use. This could be useful for quick prototyping or, given a box of tools in the form of UDFs, working through a natural language interface.\n\n\nApproach 3: Use LLM in a subroutine\nWe can also call the LLM once-per-row in the table via a subroutine. For variety, we’ll use an AI model instead of an AI function:\n1from pydantic import BaseModel, Field\n\n# save some money and avoid rate limiting\n2marvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n\n3@marvin.ai_model\nclass VowelCounter(BaseModel):\n    \"\"\"Count vowels in a string.\"\"\"\n\n    include_y: bool = Field(False, description=\"Include 'y' as a vowel.\")\n    # num_a: int = Field(..., description=\"The number of 'a' vowels.\")\n    # num_e: int = Field(..., description=\"The number of 'e' vowels.\")\n    # num_i: int = Field(..., description=\"The number of 'i' vowels.\")\n    # num_o: int = Field(..., description=\"The number of 'o' vowels.\")\n    # num_u: int = Field(..., description=\"The number of 'u' vowels.\")\n    # num_y: int = Field(..., description=\"The number of 'y' vowels.\")\n    num_total: int = Field(..., description=\"The total number of vowels.\")\n\n\n4VowelCounter(\"hello world\")\n\n1\n\nAdditional imports for Pydantic.\n\n2\n\nConfigure Marvin to use a cheaper model.\n\n3\n\nA non-deterministic, LLM-powered AI model.\n\n4\n\nCall the AI model on some text.\n\n\nThen we’ll have the LLM write the UDF, just to be fancy:\nudf = create_udf_from_text(\n    \"a function named count_vowels_ai that given an input string, calls VowelCounter on it and returns the num_total attribute of that result\"\n)\nprint(udf)\nexec(udf)\nt5 = t3.mutate(\n    species_vowel_count=count_vowels_ai(t3.species),\n    island_vowel_count=count_vowels_ai(t3.island),\n)\nt5\nNotice that in this UDF, unlike in the previous example, a LLM is being called (possibly several times) for each row in the table. This is a very expensive operation and we’ll need to be careful about how we use it in practice."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#summary",
+    "href": "posts/llms-and-data-pt1/index.html#summary",
+    "title": "Three approaches",
+    "section": "Summary",
+    "text": "Summary\nTo summarize this post:\nfrom rich import print\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#next-steps",
+    "href": "posts/llms-and-data-pt1/index.html#next-steps",
+    "title": "Three approaches",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt3/index.html",
+    "href": "posts/llms-and-data-pt3/index.html",
+    "title": "Modular and composable",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt3/index.html#introduction",
+    "href": "posts/llms-and-data-pt3/index.html#introduction",
+    "title": "Modular and composable",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt3/index.html#summary",
+    "href": "posts/llms-and-data-pt3/index.html#summary",
+    "title": "Modular and composable",
+    "section": "Summary",
+    "text": "Summary\nTo summarize this post:\nfrom rich import print\nfrom pydantic import BaseModel, Field\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n# save some money and avoid rate limiting\nmarvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt3/index.html#next-steps",
+    "href": "posts/llms-and-data-pt3/index.html#next-steps",
+    "title": "Modular and composable",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html",
+    "href": "posts/llms-and-data-pt4/index.html",
+    "title": "Auxiliary tools",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#introduction",
+    "href": "posts/llms-and-data-pt4/index.html#introduction",
+    "title": "Auxiliary tools",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#summary",
+    "href": "posts/llms-and-data-pt4/index.html#summary",
+    "title": "Auxiliary tools",
+    "section": "Summary",
+    "text": "Summary\nTo summarize this post:\nfrom rich import print\nfrom pydantic import BaseModel, Field\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n# save some money and avoid rate limiting\nmarvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#next-steps",
+    "href": "posts/llms-and-data-pt4/index.html#next-steps",
+    "title": "Auxiliary tools",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Ibis Birdbrain",
     "section": "",
-    "text": "under construction by slow humans"
+    "text": "Why?\n  \n  \n    \n     Installation\n  \n  \n    \n     Tutorial\n  \n  \n    \n     GitHub\n  \n  \n    \n     Chat\n  \n  \n    \n     RSS"
+  },
+  {
+    "objectID": "index.html#demo",
+    "href": "index.html#demo",
+    "title": "Ibis Birdbrain",
+    "section": "Demo",
+    "text": "Demo\nTo get started…\nfrom ibis_birdbrain.bots.birdbrain import bot\n\nbot(\"who're you and what can you do?\")\nbirdbrain:\n\nHello! I'm known as 'birdbrain', but my full name is 'Ibis Birdbrain'. I was\ncreated by the Ibis developers to assist data practitioners with their projects.\nI have a variety of tools at my disposal. Here are some of the things I can do:\n\n1. Access a data platform via Ibis.\n2. Run SQL queries.\n3. Generate and execute Python code.\n4. Search the internet and summarize information.\n5. Read files and summarize them.\n\nMy purpose is to facilitate your data analysis process and provide assistance\nwith tools like Ibis, SQL, and Python. Please let me know how I can assist you\ntoday!\n\nFor more detailed information, you can check my documentation and source code:\n\n- Ibis Documentation: [Ibis Docs](https://www.ibis-project.org)\n- Birdbrain Source Code: (https://github.com/ibis-project/ibis-birdbrain)\n\nNote that I always rely on factual and queried data for the information I\nprovide, and I will always cite my sources.\nbot(\"what's the meaning of life?\")\nbirdbrain:\n\nThe meaning of life, according to my current state, is 42! This might be a\nreference to \"The Hitchhiker's Guide to the Galaxy\" by Douglas Adams, where the\n\"Answer to the Ultimate Question of Life, The Universe, and Everything\" is\nhumorously stated as 42. However, the true meaning of life might be different\nfor each individual and could be found in personal growth, relationships,\nhelping others, or in the pursuit of knowledge. Always a fascinating topic to\nponder upon!"
+  },
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Posts",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nGoing multi-modal and looking ahead\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 7, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEnd-to-end analytics demo\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 6, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAuxiliary tools\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 5, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModular and composable\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 4, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCalls and computations\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 3, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 2, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to LLMs, Marvin, and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 1, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+  },
+  {
+    "objectID": "tutorials/rest.html",
+    "href": "tutorials/rest.html",
+    "title": "Tutorial: REST API",
+    "section": "",
+    "text": "TBD"
+  },
+  {
+    "objectID": "tutorials/rest.html#prerequisites",
+    "href": "tutorials/rest.html#prerequisites",
+    "title": "Tutorial: REST API",
+    "section": "",
+    "text": "TBD"
+  },
+  {
+    "objectID": "tutorials/cli.html",
+    "href": "tutorials/cli.html",
+    "title": "Tutorial: command-line interface (CLI)",
+    "section": "",
+    "text": "TBD"
+  },
+  {
+    "objectID": "tutorials/cli.html#prerequisites",
+    "href": "tutorials/cli.html#prerequisites",
+    "title": "Tutorial: command-line interface (CLI)",
+    "section": "",
+    "text": "TBD"
+  },
+  {
+    "objectID": "concepts/llms.html",
+    "href": "concepts/llms.html",
+    "title": "Large language models",
+    "section": "",
+    "text": "Large language models\nLarge language models (LLMs) represent decades of research and development of neural networks.\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "concepts/platforms.html",
+    "href": "concepts/platforms.html",
+    "title": "Data and AI platforms",
+    "section": "",
+    "text": "Data and AI platforms\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "why.html",
+    "href": "why.html",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "Ibis is the portable Python dataframe library.\nIbis Birdbrain is the portable Python AI-powered data bot, powered by Ibis and thus supporting all data platforms Ibis supports. Birdbrain is also built on Marvin, thus supporting all AI platform providers Marvin supports. While this list is currently low, we expect to support a wide breadth of data and AI platforms in Ibis Birdbrain.\n\n\n\n\nWhen things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex\n\n\n\n\nComposable data systems are MICE: modular, interoperable, customizable, and extensible. Ibis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations."
+  },
+  {
+    "objectID": "why.html#standards",
+    "href": "why.html#standards",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "When things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex"
+  },
+  {
+    "objectID": "why.html#composable-data-systems-are-mice",
+    "href": "why.html#composable-data-systems-are-mice",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "Composable data systems are MICE: modular, interoperable, customizable, and extensible. Ibis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations."
+  },
+  {
+    "objectID": "release_notes.html",
+    "href": "release_notes.html",
+    "title": "Release notes",
+    "section": "",
+    "text": "Release notes\nTBD\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "concepts/ops.html",
+    "href": "concepts/ops.html",
+    "title": "LLMOps, MLOps, DevOps",
+    "section": "",
+    "text": "LLMOps, MLOps, DevOps\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "concepts/user-interfaces.html",
+    "href": "concepts/user-interfaces.html",
+    "title": "User interfaces",
+    "section": "",
+    "text": "User interfaces\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "demo.html",
+    "href": "demo.html",
+    "title": "demo",
+    "section": "",
+    "text": "Back to top"
+  },
+  {
+    "objectID": "tutorials/python.html",
+    "href": "tutorials/python.html",
+    "title": "Tutorial: (interactive) Python",
+    "section": "",
+    "text": "TBD"
+  },
+  {
+    "objectID": "tutorials/python.html#prerequisites",
+    "href": "tutorials/python.html#prerequisites",
+    "title": "Tutorial: (interactive) Python",
+    "section": "",
+    "text": "TBD"
+  },
+  {
+    "objectID": "contribute/contributing.html",
+    "href": "contribute/contributing.html",
+    "title": "Contributing",
+    "section": "",
+    "text": "To contribute…"
+  },
+  {
+    "objectID": "contribute/contributing.html#required-dependencies",
+    "href": "contribute/contributing.html#required-dependencies",
+    "title": "Contributing",
+    "section": "",
+    "text": "To contribute…"
+  },
+  {
+    "objectID": "install.html",
+    "href": "install.html",
+    "title": "Installation and setup",
+    "section": "",
+    "text": "This page describes how to install and setup Ibis Birdbrain.\n\n\npip install ibis-birdbrain\n\n\n\nOnly DuckDB supported for now. All 18+ Ibis backends coming soon.\n\n\n\nOnly OpenAI models work well due to the logit bias trick.\nTODO: document setup."
+  },
+  {
+    "objectID": "install.html#install-from-pypi",
+    "href": "install.html#install-from-pypi",
+    "title": "Installation and setup",
+    "section": "",
+    "text": "pip install ibis-birdbrain"
+  },
+  {
+    "objectID": "install.html#data-platform-setup",
+    "href": "install.html#data-platform-setup",
+    "title": "Installation and setup",
+    "section": "",
+    "text": "Only DuckDB supported for now. All 18+ Ibis backends coming soon."
+  },
+  {
+    "objectID": "install.html#ai-platform-setup",
+    "href": "install.html#ai-platform-setup",
+    "title": "Installation and setup",
+    "section": "",
+    "text": "Only OpenAI models work well due to the logit bias trick.\nTODO: document setup."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt5/index.html",
+    "href": "posts/llms-and-data-pt5/index.html",
+    "title": "End-to-end analytics demo",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt5/index.html#introduction",
+    "href": "posts/llms-and-data-pt5/index.html#introduction",
+    "title": "End-to-end analytics demo",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt5/index.html#summary",
+    "href": "posts/llms-and-data-pt5/index.html#summary",
+    "title": "End-to-end analytics demo",
+    "section": "Summary",
+    "text": "Summary\nTo summarize this post:\nfrom rich import print\nfrom pydantic import BaseModel, Field\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n# save some money and avoid rate limiting\nmarvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt5/index.html#next-steps",
+    "href": "posts/llms-and-data-pt5/index.html#next-steps",
+    "title": "End-to-end analytics demo",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html",
+    "href": "posts/llms-and-data-pt0/index.html",
+    "title": "An introduction to LLMs, Marvin, and Ibis",
+    "section": "",
+    "text": "In this “LLMs and data” series, we’ll explore how to apply large-language models (LLMs) to data analytics. We’ll show the steps to build up to Ibis Birdbrain, an open-source project for building next-generation natural language interfaces to data.\nThroughout the series, we’ll be using Ibis and Marvin. A brief introduction to each is provided below."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#introduction",
+    "href": "posts/llms-and-data-pt0/index.html#introduction",
+    "title": "An introduction to LLMs, Marvin, and Ibis",
+    "section": "",
+    "text": "In this “LLMs and data” series, we’ll explore how to apply large-language models (LLMs) to data analytics. We’ll show the steps to build up to Ibis Birdbrain, an open-source project for building next-generation natural language interfaces to data.\nThroughout the series, we’ll be using Ibis and Marvin. A brief introduction to each is provided below."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#marvin",
+    "href": "posts/llms-and-data-pt0/index.html#marvin",
+    "title": "An introduction to LLMs, Marvin, and Ibis",
+    "section": "Marvin",
+    "text": "Marvin\nMarvin is an AI engineering framework that makes it easy to build up to an interactive conversational application, command-line interface (CLI), or REST API.\n1import marvin\n\nfrom rich import print\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3marvin.settings.llm_model = \"openai/gpt-4\"\n\n4test_str = \"working with data and LLMs on 18+ data platforms is easy!\"\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nConfigure the LLM model to use.\n\n4\n\nSome text to test on\n\n\n\nFunctions\n@marvin.ai_fn(model=\"openai/gpt-4\")\ndef translate(text: str, from_: str = \"English\", to: str = \"Spanish\") -&gt; str:\n    \"\"\"translates the text\"\"\"\n\n\ntranslate(translate(test_str), from_=\"Spanish\", to=\"English\")\n\n\nModels\nfrom pydantic import BaseModel, Field\n\n\n@marvin.ai_model(\n    model=\"openai/gpt-3.5-turbo-16k\", instructions=\"from English to Spanish\"\n)\nclass Translate(BaseModel):\n    \"\"\"Translates text\"\"\"\n\n    from_: str = Field(..., description=\"The language to translate from.\")\n    to: str = Field(..., description=\"The language to translate to.\")\n    input_text: str = Field(..., description=\"The text to translate.\")\n    output_text: str = Field(..., description=\"The translated text.\")\n\n\nTranslate(test_str)\n\n\nClassifiers\nfrom enum import Enum\n\n\n@marvin.ai_classifier(model=\"openai/gpt-3.5-turbo-16k\", temperature=0)\nclass IdentifyLanguage(Enum):\n    \"\"\"Identifies the language of the text\"\"\"\n\n    english = \"English\"\n    spanish = \"Spanish\"\n\n\nIdentifyLanguage(test_str)\nIdentifyLanguage(Translate(test_str).output_text)"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#ibis",
+    "href": "posts/llms-and-data-pt0/index.html#ibis",
+    "title": "An introduction to LLMs, Marvin, and Ibis",
+    "section": "Ibis",
+    "text": "Ibis\n# | code-fold: true\n1import ibis\n\n2con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\n\n2ibis.options.interactive = True\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis.\n\n2\n\nConfigure Ibis (interactive).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n\nBackend\ncon\nbackends = [entrypoint.name for entrypoint in ibis.util.backend_entry_points()]\nbackends\n\n\nTable\nt\n\n\nSchema\nt.schema()"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#llms-and-data-marvin-and-ibis",
+    "href": "posts/llms-and-data-pt0/index.html#llms-and-data-marvin-and-ibis",
+    "title": "An introduction to LLMs, Marvin, and Ibis",
+    "section": "LLMs and data: Marvin and Ibis",
+    "text": "LLMs and data: Marvin and Ibis\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n@marvin.ai_fn(model=\"openai/gpt-4\")\ndef sql_select(text: str, table_name: str = t.get_name(), schema: Schema = t.schema()) -&gt; str:\n    \"\"\"writes the SQL SELECT statement to query the table according to the text\"\"\"\n\nquery = \"the unique combination of species and islands\"\nsql = sql_select(query)\nsql\nt.sql(sql)\nt.sql(sql_select(query + \" and include their counts in from highest to lowest\"))"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#next-steps",
+    "href": "posts/llms-and-data-pt0/index.html#next-steps",
+    "title": "An introduction to LLMs, Marvin, and Ibis",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt6/index.html",
+    "href": "posts/llms-and-data-pt6/index.html",
+    "title": "Going multi-modal and looking ahead",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt6/index.html#introduction",
+    "href": "posts/llms-and-data-pt6/index.html#introduction",
+    "title": "Going multi-modal and looking ahead",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt6/index.html#summary",
+    "href": "posts/llms-and-data-pt6/index.html#summary",
+    "title": "Going multi-modal and looking ahead",
+    "section": "Summary",
+    "text": "Summary\nTo summarize this post:\nfrom rich import print\nfrom pydantic import BaseModel, Field\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n# save some money and avoid rate limiting\nmarvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt6/index.html#next-steps",
+    "href": "posts/llms-and-data-pt6/index.html#next-steps",
+    "title": "Going multi-modal and looking ahead",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt2/index.html",
+    "href": "posts/llms-and-data-pt2/index.html",
+    "title": "Calls and computations",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt2/index.html#introduction",
+    "href": "posts/llms-and-data-pt2/index.html#introduction",
+    "title": "Calls and computations",
+    "section": "",
+    "text": "# | code-fold: true\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt2/index.html#summary",
+    "href": "posts/llms-and-data-pt2/index.html#summary",
+    "title": "Calls and computations",
+    "section": "Summary",
+    "text": "Summary\nTo summarize this post:\nfrom rich import print\nfrom pydantic import BaseModel, Field\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n# save some money and avoid rate limiting\nmarvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt2/index.html#next-steps",
+    "href": "posts/llms-and-data-pt2/index.html#next-steps",
+    "title": "Calls and computations",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
   }
 ]

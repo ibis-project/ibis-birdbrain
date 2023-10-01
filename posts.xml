@@ -1,0 +1,2659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Ibis Birdbrain</title>
+<link>https://ibis-project.github.io/ibis-birdbrain/posts.html</link>
+<atom:link href="https://ibis-project.github.io/ibis-birdbrain/posts.xml" rel="self" type="application/rss+xml"/>
+<description>AI for your data project</description>
+<generator>quarto-1.3.450</generator>
+<lastBuildDate>Sat, 07 Oct 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Going multi-modal and looking ahead</title>
+  <dc:creator>Cody Peterson</dc:creator>
+  <link>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt6/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<div class="sourceCode" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># | code-fold: true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-1-4"></span>
+<span id="annotated-cell-1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="annotated-cell-1-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target">load_dotenv()</span>
+<span id="annotated-cell-1-8"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-9" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-1-10">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-1-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.create_table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="2,3,5">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="7">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-annotation="3" data-code-lines="9,10,11">Setup the demo datain an Ibis backend.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-2-3"></span>
+<span id="annotated-cell-2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Schema</span>
+<span id="annotated-cell-2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.types.relations <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Table</span>
+<span id="annotated-cell-2-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-7" class="code-annotation-target">ibis.options.interactive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="annotated-cell-2-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span></span>
+<span id="annotated-cell-2-9"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-10" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-2-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="1,2,4,5">Import Ibis and Marvin.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="7,8">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-annotation="3" data-code-lines="10,11">Connect to the data and load a table into a variable.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-3" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span></span>
+<span id="annotated-cell-3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> _generate_sql_select(</span>
+<span id="annotated-cell-3-3">    text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_schema: Schema</span>
+<span id="annotated-cell-3-4">) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Generate SQL SELECT from text."""</span></span>
+<span id="annotated-cell-3-6"></span>
+<span id="annotated-cell-3-7"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sql_from_text(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, t: Table) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Table:</span>
+<span id="annotated-cell-3-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Run SQL from text."""</span></span>
+<span id="annotated-cell-3-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="1,4,5">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-annotation="2" data-code-lines="8,9,10">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands"</span>, t)</span>
+<span id="cb1-2">t2</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">t3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(</span>
+<span id="cb2-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'"</span>,</span>
+<span id="cb2-3">    t,</span>
+<span id="cb2-4">)</span>
+<span id="cb2-5">t3</span></code></pre></div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>To summarize this post:</p>
+<div class="sourceCode" id="annotated-cell-6" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy"><code class="sourceCode python"><span id="annotated-cell-6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rich <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span></span>
+<span id="annotated-cell-6-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BaseModel, Field</span>
+<span id="annotated-cell-6-3"></span>
+<span id="annotated-cell-6-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index.qmd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span>) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> f:</span>
+<span id="annotated-cell-6-5">    self_text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f.read()</span>
+<span id="annotated-cell-6-6"></span>
+<span id="annotated-cell-6-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># save some money and avoid rate limiting</span></span>
+<span id="annotated-cell-6-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span></span>
+<span id="annotated-cell-6-9"></span>
+<span id="annotated-cell-6-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span></span>
+<span id="annotated-cell-6-11"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> Summary(BaseModel):</span>
+<span id="annotated-cell-6-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Summary of text."""</span></span>
+<span id="annotated-cell-6-13"></span>
+<span id="annotated-cell-6-14">    summary_line: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-line summary of the text."</span>)</span>
+<span id="annotated-cell-6-15">    summary_paragraph: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-16">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-paragraph summary of the text."</span></span>
+<span id="annotated-cell-6-17">    )</span>
+<span id="annotated-cell-6-18">    conclusion: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-19">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The conclusion the reader should draw from the text."</span></span>
+<span id="annotated-cell-6-20">    )</span>
+<span id="annotated-cell-6-21">    key_points: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The key points of the text."</span>)</span>
+<span id="annotated-cell-6-22">    critiques: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-23">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Professional, fair critiques of the text."</span></span>
+<span id="annotated-cell-6-24">    )</span>
+<span id="annotated-cell-6-25">    suggested_improvements: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-26">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Suggested improvements for the text."</span></span>
+<span id="annotated-cell-6-27">    )</span>
+<span id="annotated-cell-6-28">    sentiment: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment of the text."</span>)</span>
+<span id="annotated-cell-6-29">    sentiment_label: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment label of the text."</span>)</span>
+<span id="annotated-cell-6-30">    author_bias: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The author bias of the text."</span>)</span>
+<span id="annotated-cell-6-31"></span>
+<span id="annotated-cell-6-32"></span>
+<span id="annotated-cell-6-33"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Summary(self_text))</span></code></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>LLMs and data</category>
+  <guid>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt6/index.html</guid>
+  <pubDate>Sat, 07 Oct 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>End-to-end analytics demo</title>
+  <dc:creator>Cody Peterson</dc:creator>
+  <link>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt5/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<div class="sourceCode" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># | code-fold: true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-1-4"></span>
+<span id="annotated-cell-1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="annotated-cell-1-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target">load_dotenv()</span>
+<span id="annotated-cell-1-8"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-9" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-1-10">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-1-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.create_table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="2,3,5">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="7">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-annotation="3" data-code-lines="9,10,11">Setup the demo datain an Ibis backend.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-2-3"></span>
+<span id="annotated-cell-2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Schema</span>
+<span id="annotated-cell-2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.types.relations <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Table</span>
+<span id="annotated-cell-2-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-7" class="code-annotation-target">ibis.options.interactive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="annotated-cell-2-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span></span>
+<span id="annotated-cell-2-9"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-10" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-2-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="1,2,4,5">Import Ibis and Marvin.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="7,8">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-annotation="3" data-code-lines="10,11">Connect to the data and load a table into a variable.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-3" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span></span>
+<span id="annotated-cell-3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> _generate_sql_select(</span>
+<span id="annotated-cell-3-3">    text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_schema: Schema</span>
+<span id="annotated-cell-3-4">) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Generate SQL SELECT from text."""</span></span>
+<span id="annotated-cell-3-6"></span>
+<span id="annotated-cell-3-7"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sql_from_text(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, t: Table) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Table:</span>
+<span id="annotated-cell-3-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Run SQL from text."""</span></span>
+<span id="annotated-cell-3-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="1,4,5">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-annotation="2" data-code-lines="8,9,10">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands"</span>, t)</span>
+<span id="cb1-2">t2</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">t3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(</span>
+<span id="cb2-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'"</span>,</span>
+<span id="cb2-3">    t,</span>
+<span id="cb2-4">)</span>
+<span id="cb2-5">t3</span></code></pre></div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>To summarize this post:</p>
+<div class="sourceCode" id="annotated-cell-6" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy"><code class="sourceCode python"><span id="annotated-cell-6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rich <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span></span>
+<span id="annotated-cell-6-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BaseModel, Field</span>
+<span id="annotated-cell-6-3"></span>
+<span id="annotated-cell-6-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index.qmd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span>) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> f:</span>
+<span id="annotated-cell-6-5">    self_text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f.read()</span>
+<span id="annotated-cell-6-6"></span>
+<span id="annotated-cell-6-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># save some money and avoid rate limiting</span></span>
+<span id="annotated-cell-6-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span></span>
+<span id="annotated-cell-6-9"></span>
+<span id="annotated-cell-6-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span></span>
+<span id="annotated-cell-6-11"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> Summary(BaseModel):</span>
+<span id="annotated-cell-6-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Summary of text."""</span></span>
+<span id="annotated-cell-6-13"></span>
+<span id="annotated-cell-6-14">    summary_line: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-line summary of the text."</span>)</span>
+<span id="annotated-cell-6-15">    summary_paragraph: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-16">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-paragraph summary of the text."</span></span>
+<span id="annotated-cell-6-17">    )</span>
+<span id="annotated-cell-6-18">    conclusion: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-19">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The conclusion the reader should draw from the text."</span></span>
+<span id="annotated-cell-6-20">    )</span>
+<span id="annotated-cell-6-21">    key_points: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The key points of the text."</span>)</span>
+<span id="annotated-cell-6-22">    critiques: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-23">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Professional, fair critiques of the text."</span></span>
+<span id="annotated-cell-6-24">    )</span>
+<span id="annotated-cell-6-25">    suggested_improvements: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-26">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Suggested improvements for the text."</span></span>
+<span id="annotated-cell-6-27">    )</span>
+<span id="annotated-cell-6-28">    sentiment: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment of the text."</span>)</span>
+<span id="annotated-cell-6-29">    sentiment_label: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment label of the text."</span>)</span>
+<span id="annotated-cell-6-30">    author_bias: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The author bias of the text."</span>)</span>
+<span id="annotated-cell-6-31"></span>
+<span id="annotated-cell-6-32"></span>
+<span id="annotated-cell-6-33"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Summary(self_text))</span></code></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>LLMs and data</category>
+  <guid>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt5/index.html</guid>
+  <pubDate>Fri, 06 Oct 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Auxiliary tools</title>
+  <dc:creator>Cody Peterson</dc:creator>
+  <link>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt4/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<div class="sourceCode" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># | code-fold: true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-1-4"></span>
+<span id="annotated-cell-1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="annotated-cell-1-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target">load_dotenv()</span>
+<span id="annotated-cell-1-8"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-9" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-1-10">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-1-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.create_table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,3,5" data-code-annotation="1">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="9,10,11" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-2-3"></span>
+<span id="annotated-cell-2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Schema</span>
+<span id="annotated-cell-2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.types.relations <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Table</span>
+<span id="annotated-cell-2-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-7" class="code-annotation-target">ibis.options.interactive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="annotated-cell-2-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span></span>
+<span id="annotated-cell-2-9"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-10" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-2-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1,2,4,5" data-code-annotation="1">Import Ibis and Marvin.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="7,8" data-code-annotation="2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="10,11" data-code-annotation="3">Connect to the data and load a table into a variable.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-3" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span></span>
+<span id="annotated-cell-3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> _generate_sql_select(</span>
+<span id="annotated-cell-3-3">    text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_schema: Schema</span>
+<span id="annotated-cell-3-4">) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Generate SQL SELECT from text."""</span></span>
+<span id="annotated-cell-3-6"></span>
+<span id="annotated-cell-3-7"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sql_from_text(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, t: Table) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Table:</span>
+<span id="annotated-cell-3-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Run SQL from text."""</span></span>
+<span id="annotated-cell-3-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1,4,5" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="8,9,10" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands"</span>, t)</span>
+<span id="cb1-2">t2</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">t3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(</span>
+<span id="cb2-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'"</span>,</span>
+<span id="cb2-3">    t,</span>
+<span id="cb2-4">)</span>
+<span id="cb2-5">t3</span></code></pre></div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>To summarize this post:</p>
+<div class="sourceCode" id="annotated-cell-6" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy"><code class="sourceCode python"><span id="annotated-cell-6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rich <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span></span>
+<span id="annotated-cell-6-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BaseModel, Field</span>
+<span id="annotated-cell-6-3"></span>
+<span id="annotated-cell-6-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index.qmd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span>) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> f:</span>
+<span id="annotated-cell-6-5">    self_text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f.read()</span>
+<span id="annotated-cell-6-6"></span>
+<span id="annotated-cell-6-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># save some money and avoid rate limiting</span></span>
+<span id="annotated-cell-6-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span></span>
+<span id="annotated-cell-6-9"></span>
+<span id="annotated-cell-6-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span></span>
+<span id="annotated-cell-6-11"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> Summary(BaseModel):</span>
+<span id="annotated-cell-6-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Summary of text."""</span></span>
+<span id="annotated-cell-6-13"></span>
+<span id="annotated-cell-6-14">    summary_line: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-line summary of the text."</span>)</span>
+<span id="annotated-cell-6-15">    summary_paragraph: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-16">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-paragraph summary of the text."</span></span>
+<span id="annotated-cell-6-17">    )</span>
+<span id="annotated-cell-6-18">    conclusion: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-19">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The conclusion the reader should draw from the text."</span></span>
+<span id="annotated-cell-6-20">    )</span>
+<span id="annotated-cell-6-21">    key_points: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The key points of the text."</span>)</span>
+<span id="annotated-cell-6-22">    critiques: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-23">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Professional, fair critiques of the text."</span></span>
+<span id="annotated-cell-6-24">    )</span>
+<span id="annotated-cell-6-25">    suggested_improvements: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-26">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Suggested improvements for the text."</span></span>
+<span id="annotated-cell-6-27">    )</span>
+<span id="annotated-cell-6-28">    sentiment: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment of the text."</span>)</span>
+<span id="annotated-cell-6-29">    sentiment_label: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment label of the text."</span>)</span>
+<span id="annotated-cell-6-30">    author_bias: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The author bias of the text."</span>)</span>
+<span id="annotated-cell-6-31"></span>
+<span id="annotated-cell-6-32"></span>
+<span id="annotated-cell-6-33"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Summary(self_text))</span></code></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>LLMs and data</category>
+  <guid>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt4/index.html</guid>
+  <pubDate>Thu, 05 Oct 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Modular and composable</title>
+  <dc:creator>Cody Peterson</dc:creator>
+  <link>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt3/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<div class="sourceCode" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># | code-fold: true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-1-4"></span>
+<span id="annotated-cell-1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="annotated-cell-1-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target">load_dotenv()</span>
+<span id="annotated-cell-1-8"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-9" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-1-10">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-1-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.create_table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,3,5" data-code-annotation="1">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="9,10,11" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-2-3"></span>
+<span id="annotated-cell-2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Schema</span>
+<span id="annotated-cell-2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.types.relations <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Table</span>
+<span id="annotated-cell-2-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-7" class="code-annotation-target">ibis.options.interactive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="annotated-cell-2-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span></span>
+<span id="annotated-cell-2-9"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-10" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-2-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1,2,4,5" data-code-annotation="1">Import Ibis and Marvin.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="7,8" data-code-annotation="2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="10,11" data-code-annotation="3">Connect to the data and load a table into a variable.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-3" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span></span>
+<span id="annotated-cell-3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> _generate_sql_select(</span>
+<span id="annotated-cell-3-3">    text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_schema: Schema</span>
+<span id="annotated-cell-3-4">) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Generate SQL SELECT from text."""</span></span>
+<span id="annotated-cell-3-6"></span>
+<span id="annotated-cell-3-7"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sql_from_text(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, t: Table) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Table:</span>
+<span id="annotated-cell-3-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Run SQL from text."""</span></span>
+<span id="annotated-cell-3-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1,4,5" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="8,9,10" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands"</span>, t)</span>
+<span id="cb1-2">t2</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">t3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(</span>
+<span id="cb2-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'"</span>,</span>
+<span id="cb2-3">    t,</span>
+<span id="cb2-4">)</span>
+<span id="cb2-5">t3</span></code></pre></div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>To summarize this post:</p>
+<div class="sourceCode" id="annotated-cell-6" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy"><code class="sourceCode python"><span id="annotated-cell-6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rich <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span></span>
+<span id="annotated-cell-6-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BaseModel, Field</span>
+<span id="annotated-cell-6-3"></span>
+<span id="annotated-cell-6-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index.qmd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span>) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> f:</span>
+<span id="annotated-cell-6-5">    self_text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f.read()</span>
+<span id="annotated-cell-6-6"></span>
+<span id="annotated-cell-6-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># save some money and avoid rate limiting</span></span>
+<span id="annotated-cell-6-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span></span>
+<span id="annotated-cell-6-9"></span>
+<span id="annotated-cell-6-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span></span>
+<span id="annotated-cell-6-11"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> Summary(BaseModel):</span>
+<span id="annotated-cell-6-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Summary of text."""</span></span>
+<span id="annotated-cell-6-13"></span>
+<span id="annotated-cell-6-14">    summary_line: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-line summary of the text."</span>)</span>
+<span id="annotated-cell-6-15">    summary_paragraph: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-16">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-paragraph summary of the text."</span></span>
+<span id="annotated-cell-6-17">    )</span>
+<span id="annotated-cell-6-18">    conclusion: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-19">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The conclusion the reader should draw from the text."</span></span>
+<span id="annotated-cell-6-20">    )</span>
+<span id="annotated-cell-6-21">    key_points: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The key points of the text."</span>)</span>
+<span id="annotated-cell-6-22">    critiques: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-23">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Professional, fair critiques of the text."</span></span>
+<span id="annotated-cell-6-24">    )</span>
+<span id="annotated-cell-6-25">    suggested_improvements: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-26">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Suggested improvements for the text."</span></span>
+<span id="annotated-cell-6-27">    )</span>
+<span id="annotated-cell-6-28">    sentiment: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment of the text."</span>)</span>
+<span id="annotated-cell-6-29">    sentiment_label: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment label of the text."</span>)</span>
+<span id="annotated-cell-6-30">    author_bias: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The author bias of the text."</span>)</span>
+<span id="annotated-cell-6-31"></span>
+<span id="annotated-cell-6-32"></span>
+<span id="annotated-cell-6-33"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Summary(self_text))</span></code></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>LLMs and data</category>
+  <guid>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt3/index.html</guid>
+  <pubDate>Wed, 04 Oct 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Calls and computations</title>
+  <dc:creator>Cody Peterson</dc:creator>
+  <link>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt2/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<div class="sourceCode" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># | code-fold: true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-1-4"></span>
+<span id="annotated-cell-1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="annotated-cell-1-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target">load_dotenv()</span>
+<span id="annotated-cell-1-8"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-9" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-1-10">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-1-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.create_table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,3,5" data-code-annotation="1">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="9,10,11" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-2-3"></span>
+<span id="annotated-cell-2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Schema</span>
+<span id="annotated-cell-2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.types.relations <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Table</span>
+<span id="annotated-cell-2-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-7" class="code-annotation-target">ibis.options.interactive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="annotated-cell-2-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span></span>
+<span id="annotated-cell-2-9"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-10" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-2-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1,2,4,5" data-code-annotation="1">Import Ibis and Marvin.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="7,8" data-code-annotation="2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="10,11" data-code-annotation="3">Connect to the data and load a table into a variable.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-3" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span></span>
+<span id="annotated-cell-3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> _generate_sql_select(</span>
+<span id="annotated-cell-3-3">    text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_schema: Schema</span>
+<span id="annotated-cell-3-4">) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Generate SQL SELECT from text."""</span></span>
+<span id="annotated-cell-3-6"></span>
+<span id="annotated-cell-3-7"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sql_from_text(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, t: Table) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Table:</span>
+<span id="annotated-cell-3-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Run SQL from text."""</span></span>
+<span id="annotated-cell-3-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1,4,5" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="8,9,10" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands"</span>, t)</span>
+<span id="cb1-2">t2</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">t3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(</span>
+<span id="cb2-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'"</span>,</span>
+<span id="cb2-3">    t,</span>
+<span id="cb2-4">)</span>
+<span id="cb2-5">t3</span></code></pre></div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>To summarize this post:</p>
+<div class="sourceCode" id="annotated-cell-6" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy"><code class="sourceCode python"><span id="annotated-cell-6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rich <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span></span>
+<span id="annotated-cell-6-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BaseModel, Field</span>
+<span id="annotated-cell-6-3"></span>
+<span id="annotated-cell-6-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index.qmd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span>) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> f:</span>
+<span id="annotated-cell-6-5">    self_text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f.read()</span>
+<span id="annotated-cell-6-6"></span>
+<span id="annotated-cell-6-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># save some money and avoid rate limiting</span></span>
+<span id="annotated-cell-6-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span></span>
+<span id="annotated-cell-6-9"></span>
+<span id="annotated-cell-6-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span></span>
+<span id="annotated-cell-6-11"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> Summary(BaseModel):</span>
+<span id="annotated-cell-6-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Summary of text."""</span></span>
+<span id="annotated-cell-6-13"></span>
+<span id="annotated-cell-6-14">    summary_line: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-line summary of the text."</span>)</span>
+<span id="annotated-cell-6-15">    summary_paragraph: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-16">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-paragraph summary of the text."</span></span>
+<span id="annotated-cell-6-17">    )</span>
+<span id="annotated-cell-6-18">    conclusion: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-19">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The conclusion the reader should draw from the text."</span></span>
+<span id="annotated-cell-6-20">    )</span>
+<span id="annotated-cell-6-21">    key_points: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The key points of the text."</span>)</span>
+<span id="annotated-cell-6-22">    critiques: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-23">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Professional, fair critiques of the text."</span></span>
+<span id="annotated-cell-6-24">    )</span>
+<span id="annotated-cell-6-25">    suggested_improvements: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="annotated-cell-6-26">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Suggested improvements for the text."</span></span>
+<span id="annotated-cell-6-27">    )</span>
+<span id="annotated-cell-6-28">    sentiment: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment of the text."</span>)</span>
+<span id="annotated-cell-6-29">    sentiment_label: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment label of the text."</span>)</span>
+<span id="annotated-cell-6-30">    author_bias: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The author bias of the text."</span>)</span>
+<span id="annotated-cell-6-31"></span>
+<span id="annotated-cell-6-32"></span>
+<span id="annotated-cell-6-33"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Summary(self_text))</span></code></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>LLMs and data</category>
+  <guid>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt2/index.html</guid>
+  <pubDate>Tue, 03 Oct 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Three approaches</title>
+  <dc:creator>Cody Peterson</dc:creator>
+  <link>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt1/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>While large-language models (LLMs) have been around for years, recent versions and innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user. The thought of using natural language to transform and analyze data is appealing.</p>
+</section>
+<section id="approaches" class="level2">
+<h2 class="anchored" data-anchor-id="approaches">Approaches</h2>
+<p>When discussed internally at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:</p>
+<ol type="1">
+<li>LLM writes SQL</li>
+<li>LLM writes a subroutine (Python UDF or another language)</li>
+<li>Use LLM in a subroutine</li>
+</ol>
+<p>While these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and <a href="https://www.askmarvin.ai/welcome/what_is_marvin/">Marvin</a>, an AI engineering framework for building natural language interfaces. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends. But first, let’s demonstrate the three approaches in code.</p>
+<section id="approach-1-llm-writes-sql" class="level3">
+<h3 class="anchored" data-anchor-id="approach-1-llm-writes-sql">Approach 1: LLM writes SQL</h3>
+<p>State of the art (SoTA) LLMs are decent at generating SQL out of the box. We can be clever to handle errors, retries, and more, but in its simplest form:</p>
+<div class="sourceCode" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># | code-fold: true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-1-4"></span>
+<span id="annotated-cell-1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="annotated-cell-1-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target">load_dotenv()</span>
+<span id="annotated-cell-1-8"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-9" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-1-10">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-1-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.create_table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,3,5" data-code-annotation="1">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="9,10,11" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-2-3"></span>
+<span id="annotated-cell-2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Schema</span>
+<span id="annotated-cell-2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.types.relations <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Table</span>
+<span id="annotated-cell-2-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-7" class="code-annotation-target">ibis.options.interactive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="annotated-cell-2-8">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span></span>
+<span id="annotated-cell-2-9"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-10" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-2-11">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1,2,4,5" data-code-annotation="1">Import Ibis and Marvin.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="7,8" data-code-annotation="2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="10,11" data-code-annotation="3">Connect to the data and load a table into a variable.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-3" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span></span>
+<span id="annotated-cell-3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> _generate_sql_select(</span>
+<span id="annotated-cell-3-3">    text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_schema: Schema</span>
+<span id="annotated-cell-3-4">) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Generate SQL SELECT from text."""</span></span>
+<span id="annotated-cell-3-6"></span>
+<span id="annotated-cell-3-7"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sql_from_text(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, t: Table) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Table:</span>
+<span id="annotated-cell-3-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Run SQL from text."""</span></span>
+<span id="annotated-cell-3-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1,4,5" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="8,9,10" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands"</span>, t)</span>
+<span id="cb1-2">t2</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">t3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_from_text(</span>
+<span id="cb2-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'"</span>,</span>
+<span id="cb2-3">    t,</span>
+<span id="cb2-4">)</span>
+<span id="cb2-5">t3</span></code></pre></div>
+<p>This works well-enough for simple cases and can be expanded to handle complex ones. In many scenarios, it may be easier to express a query in English or another language than to write it in SQL, especially if working across multiple SQL dialects.</p>
+</section>
+<section id="approach-2-llm-writes-a-subroutine" class="level3">
+<h3 class="anchored" data-anchor-id="approach-2-llm-writes-a-subroutine">Approach 2: LLM writes a subroutine</h3>
+<p>If more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages. Many data platforms support user-defined functions (UDFs) in Python or some other language. We’ll stick to scalar Python UDFs via DuckDB to demonstrate the concept:</p>
+<div class="sourceCode" id="annotated-cell-6" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-1" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span></span>
+<span id="annotated-cell-6-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> _generate_python_function(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-6-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Generate a simple, typed, correct Python function from text."""</span></span>
+<span id="annotated-cell-6-4"></span>
+<span id="annotated-cell-6-5"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-6" class="code-annotation-target"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> create_udf_from_text(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="annotated-cell-6-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Create a UDF from text."""</span></span>
+<span id="annotated-cell-6-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"""</span></span>
+<span id="annotated-cell-6-9"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">import ibis</span></span>
+<span id="annotated-cell-6-10"></span>
+<span id="annotated-cell-6-11"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">@ibis.udf.scalar.python</span></span>
+<span id="annotated-cell-6-12"><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>_generate_python_function(text)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="annotated-cell-6-13"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span>.strip()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="1,2,3" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="6,7,13" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">udf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> create_udf_from_text(</span>
+<span id="cb3-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a function named count_vowels that given an input string, returns an int w/ the number of vowels (y_included as a boolean option defaulted to False)"</span></span>
+<span id="cb3-3">)</span>
+<span id="cb3-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(udf)</span>
+<span id="cb3-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">exec</span>(udf)</span></code></pre></div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">t4 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t3.mutate(</span>
+<span id="cb4-2">    species_vowel_count<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>count_vowels(t3.species),</span>
+<span id="cb4-3">    island_vowel_count<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>count_vowels(t3.island),</span>
+<span id="cb4-4">)</span>
+<span id="cb4-5">t4</span></code></pre></div>
+<p>In this case, there’s no reason not to have a human in the loop reviewing the output code and committing it for production use. This could be useful for quick prototyping or, given a box of tools in the form of UDFs, working through a natural language interface.</p>
+</section>
+<section id="approach-3-use-llm-in-a-subroutine" class="level3">
+<h3 class="anchored" data-anchor-id="approach-3-use-llm-in-a-subroutine">Approach 3: Use LLM in a subroutine</h3>
+<p>We can also call the LLM once-per-row in the table via a subroutine. For variety, we’ll use an <a href="https://www.askmarvin.ai/components/ai_model/">AI model</a> instead of an <a href="https://www.askmarvin.ai/components/ai_function/">AI function</a>:</p>
+<div class="sourceCode" id="annotated-cell-9" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BaseModel, Field</span>
+<span id="annotated-cell-9-2"></span>
+<span id="annotated-cell-9-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># save some money and avoid rate limiting</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-4" class="code-annotation-target">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span></span>
+<span id="annotated-cell-9-5"></span>
+<span id="annotated-cell-9-6"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3">3</button><span id="annotated-cell-9-7" class="code-annotation-target"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span></span>
+<span id="annotated-cell-9-8"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> VowelCounter(BaseModel):</span>
+<span id="annotated-cell-9-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Count vowels in a string."""</span></span>
+<span id="annotated-cell-9-10"></span>
+<span id="annotated-cell-9-11">    include_y: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">bool</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>, description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Include 'y' as a vowel."</span>)</span>
+<span id="annotated-cell-9-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># num_a: int = Field(..., description="The number of 'a' vowels.")</span></span>
+<span id="annotated-cell-9-13">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># num_e: int = Field(..., description="The number of 'e' vowels.")</span></span>
+<span id="annotated-cell-9-14">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># num_i: int = Field(..., description="The number of 'i' vowels.")</span></span>
+<span id="annotated-cell-9-15">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># num_o: int = Field(..., description="The number of 'o' vowels.")</span></span>
+<span id="annotated-cell-9-16">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># num_u: int = Field(..., description="The number of 'u' vowels.")</span></span>
+<span id="annotated-cell-9-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># num_y: int = Field(..., description="The number of 'y' vowels.")</span></span>
+<span id="annotated-cell-9-18">    num_total: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The total number of vowels."</span>)</span>
+<span id="annotated-cell-9-19"></span>
+<span id="annotated-cell-9-20"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="4">4</button><span id="annotated-cell-9-21" class="code-annotation-target">VowelCounter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hello world"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1">Additional imports for Pydantic.</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="4" data-code-annotation="2">Configure Marvin to use a cheaper model.</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="7,8,9,11,12,13,14,15,16,17,18" data-code-annotation="3">A non-deterministic, LLM-powered AI model.</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="21" data-code-annotation="4">Call the AI model on some text.</span>
+</dd>
+</dl>
+<p>Then we’ll have the LLM write the UDF, just to be fancy:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">udf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> create_udf_from_text(</span>
+<span id="cb5-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a function named count_vowels_ai that given an input string, calls VowelCounter on it and returns the num_total attribute of that result"</span></span>
+<span id="cb5-3">)</span>
+<span id="cb5-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(udf)</span>
+<span id="cb5-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">exec</span>(udf)</span></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">t5 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t3.mutate(</span>
+<span id="cb6-2">    species_vowel_count<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>count_vowels_ai(t3.species),</span>
+<span id="cb6-3">    island_vowel_count<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>count_vowels_ai(t3.island),</span>
+<span id="cb6-4">)</span>
+<span id="cb6-5">t5</span></code></pre></div>
+<p>Notice that in this UDF, unlike in the previous example, a LLM is being called (possibly several times) for each row in the table. This is a very expensive operation and we’ll need to be careful about how we use it in practice.</p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>To summarize this post:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rich <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span></span>
+<span id="cb7-2"></span>
+<span id="cb7-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index.qmd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span>) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> f:</span>
+<span id="cb7-4">    self_text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f.read()</span>
+<span id="cb7-5"></span>
+<span id="cb7-6"></span>
+<span id="cb7-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span></span>
+<span id="cb7-8"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> Summary(BaseModel):</span>
+<span id="cb7-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Summary of text."""</span></span>
+<span id="cb7-10"></span>
+<span id="cb7-11">    summary_line: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-line summary of the text."</span>)</span>
+<span id="cb7-12">    summary_paragraph: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="cb7-13">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The one-paragraph summary of the text."</span></span>
+<span id="cb7-14">    )</span>
+<span id="cb7-15">    conclusion: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="cb7-16">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The conclusion the reader should draw from the text."</span></span>
+<span id="cb7-17">    )</span>
+<span id="cb7-18">    key_points: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The key points of the text."</span>)</span>
+<span id="cb7-19">    critiques: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="cb7-20">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Professional, fair critiques of the text."</span></span>
+<span id="cb7-21">    )</span>
+<span id="cb7-22">    suggested_improvements: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(</span>
+<span id="cb7-23">        ..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Suggested improvements for the text."</span></span>
+<span id="cb7-24">    )</span>
+<span id="cb7-25">    sentiment: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment of the text."</span>)</span>
+<span id="cb7-26">    sentiment_label: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The sentiment label of the text."</span>)</span>
+<span id="cb7-27">    author_bias: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The author bias of the text."</span>)</span>
+<span id="cb7-28"></span>
+<span id="cb7-29"></span>
+<span id="cb7-30"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Summary(self_text))</span></code></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>LLMs and data</category>
+  <guid>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt1/index.html</guid>
+  <pubDate>Mon, 02 Oct 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>An introduction to LLMs, Marvin, and Ibis</title>
+  <dc:creator>Cody Peterson</dc:creator>
+  <link>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt0/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In this “LLMs and data” series, we’ll explore how to apply large-language models (LLMs) to data analytics. We’ll show the steps to build up to <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, an open-source project for building next-generation natural language interfaces to data.</p>
+<p>Throughout the series, we’ll be using Ibis and <a href="https://www.askmarvin.ai/welcome/overview/">Marvin</a>. A brief introduction to each is provided below.</p>
+</section>
+<section id="marvin" class="level2">
+<h2 class="anchored" data-anchor-id="marvin">Marvin</h2>
+<p><a href="https://www.askmarvin.ai/welcome/overview/">Marvin</a> is an AI engineering framework that makes it easy to build up to an interactive conversational application, command-line interface (CLI), or REST API.</p>
+<div class="sourceCode" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> marvin</span>
+<span id="annotated-cell-1-2"></span>
+<span id="annotated-cell-1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rich <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span></span>
+<span id="annotated-cell-1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="annotated-cell-1-5"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-6" class="code-annotation-target">load_dotenv()</span>
+<span id="annotated-cell-1-7"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-8" class="code-annotation-target">marvin.settings.llm_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span></span>
+<span id="annotated-cell-1-9"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-10" class="code-annotation-target">test_str <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"working with data and LLMs on 18+ data platforms is easy!"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="1,3,4" data-code-annotation="1" data-code-cell="annotated-cell-1">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="6" data-code-annotation="2" data-code-cell="annotated-cell-1">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-lines="8" data-code-annotation="3" data-code-cell="annotated-cell-1">Configure the LLM model to use.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-lines="10" data-code-annotation="4" data-code-cell="annotated-cell-1">Some text to test on</span>
+</dd>
+</dl>
+<section id="functions" class="level3">
+<h3 class="anchored" data-anchor-id="functions">Functions</h3>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span>(model<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span>)</span>
+<span id="cb1-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> translate(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, from_: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"English"</span>, to: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Spanish"</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="cb1-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""translates the text"""</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5"></span>
+<span id="cb1-6">translate(translate(test_str), from_<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Spanish"</span>, to<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"English"</span>)</span></code></pre></div>
+</section>
+<section id="models" class="level3">
+<h3 class="anchored" data-anchor-id="models">Models</h3>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BaseModel, Field</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_model</span>(</span>
+<span id="cb2-5">    model<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span>, instructions<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"from English to Spanish"</span></span>
+<span id="cb2-6">)</span>
+<span id="cb2-7"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> Translate(BaseModel):</span>
+<span id="cb2-8">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Translates text"""</span></span>
+<span id="cb2-9"></span>
+<span id="cb2-10">    from_: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The language to translate from."</span>)</span>
+<span id="cb2-11">    to: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The language to translate to."</span>)</span>
+<span id="cb2-12">    input_text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The text to translate."</span>)</span>
+<span id="cb2-13">    output_text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Field(..., description<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The translated text."</span>)</span>
+<span id="cb2-14"></span>
+<span id="cb2-15"></span>
+<span id="cb2-16">Translate(test_str)</span></code></pre></div>
+</section>
+<section id="classifiers" class="level3">
+<h3 class="anchored" data-anchor-id="classifiers">Classifiers</h3>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> enum <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Enum</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_classifier</span>(model<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-3.5-turbo-16k"</span>, temperature<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb3-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> IdentifyLanguage(Enum):</span>
+<span id="cb3-6">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Identifies the language of the text"""</span></span>
+<span id="cb3-7"></span>
+<span id="cb3-8">    english <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"English"</span></span>
+<span id="cb3-9">    spanish <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Spanish"</span></span>
+<span id="cb3-10"></span>
+<span id="cb3-11"></span>
+<span id="cb3-12">IdentifyLanguage(test_str)</span></code></pre></div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">IdentifyLanguage(Translate(test_str).output_text)</span></code></pre></div>
+</section>
+</section>
+<section id="ibis" class="level2">
+<h2 class="anchored" data-anchor-id="ibis">Ibis</h2>
+<div class="sourceCode" id="annotated-cell-6" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># | code-fold: true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-2" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-6-3"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-4" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-6-5">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.examples.penguins.fetch()</span>
+<span id="annotated-cell-6-6">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.create_table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>, t.to_pyarrow(), overwrite<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="2" data-code-annotation="1" data-code-cell="annotated-cell-6">Import the libraries we need.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="4,5,6" data-code-annotation="2" data-code-cell="annotated-cell-6">Setup the demo datain an Ibis backend.</span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-7" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ibis</span>
+<span id="annotated-cell-7-2"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-3" class="code-annotation-target">ibis.options.interactive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="annotated-cell-7-4"></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3">3</button><span id="annotated-cell-7-5" class="code-annotation-target">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ibis.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"duckdb://penguins.ddb"</span>)</span>
+<span id="annotated-cell-7-6">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> con.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-7">Import Ibis.</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-7">Configure Ibis (interactive).</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-lines="5,6" data-code-annotation="3" data-code-cell="annotated-cell-7">Connect to the data and load a table into a variable.</span>
+</dd>
+</dl>
+<section id="backend" class="level3">
+<h3 class="anchored" data-anchor-id="backend">Backend</h3>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">con</span></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">backends <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [entrypoint.name <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> entrypoint <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> ibis.util.backend_entry_points()]</span>
+<span id="cb6-2">backends</span></code></pre></div>
+</section>
+<section id="table" class="level3">
+<h3 class="anchored" data-anchor-id="table">Table</h3>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">t</span></code></pre></div>
+</section>
+<section id="schema" class="level3">
+<h3 class="anchored" data-anchor-id="schema">Schema</h3>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">t.schema()</span></code></pre></div>
+</section>
+</section>
+<section id="llms-and-data-marvin-and-ibis" class="level2">
+<h2 class="anchored" data-anchor-id="llms-and-data-marvin-and-ibis">LLMs and data: Marvin and Ibis</h2>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Schema</span>
+<span id="cb9-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ibis.expr.types.relations <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Table</span>
+<span id="cb9-3"></span>
+<span id="cb9-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@marvin.ai_fn</span>(model<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-4"</span>)</span>
+<span id="cb9-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sql_select(text: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, table_name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t.get_name(), schema: Schema <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t.schema()) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="cb9-6">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""writes the SQL SELECT statement to query the table according to the text"""</span></span>
+<span id="cb9-7"></span>
+<span id="cb9-8">query <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the unique combination of species and islands"</span></span>
+<span id="cb9-9">sql <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sql_select(query)</span>
+<span id="cb9-10">sql</span></code></pre></div>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">t.sql(sql)</span></code></pre></div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">t.sql(sql_select(query <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" and include their counts in from highest to lowest"</span>))</span></code></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>You can get involved with <a href="https://github.com/ibis-project/ibis-birdbrain">Ibis Birdbrain</a>, our open-source data &amp; AI project for building next-generation natural language interfaces to data.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>LLMs and data</category>
+  <guid>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt0/index.html</guid>
+  <pubDate>Sun, 01 Oct 2023 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
