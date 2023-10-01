@@ -104,10 +104,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../tutorials/python.html" rel="" target="">
  <span class="dropdown-text">Tutorial: (interactive) Python</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../tutorials/rest.html" rel="" target="">
- <span class="dropdown-text">Tutorial: REST API</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -137,36 +133,12 @@ ul.task-list li input[type="checkbox"] {
   </li>  
     </ul>
   </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-to" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">How-to</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-how-to">    
-        <li class="dropdown-header">Input Output</li>
-        <li>
-    <a class="dropdown-item" href="../how-to/input-output/basics.html" rel="" target="">
- <span class="dropdown-text">Basic input/output</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../posts.html" rel="" target="">
  <span class="menu-text">Posts</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Contribute</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
-        <li class="dropdown-header">Contribute</li>
-        <li>
-    <a class="dropdown-item" href="../contribute/contributing.html" rel="" target="">
- <span class="dropdown-text">Contributing</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <div class="quarto-navbar-tools">
     <div class="dropdown">
@@ -253,8 +225,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#large-language-models" id="toc-large-language-models" class="nav-link active" data-scroll-target="#large-language-models">Large language models</a>
   <ul class="collapse">
-  <li><a href="#what-is-a-neural-network" id="toc-what-is-a-neural-network" class="nav-link" data-scroll-target="#what-is-a-neural-network">What is a neural network?</a></li>
-  <li><a href="#what-is-a-language-model" id="toc-what-is-a-language-model" class="nav-link" data-scroll-target="#what-is-a-language-model">What is a language model?</a></li>
+  <li><a href="#what-is-an-artificial-neural-network" id="toc-what-is-an-artificial-neural-network" class="nav-link" data-scroll-target="#what-is-an-artificial-neural-network">What is an artificial neural network?</a></li>
+  <li><a href="#what-is-a-large-language-model" id="toc-what-is-a-large-language-model" class="nav-link" data-scroll-target="#what-is-a-large-language-model">What is a (large) language model?</a></li>
   <li><a href="#what-are-the-inputs-and-outputs" id="toc-what-are-the-inputs-and-outputs" class="nav-link" data-scroll-target="#what-are-the-inputs-and-outputs">What are the inputs and outputs?</a></li>
   <li><a href="#what-do-llms-work-well-for" id="toc-what-do-llms-work-well-for" class="nav-link" data-scroll-target="#what-do-llms-work-well-for">What do LLMs work well for?</a></li>
   <li><a href="#what-are-the-limitations-and-considerations" id="toc-what-are-the-limitations-and-considerations" class="nav-link" data-scroll-target="#what-are-the-limitations-and-considerations">What are the limitations and considerations?</a></li>
@@ -271,20 +243,39 @@ ul.task-list li input[type="checkbox"] {
 <h1>Large language models</h1>
 <p>Large language models (LLMs) represent decades of research and development of neural networks. While relatively impressive LLMs have been around for years, recent innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user.</p>
 <p>We are primarily concerned with applying LLMs to data, but we’ll take a brief look at how they work and why we should use them.</p>
-<section id="what-is-a-neural-network" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-a-neural-network">What is a neural network?</h2>
+<section id="what-is-an-artificial-neural-network" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-an-artificial-neural-network">What is an artificial neural network?</h2>
+<p>An artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.</p>
+<p>An instance of a neural network (and many other ML architectures) is called a <strong>model</strong>. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.</p>
 </section>
-<section id="what-is-a-language-model" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-a-language-model">What is a language model?</h2>
+<section id="what-is-a-large-language-model" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-large-language-model">What is a (large) language model?</h2>
+<p>A large language model is a neural network trained on vast amounts of text data.</p>
 </section>
 <section id="what-are-the-inputs-and-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="what-are-the-inputs-and-outputs">What are the inputs and outputs?</h2>
+<p>A LLM takes text as input and produces text as output.</p>
 </section>
 <section id="what-do-llms-work-well-for" class="level2">
 <h2 class="anchored" data-anchor-id="what-do-llms-work-well-for">What do LLMs work well for?</h2>
+<p>Text in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:</p>
+<ul>
+<li>text-based ML tasks (like classification, clustering)</li>
+<li>text-based entity extraction (named entity regognition)</li>
+<li>text-based generation (like summarization, translation, and question answering)</li>
+<li>other text-based tasks</li>
+</ul>
+<p>LLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.</p>
 </section>
 <section id="what-are-the-limitations-and-considerations" class="level2">
 <h2 class="anchored" data-anchor-id="what-are-the-limitations-and-considerations">What are the limitations and considerations?</h2>
+<p>Some limitations include:</p>
+<ul>
+<li>cost</li>
+<li>latency</li>
+<li>accuracy</li>
+<li>…</li>
+</ul>
 
 
 </section>

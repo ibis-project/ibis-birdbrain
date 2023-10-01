@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -144,10 +110,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./tutorials/python.html" rel="" target="">
  <span class="dropdown-text">Tutorial: (interactive) Python</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./tutorials/rest.html" rel="" target="">
- <span class="dropdown-text">Tutorial: REST API</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -177,36 +139,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-to" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">How-to</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-how-to">    
-        <li class="dropdown-header">Input Output</li>
-        <li>
-    <a class="dropdown-item" href="./how-to/input-output/basics.html" rel="" target="">
- <span class="dropdown-text">Basic input/output</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./posts.html" rel="" target="">
  <span class="menu-text">Posts</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Contribute</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
-        <li class="dropdown-header">Contribute</li>
-        <li>
-    <a class="dropdown-item" href="./contribute/contributing.html" rel="" target="">
- <span class="dropdown-text">Contributing</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <div class="quarto-navbar-tools">
     <div class="dropdown">
@@ -265,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    <div class="about-links">
   <a href="/why.html" class="about-link" rel="" target="">
     <i class="bi bi-info-circle"></i>
-     <span class="about-link-text">Why?</span>
+     <span class="about-link-text">Why Ibis Birdbrain?</span>
   </a>
   <a href="/install.html" class="about-link" rel="" target="">
     <i class="bi bi-download"></i>
@@ -273,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </a>
   <a href="/tutorials/cli.html" class="about-link" rel="" target="">
     <i class="bi bi-book"></i>
-     <span class="about-link-text">Tutorial</span>
+     <span class="about-link-text">Tutorial: getting started</span>
   </a>
   <a href="https://github.com/ibis-project/ibis-birdbrain" class="about-link" rel="" target="">
     <i class="bi bi-github"></i>
@@ -300,56 +238,8 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ibis Birdbrain is currently under construction by slow humans and is highly experimental. Please check back soon!</p>
+<p>Ibis Birdbrain is highly experimental and currently under construction by slow humans. Please check back soon!</p>
 </div>
-</div>
-<div class="d-grid gap-2">
-<a class="btn btn-lg btn-primary" data-bs-toggle="collapse" href="#collapseDemo" role="button" aria-expanded="false" aria-controls="collapseDemo" margin="100px">Show demo</a>
-</div>
-<section id="section" class="level3">
-<h3 data-anchor-id="section"></h3>
-</section>
-<div id="collapseDemo" class="collapse multi-collapse">
-<section id="demo" class="level2">
-<h2 data-anchor-id="demo">Demo</h2>
-<p>To get started…</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.bots.birdbrain <span class="im">import</span> bot</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"who're you and what can you do?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>birdbrain:</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Hello! I'm known as 'birdbrain', but my full name is 'Ibis Birdbrain'. I was</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>created by the Ibis developers to assist data practitioners with their projects.</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>I have a variety of tools at my disposal. Here are some of the things I can do:</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>1. Access a data platform via Ibis.</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>2. Run SQL queries.</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>3. Generate and execute Python code.</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>4. Search the internet and summarize information.</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>5. Read files and summarize them.</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>My purpose is to facilitate your data analysis process and provide assistance</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>with tools like Ibis, SQL, and Python. Please let me know how I can assist you</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>today!</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>For more detailed information, you can check my documentation and source code:</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>- Ibis Documentation: [Ibis Docs](https://www.ibis-project.org)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>- Birdbrain Source Code: (https://github.com/ibis-project/ibis-birdbrain)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>Note that I always rely on factual and queried data for the information I</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>provide, and I will always cite my sources.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"what's the meaning of life?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>birdbrain:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>The meaning of life, according to my current state, is 42! This might be a</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>reference to "The Hitchhiker's Guide to the Galaxy" by Douglas Adams, where the</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>"Answer to the Ultimate Question of Life, The Universe, and Everything" is</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>humorously stated as 42. However, the true meaning of life might be different</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>for each individual and could be found in personal growth, relationships,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>helping others, or in the pursuit of knowledge. Always a fascinating topic to</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ponder upon!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
 </div>
 
 

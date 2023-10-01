@@ -138,10 +138,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./tutorials/python.html" rel="" target="">
  <span class="dropdown-text">Tutorial: (interactive) Python</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./tutorials/rest.html" rel="" target="">
- <span class="dropdown-text">Tutorial: REST API</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -171,36 +167,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-to" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">How-to</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-how-to">    
-        <li class="dropdown-header">Input Output</li>
-        <li>
-    <a class="dropdown-item" href="./how-to/input-output/basics.html" rel="" target="">
- <span class="dropdown-text">Basic input/output</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./posts.html" rel="" target="">
  <span class="menu-text">Posts</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Contribute</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
-        <li class="dropdown-header">Contribute</li>
-        <li>
-    <a class="dropdown-item" href="./contribute/contributing.html" rel="" target="">
- <span class="dropdown-text">Contributing</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <div class="quarto-navbar-tools">
     <div class="dropdown">
@@ -263,12 +235,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Tutorial: (interactive) Python</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/rest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial: REST API</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -284,6 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#install-from-pypi" id="toc-install-from-pypi" class="nav-link" data-scroll-target="#install-from-pypi">Install from PyPI</a></li>
   <li><a href="#data-platform-setup" id="toc-data-platform-setup" class="nav-link" data-scroll-target="#data-platform-setup">Data platform setup</a></li>
   <li><a href="#ai-platform-setup" id="toc-ai-platform-setup" class="nav-link" data-scroll-target="#ai-platform-setup">AI platform setup</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/install.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -302,12 +269,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-platform-setup" class="level2">
 <h2 class="anchored" data-anchor-id="data-platform-setup">Data platform setup</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Documentation coming soon!</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Only DuckDB supported for now. All 18+ Ibis backends coming soon.</p>
+</div>
+</div>
 </section>
 <section id="ai-platform-setup" class="level2">
 <h2 class="anchored" data-anchor-id="ai-platform-setup">AI platform setup</h2>
-<p>Only OpenAI models work well due to the logit bias trick.</p>
-<p>TODO: document setup.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Documentation coming soon!</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Only Azure OpenAI is supported for now. All Marvin providers coming soon.</p>
+</div>
+</div>
+<p>Create the <code>~/.birdbrain/.env</code> file:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_API_KEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_API_BASE="https://birdbrain.openai.azure.com"</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_DEPLOYMENT_NAME="birdbrain-4-32k"</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_API_TYPE="azure"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p><a href="./cli.qmd">Learn how get started with Ibis Birdbrain’s CLI</a>.</p>
 
 
 </section>

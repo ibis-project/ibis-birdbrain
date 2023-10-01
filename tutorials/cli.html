@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -104,10 +138,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../tutorials/python.html" rel="" target="">
  <span class="dropdown-text">Tutorial: (interactive) Python</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../tutorials/rest.html" rel="" target="">
- <span class="dropdown-text">Tutorial: REST API</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -137,36 +167,12 @@ ul.task-list li input[type="checkbox"] {
   </li>  
     </ul>
   </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-to" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">How-to</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-how-to">    
-        <li class="dropdown-header">Input Output</li>
-        <li>
-    <a class="dropdown-item" href="../how-to/input-output/basics.html" rel="" target="">
- <span class="dropdown-text">Basic input/output</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../posts.html" rel="" target="">
  <span class="menu-text">Posts</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Contribute</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
-        <li class="dropdown-header">Contribute</li>
-        <li>
-    <a class="dropdown-item" href="../contribute/contributing.html" rel="" target="">
- <span class="dropdown-text">Contributing</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
             <div class="quarto-navbar-tools">
     <div class="dropdown">
@@ -229,12 +235,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Tutorial: (interactive) Python</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tutorials/rest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial: REST API</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -249,6 +249,8 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#starting-an-interactive-python-session" id="toc-starting-an-interactive-python-session" class="nav-link" data-scroll-target="#starting-an-interactive-python-session">Starting an interactive Python session</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/tutorials/cli.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -262,10 +264,46 @@ ul.task-list li input[type="checkbox"] {
 <h1>Tutorial: command-line interface (CLI)</h1>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<p>TBD</p>
+<ul>
+<li><a href="../install.html">Install Ibis Birdbrain</a></li>
+</ul>
 </section>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>With Ibis Birdbrain installed, you can use the <code>birdbrain</code> CLI:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> birdbrain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> Usage: birdbrain [OPTIONS] COMMAND [ARGS]...</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>╭─ Options ──────────────────────────────────────────────────────────────────────╮</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>│ --version                     Show version.                                    │</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>│ --install-completion          Install completion for the current shell.        │</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>│ --show-completion             Show completion for the current shell, to copy   │</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>│                               it or customize the installation.                │</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>│ --help                        Show this message and exit.                      │</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>╰────────────────────────────────────────────────────────────────────────────────╯</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>╭─ Commands ─────────────────────────────────────────────────────────────────────╮</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>│ ai                                      ai                                     │</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>│ test                                    test                                   │</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>╰────────────────────────────────────────────────────────────────────────────────╯</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="starting-an-interactive-python-session" class="level2">
+<h2 class="anchored" data-anchor-id="starting-an-interactive-python-session">Starting an interactive Python session</h2>
+<p>You can use the <code>ai</code> subcommand with the <code>--interactive/-i</code> option to start an interactive Python session with Ibis Birdbrain ready to use:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> birdbrain ai <span class="at">--interactive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>access to: birdbrain</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>model: azure_openai/gpt-4-32k</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Python 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Type 'copyright', 'credits' or 'license' for more information</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>IPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>[ins] In [1]: birdbrain</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Out[1]: <span class="kw">&lt;Bot:</span> <span class="er">birdbrain</span><span class="kw">&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>[ins] In [2]:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p><a href="../tutorials/python.html">Learn how to work with Ibis Birdbrain in Python</a>.</p>
 
 
 </section>
