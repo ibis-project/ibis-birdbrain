@@ -274,15 +274,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="2,3,5" data-code-cell="annotated-cell-1">Import the libraries we need.</span>
+<span data-code-lines="2,3,5" data-code-annotation="1" data-code-cell="annotated-cell-1">Import the libraries we need.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="7" data-code-cell="annotated-cell-1">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+<span data-code-lines="7" data-code-annotation="2" data-code-cell="annotated-cell-1">Load the environment variable to setup Marvin to call our OpenAI account.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="9,10,11" data-code-cell="annotated-cell-1">Setup the demo datain an Ibis backend.</span>
+<span data-code-lines="9,10,11" data-code-annotation="3" data-code-cell="annotated-cell-1">Setup the demo datain an Ibis backend.</span>
 </dd>
 </dl>
 <div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
@@ -299,15 +299,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1,2,4,5" data-code-cell="annotated-cell-2">Import Ibis and Marvin.</span>
+<span data-code-lines="1,2,4,5" data-code-annotation="1" data-code-cell="annotated-cell-2">Import Ibis and Marvin.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="7,8" data-code-cell="annotated-cell-2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+<span data-code-lines="7,8" data-code-annotation="2" data-code-cell="annotated-cell-2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="10,11" data-code-cell="annotated-cell-2">Connect to the data and load a table into a variable.</span>
+<span data-code-lines="10,11" data-code-annotation="3" data-code-cell="annotated-cell-2">Connect to the data and load a table into a variable.</span>
 </dd>
 </dl>
 <div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_fn</span></span>
@@ -323,11 +323,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1,4,5" data-code-cell="annotated-cell-3">A non-deterministic, LLM-powered AI function.</span>
+<span data-code-lines="1,4,5" data-code-annotation="1" data-code-cell="annotated-cell-3">A non-deterministic, LLM-powered AI function.</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="8,9,10" data-code-cell="annotated-cell-3">A deterministic, human-authored function that calls the AI function.</span>
+<span data-code-lines="8,9,10" data-code-annotation="2" data-code-cell="annotated-cell-3">A deterministic, human-authored function that calls the AI function.</span>
 </dd>
 </dl>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>t2 <span class="op">=</span> sql_from_text(<span class="st">"the unique combination of species and islands"</span>, t)</span>
