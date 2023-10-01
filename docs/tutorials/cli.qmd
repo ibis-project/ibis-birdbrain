@@ -51,4 +51,4 @@ Out[1]: <Bot: birdbrain>
 
 ## Next steps
 
-[Learn how to work with Ibis Birdbrain in Python](./python.qmd).
+[Learn how to work with Ibis Birdbrain in Python](/tutorials/python.qmd).
