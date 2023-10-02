@@ -92,7 +92,7 @@ format:
   html:
     #theme: vapor
     theme:
-       dark: darkly
+      dark: darkly
       light: darkly
       #dark: vapor
       #light: vapor
