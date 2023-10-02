@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/how-to/input-output/basics.html</loc>
-    <lastmod>2023-10-01T21:45:34.681Z</lastmod>
+    <loc>https://ibis-project.github.io/how-to/input-output/basics.html</loc>
+    <lastmod>2023-10-02T15:31:32.107Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt1/index.html</loc>
-    <lastmod>2023-10-01T21:45:33.825Z</lastmod>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt1/index.html</loc>
+    <lastmod>2023-10-02T15:31:31.063Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt3/index.html</loc>
-    <lastmod>2023-10-01T21:45:32.609Z</lastmod>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt3/index.html</loc>
+    <lastmod>2023-10-02T15:31:29.639Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/index.html</loc>
-    <lastmod>2023-10-01T21:45:30.593Z</lastmod>
+    <loc>https://ibis-project.github.io/index.html</loc>
+    <lastmod>2023-10-02T15:31:27.251Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/posts.html</loc>
-    <lastmod>2023-10-01T21:45:29.565Z</lastmod>
+    <loc>https://ibis-project.github.io/posts.html</loc>
+    <lastmod>2023-10-02T15:31:26.011Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/tutorials/python.html</loc>
-    <lastmod>2023-10-01T21:45:28.177Z</lastmod>
+    <loc>https://ibis-project.github.io/tutorials/python.html</loc>
+    <lastmod>2023-10-02T15:31:24.403Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/demo.html</loc>
-    <lastmod>2023-10-01T21:45:26.909Z</lastmod>
+    <loc>https://ibis-project.github.io/demo.html</loc>
+    <lastmod>2023-10-02T15:31:22.875Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/concepts/user-interfaces.html</loc>
-    <lastmod>2023-10-01T21:45:26.077Z</lastmod>
+    <loc>https://ibis-project.github.io/concepts/user-interfaces.html</loc>
+    <lastmod>2023-10-02T15:31:21.899Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/concepts/ops.html</loc>
-    <lastmod>2023-10-01T21:45:25.321Z</lastmod>
+    <loc>https://ibis-project.github.io/concepts/ops.html</loc>
+    <lastmod>2023-10-02T15:31:20.983Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/release_notes.html</loc>
-    <lastmod>2023-10-01T21:45:22.853Z</lastmod>
+    <loc>https://ibis-project.github.io/release_notes.html</loc>
+    <lastmod>2023-10-02T15:31:17.143Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/why.html</loc>
-    <lastmod>2023-10-01T21:45:24.957Z</lastmod>
+    <loc>https://ibis-project.github.io/why.html</loc>
+    <lastmod>2023-10-02T15:31:20.515Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/concepts/platforms.html</loc>
-    <lastmod>2023-10-01T21:45:25.677Z</lastmod>
+    <loc>https://ibis-project.github.io/concepts/platforms.html</loc>
+    <lastmod>2023-10-02T15:31:21.427Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/concepts/llms.html</loc>
-    <lastmod>2023-10-01T21:45:26.537Z</lastmod>
+    <loc>https://ibis-project.github.io/concepts/llms.html</loc>
+    <lastmod>2023-10-02T15:31:22.443Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/tutorials/cli.html</loc>
-    <lastmod>2023-10-01T21:45:27.333Z</lastmod>
+    <loc>https://ibis-project.github.io/tutorials/cli.html</loc>
+    <lastmod>2023-10-02T15:31:23.359Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/contribute/contributing.html</loc>
-    <lastmod>2023-10-01T21:45:28.553Z</lastmod>
+    <loc>https://ibis-project.github.io/contribute/contributing.html</loc>
+    <lastmod>2023-10-02T15:31:24.807Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/install.html</loc>
-    <lastmod>2023-10-01T21:45:30.197Z</lastmod>
+    <loc>https://ibis-project.github.io/install.html</loc>
+    <lastmod>2023-10-02T15:31:26.783Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt0/index.html</loc>
-    <lastmod>2023-10-01T21:45:32.177Z</lastmod>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt0/index.html</loc>
+    <lastmod>2023-10-02T15:31:29.139Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/ibis-birdbrain/posts/llms-and-data-pt2/index.html</loc>
-    <lastmod>2023-10-01T21:45:34.337Z</lastmod>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt2/index.html</loc>
+    <lastmod>2023-10-02T15:31:31.687Z</lastmod>
   </url>
 </urlset>
