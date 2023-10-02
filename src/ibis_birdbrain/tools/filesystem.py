@@ -54,6 +54,7 @@ def list_files_and_dirs(
         "_output",
         "_freeze",
         ".quarto",
+        ".streamlit",
     ] + additional_ignore_dirs
 
     for root, dirs, files in os.walk(path):
