@@ -7,7 +7,8 @@ website:
 
   # basics
   title: "Ibis Birdbrain"
-  site-url: https://ibis-project.github.io/ibis-birdbrain
+  site-url: https://ibis-project.github.io
+  site-path: ibis-birdbrain
   description: "AI for your data project"
   favicon: images/logo.png
 
