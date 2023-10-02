@@ -25,6 +25,7 @@ class Bot:
         self.tools = tools
         self.prompts = prompts
         self.description = description
+        self.interactive = True
 
         self.console = Console()
 
@@ -38,7 +39,7 @@ class Bot:
 
     def __call__(self, text: str) -> str | None:
         res = self.ai(text).content
-        if self.name == "birdbrain":
+        if self.interactive:
             self.console.print(f"birdbrain:\n\n", style="bold violet blink", end="")
             self.console.print(res)
         else:
