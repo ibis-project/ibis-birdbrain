@@ -13,13 +13,13 @@ about:
   links:
     - icon: info-circle
       text: Why Ibis Birdbrain?
-      href: /ibis-birdbrain/why.qmd
+      href: /ibis-birdbrain/why
     - icon: download
       text: Installation
-      href: /ibis-birdbrain/install.qmd
+      href: /ibis-birdbrain/install
     - icon: book
       text: "Tutorial: getting started"
-      href: /ibis-birdbrain/tutorials/cli.qmd
+      href: /ibis-birdbrain/tutorials/cli
     - icon: github
       text: GitHub
       href: https://github.com/ibis-project/ibis-birdbrain
