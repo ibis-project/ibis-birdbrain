@@ -1,4 +1,4 @@
-# Tutorial: command-line interface
+# Tutorial: CLI
 
 ## Prerequisites
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-With Ibis Birdbrain installed, you can use the `birdbrain` CLI:
+With Ibis Birdbrain installed, you can use the `birdbrain` command-line interface (CLI):
 
 ```bash
 $ birdbrain
