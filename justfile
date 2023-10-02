@@ -61,3 +61,6 @@ smoke-test:
 clean:
     @rm -rf dist || True
 
+# open-app
+open-app:
+    @open https://ibis-birdbrain.streamlit.app
