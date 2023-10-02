@@ -152,7 +152,7 @@ quartodoc:
             - read_excel_file
             - read_delta_table
             - list_tables
-            - get_table_schema
+            - get_table_schemas
     - title: Code tools
       desc: Tools for code
       package: ibis_birdbrain.tools.code
