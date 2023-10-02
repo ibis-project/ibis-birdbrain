@@ -62,15 +62,15 @@ font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="2,3,5" data-code-annotation="1" data-code-cell="annotated-cell-1">Import the libraries we need.</span>
+<span data-code-lines="2,3,5" data-code-cell="annotated-cell-1" data-code-annotation="1">Import the libraries we need.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="7" data-code-annotation="2" data-code-cell="annotated-cell-1">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+<span data-code-lines="7" data-code-cell="annotated-cell-1" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="9,10,11" data-code-annotation="3" data-code-cell="annotated-cell-1">Setup the demo datain an Ibis backend.</span>
+<span data-code-lines="9,10,11" data-code-cell="annotated-cell-1" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
 </dd>
 </dl>
 <div class="sourceCode" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
@@ -117,15 +117,15 @@ font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutte
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2,4,5" data-code-annotation="1" data-code-cell="annotated-cell-2">Import Ibis and Marvin.</span>
+<span data-code-lines="1,2,4,5" data-code-cell="annotated-cell-2" data-code-annotation="1">Import Ibis and Marvin.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="7,8" data-code-annotation="2" data-code-cell="annotated-cell-2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+<span data-code-lines="7,8" data-code-cell="annotated-cell-2" data-code-annotation="2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="10,11" data-code-annotation="3" data-code-cell="annotated-cell-2">Connect to the data and load a table into a variable.</span>
+<span data-code-lines="10,11" data-code-cell="annotated-cell-2" data-code-annotation="3">Connect to the data and load a table into a variable.</span>
 </dd>
 </dl>
 <div class="sourceCode" id="annotated-cell-3" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><span class="at" style="color: #657422;
@@ -167,11 +167,11 @@ font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,4,5" data-code-annotation="1" data-code-cell="annotated-cell-3">A non-deterministic, LLM-powered AI function.</span>
+<span data-code-lines="1,4,5" data-code-cell="annotated-cell-3" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="8,9,10" data-code-annotation="2" data-code-cell="annotated-cell-3">A deterministic, human-authored function that calls the AI function.</span>
+<span data-code-lines="8,9,10" data-code-cell="annotated-cell-3" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
 </dd>
 </dl>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t2 <span class="op" style="color: #5E5E5E;
@@ -409,15 +409,15 @@ font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="1,2,4" data-code-annotation="1">Import the libraries we need.</span>
+<span data-code-annotation="1" data-code-lines="1,2,4" data-code-cell="annotated-cell-1">Import the libraries we need.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+<span data-code-annotation="2" data-code-lines="6" data-code-cell="annotated-cell-1">Load the environment variable to setup Marvin to call our OpenAI account.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="8,9,10" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
+<span data-code-annotation="3" data-code-lines="8,9,10" data-code-cell="annotated-cell-1">Setup the demo datain an Ibis backend.</span>
 </dd>
 </dl>
 </div>
@@ -468,15 +468,15 @@ font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutte
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1,2,4,5" data-code-annotation="1">Import Ibis and Marvin.</span>
+<span data-code-annotation="1" data-code-lines="1,2,4,5" data-code-cell="annotated-cell-2">Import Ibis and Marvin.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="7,8" data-code-annotation="2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
+<span data-code-annotation="2" data-code-lines="7,8" data-code-cell="annotated-cell-2">Configure Ibis (interactive) and Marvin (GPT-4).</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="10,11" data-code-annotation="3">Connect to the data and load a table into a variable.</span>
+<span data-code-annotation="3" data-code-lines="10,11" data-code-cell="annotated-cell-2">Connect to the data and load a table into a variable.</span>
 </dd>
 </dl>
 </div>
@@ -529,11 +529,11 @@ font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="1,4,5" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+<span data-code-annotation="1" data-code-lines="1,4,5" data-code-cell="annotated-cell-3">A non-deterministic, LLM-powered AI function.</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="8,9,10" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+<span data-code-annotation="2" data-code-lines="8,9,10" data-code-cell="annotated-cell-3">A deterministic, human-authored function that calls the AI function.</span>
 </dd>
 </dl>
 </div>
@@ -643,15 +643,15 @@ font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2,4,5,6" data-code-cell="annotated-cell-1" data-code-annotation="1">Import the libraries we need.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="1,2,4,5,6">Import the libraries we need.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="8" data-code-cell="annotated-cell-1" data-code-annotation="2">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="8">Load the environment variable to setup Marvin to call our OpenAI account.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="10,11,12" data-code-cell="annotated-cell-1" data-code-annotation="3">Setup the demo datain an Ibis backend.</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-1" data-code-lines="10,11,12">Setup the demo datain an Ibis backend.</span>
 </dd>
 </dl>
 </div>
@@ -690,11 +690,11 @@ font-style: inherit;">"openai/gpt-4"</span></span><div class="code-annotation-gu
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2,4,5" data-code-cell="annotated-cell-2" data-code-annotation="1">Import Ibis and Marvin.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-2" data-code-lines="1,2,4,5">Import Ibis and Marvin.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="8,9" data-code-cell="annotated-cell-2" data-code-annotation="2">Configure Ibis and Marvin</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-2" data-code-lines="8,9">Configure Ibis and Marvin</span>
 </dd>
 </dl>
 </div>
@@ -740,11 +740,11 @@ font-style: inherit;">";"</span>))</span><div class="code-annotation-gutter-bg">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,4,5" data-code-cell="annotated-cell-3" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-3" data-code-lines="1,4,5">A non-deterministic, LLM-powered AI function.</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="8,9,10" data-code-cell="annotated-cell-3" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-3" data-code-lines="8,9,10">A deterministic, human-authored function that calls the AI function.</span>
 </dd>
 </dl>
 </div>
@@ -782,7 +782,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-5" data-code-annotation="1">Avoid rate-limiting by waiting.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-5" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -823,7 +823,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-7" data-code-annotation="1">Avoid rate-limiting by waiting.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-7" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -889,11 +889,11 @@ font-style: inherit;">"""</span>.strip()</span><div class="code-annotation-gutte
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2,3" data-code-cell="annotated-cell-8" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-8" data-code-lines="1,2,3">A non-deterministic, LLM-powered AI function.</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="6,7,13" data-code-cell="annotated-cell-8" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-8" data-code-lines="6,7,13">A deterministic, human-authored function that calls the AI function.</span>
 </dd>
 </dl>
 </div>
@@ -936,7 +936,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-10" data-code-annotation="1">Avoid rate-limiting by waiting.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-10" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -979,7 +979,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-12" data-code-annotation="1">Avoid rate-limiting by waiting.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-12" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1063,19 +1063,19 @@ font-style: inherit;">"hello world"</span>)</span><div class="code-annotation-gu
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-13" data-code-annotation="1">Additional imports for Pydantic.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-13" data-code-lines="1">Additional imports for Pydantic.</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-13" data-code-annotation="2">Configure Marvin to use a cheaper model.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-13" data-code-lines="4">Configure Marvin to use a cheaper model.</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="7,8,9,11,12,13,14,15,16,17,18" data-code-cell="annotated-cell-13" data-code-annotation="3">A non-deterministic, LLM-powered AI model.</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-13" data-code-lines="7,8,9,11,12,13,14,15,16,17,18">A non-deterministic, LLM-powered AI model.</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="21" data-code-cell="annotated-cell-13" data-code-annotation="4">Call the AI model on some text.</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-13" data-code-lines="21">Call the AI model on some text.</span>
 </dd>
 </dl>
 </div>
@@ -1119,7 +1119,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-15" data-code-annotation="1">Avoid rate-limiting by waiting.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-15" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1163,7 +1163,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-17" data-code-annotation="1">Avoid rate-limiting by waiting.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-17" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1440,19 +1440,19 @@ font-style: inherit;">"working with data and LLMs on 18+ data platforms is easy!
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1,3,4,5" data-code-cell="annotated-cell-1">Import the libraries we need.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="1,3,4,5">Import the libraries we need.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="7" data-code-cell="annotated-cell-1">Load the environment variable to setup Marvin to call our OpenAI account.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="7">Load the environment variable to setup Marvin to call our OpenAI account.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="10,12" data-code-cell="annotated-cell-1">Configure the LLM model to use.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="3" data-code-lines="10,12">Configure the LLM model to use.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-lines="14" data-code-cell="annotated-cell-1">Some text to test on</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="4" data-code-lines="14">Some text to test on</span>
 </dd>
 </dl>
 </div>
@@ -1509,7 +1509,7 @@ font-style: inherit;">1</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-3">Avoid rate-limiting by waiting.</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1539,7 +1539,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-5">Avoid rate-limiting by waiting.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1631,7 +1631,7 @@ font-style: inherit;">1</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-7">Avoid rate-limiting by waiting.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1695,7 +1695,7 @@ font-style: inherit;">1</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-9">Avoid rate-limiting by waiting.</span>
+<span data-code-cell="annotated-cell-9" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1717,7 +1717,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-11">Avoid rate-limiting by waiting.</span>
+<span data-code-cell="annotated-cell-11" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
@@ -1756,11 +1756,11 @@ font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-12">Import the libraries we need.</span>
+<span data-code-cell="annotated-cell-12" data-code-annotation="1" data-code-lines="1">Import the libraries we need.</span>
 </dd>
 <dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="3,4,5" data-code-cell="annotated-cell-12">Setup the demo datain an Ibis backend.</span>
+<span data-code-cell="annotated-cell-12" data-code-annotation="2" data-code-lines="3,4,5">Setup the demo datain an Ibis backend.</span>
 </dd>
 </dl>
 </div>
@@ -1793,15 +1793,15 @@ font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutte
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-13">Import Ibis.</span>
+<span data-code-cell="annotated-cell-13" data-code-annotation="1" data-code-lines="1">Import Ibis.</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-13">Configure Ibis (interactive).</span>
+<span data-code-cell="annotated-cell-13" data-code-annotation="2" data-code-lines="3">Configure Ibis (interactive).</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="5,6" data-code-cell="annotated-cell-13">Connect to the data and load a table into a variable.</span>
+<span data-code-cell="annotated-cell-13" data-code-annotation="3" data-code-lines="5,6">Connect to the data and load a table into a variable.</span>
 </dd>
 </dl>
 </div>
@@ -1998,7 +1998,7 @@ font-style: inherit;">3</span>)</span><div class="code-annotation-gutter-bg"></d
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-21" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-21">Avoid rate-limiting by waiting.</span>
+<span data-code-cell="annotated-cell-21" data-code-annotation="1" data-code-lines="1">Avoid rate-limiting by waiting.</span>
 </dd>
 </dl>
 </div>
