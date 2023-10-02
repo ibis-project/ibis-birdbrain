@@ -37,9 +37,3 @@ def open_browser(url: str) -> str:
         return str(e)
 
     return f"Opened {url} in the user's web browser."
-
-
-@tool
-def let_me_google_that_for_you(query: str) -> None:
-    """Snarky tool that opens a web browser with a LMGTFY link."""
-    open_browser("https://letmegooglethat.com/?q=" + query)
