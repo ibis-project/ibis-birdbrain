@@ -21,7 +21,7 @@ jobs:
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: "v1.4.398"
+          version: "1.4.398"
 
       - name: Install ibis-birdbrain and dependencies
         run: |
