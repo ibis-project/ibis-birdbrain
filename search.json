@@ -179,7 +179,7 @@
     "href": "concepts/user-interfaces.html",
     "title": "User interfaces",
     "section": "",
-    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be used interactively in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics. A REPR loop is a common pattern for this type of interface, where the user enters a command, the command is evaluated, and the result is printed to the screen.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
+    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
     "crumbs": [
       "User interfaces"
     ]
@@ -189,17 +189,17 @@
     "href": "concepts/user-interfaces.html#command-line-interface-cli",
     "title": "User interfaces",
     "section": "",
-    "text": "A command-line interface (CLI) is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.",
+    "text": "A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.",
     "crumbs": [
       "User interfaces"
     ]
   },
   {
-    "objectID": "concepts/user-interfaces.html#python-interactive",
-    "href": "concepts/user-interfaces.html#python-interactive",
+    "objectID": "concepts/user-interfaces.html#python",
+    "href": "concepts/user-interfaces.html#python",
     "title": "User interfaces",
     "section": "",
-    "text": "Python can be used interactively in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics. A REPR loop is a common pattern for this type of interface, where the user enters a command, the command is evaluated, and the result is printed to the screen.",
+    "text": "Python can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.",
     "crumbs": [
       "User interfaces"
     ]
