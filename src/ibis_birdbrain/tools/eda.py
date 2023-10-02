@@ -10,7 +10,7 @@ from ibis.expr.types.relations import Table
 
 from ibis_birdbrain.tools import tool
 from ibis_birdbrain.functions.code import (
-    choose_table_name,
+    choose_table_names,
     gen_sql_query,
     fix_sql_query,
 )
@@ -28,11 +28,9 @@ else:
 
 # tools
 @tool
-def get_table_schema(table_name: str) -> Schema:
-    """Returns the schema of a table"""
-    if table_name not in list_tables():
-        raise ValueError(f"Table {table_name} not found in {list_tables()}")
-    return con.table(table_name).schema()
+def get_table_schemas(table_names: list[str]) -> list[Schema]:
+    """Returns the schemas of a list of tables"""
+    return [con.table(table_name).schema() for table_name in table_names]
 
 
 @tool
@@ -74,19 +72,17 @@ def read_excel_file(filepath: str, sheet_name: str = "Sheet1") -> Table:
 
 
 @tool
-def query_table(question: str) -> Table:
-    """Queries the table in the database to answer the question"""
-    table_name = choose_table_name(question, options=list_tables())
-    table_schema = get_table_schema(table_name)
-    if table_name not in list_tables():
-        raise ValueError(f"Table {table_name} not found in {list_tables}")
-    sql = gen_sql_query(table_name, table_schema, question).strip(";")
+def query_tables(question: str) -> Table:
+    """Queries the tables in the database to answer the question"""
+    table_names = choose_table_names(question, options=list_tables())
+    table_schemas = get_table_schemas(table_names)
+    sql = gen_sql_query(table_names, table_schemas, question).strip(";")
     try:
-        res = con.table(table_name).sql(sql)
+        res = con.table(table_names[0]).sql(sql)
     except Exception as e:
-        sql = fix_sql_query(table_name, table_schema, sql, str(e)).strip(";")
+        sql = fix_sql_query(table_names, table_schemas, sql, str(e)).strip(";")
         try:
-            res = con.table(table_name).sql(res)
+            res = con.table(table_names[0]).sql(res)
         except Exception as e:
             raise ValueError(f"Could not execute SQL: {res} with error: {e}")
 

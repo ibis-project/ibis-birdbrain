@@ -4,8 +4,8 @@ from marvin import ai_fn
 
 # functions
 @ai_fn
-def choose_table_name(text: str, options: list[str]) -> str:
-    """Given text, returns the table name to query."""
+def choose_table_names(text: str, options: list[str]) -> list[str]:
+    """Given text and a list of table names as options, returns the list of table names to query."""
     text, options = text, options
     return ""
 

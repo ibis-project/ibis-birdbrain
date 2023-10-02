@@ -19,8 +19,8 @@ from ibis_birdbrain.tools.code import text_to_python, fix_python_error, run_pyth
 from ibis_birdbrain.tools.filesystem import read_file, list_files_and_dirs, write_file
 from ibis_birdbrain.tools.eda import (
     list_tables,
-    query_table,
-    get_table_schema,
+    query_tables,
+    get_table_schemas,
     read_delta_table,
     read_excel_file,
 )
@@ -55,8 +55,8 @@ tools = [
     run_python_code,
     # Ibis
     list_tables,
-    query_table,
-    get_table_schema,
+    query_tables,
+    get_table_schemas,
     read_delta_table,
     read_excel_file,
     # advanced
