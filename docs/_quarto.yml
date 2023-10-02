@@ -92,10 +92,10 @@ format:
   html:
     #theme: vapor
     theme:
-      # dark: darkly
-      #light: darkly
-      dark: vapor
-      light: vapor
+       dark: darkly
+      light: darkly
+      #dark: vapor
+      #light: vapor
     fontcolor: fuchsia
     linkcolor: fuchsia
     css: styles.css
