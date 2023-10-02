@@ -47,7 +47,7 @@ preview:
 
 # streamlit stuff
 app:
-    @streamlit run app.py
+    @streamlit run examples/streamlit_app/app.py
 
 # format
 format:

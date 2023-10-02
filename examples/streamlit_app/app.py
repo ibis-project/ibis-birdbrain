@@ -1,12 +1,10 @@
-import streamlit as st
-
-from random import randint
-
+# imports
 import ibis
 import marvin
 import IPython
 
-from ibis_birdbrain.tools.eda import con
+import streamlit as st
+
 from ibis_birdbrain.bots.birdbrain import bot as birdbrain
 
 # configure Ibis
