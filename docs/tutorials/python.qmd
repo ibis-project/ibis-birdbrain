@@ -1,4 +1,4 @@
-# Tutorial: (interactive) Python
+# Tutorial: Python
 
 ## Prerequisites
 

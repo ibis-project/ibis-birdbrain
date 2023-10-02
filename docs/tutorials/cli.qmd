@@ -1,4 +1,4 @@
-# Tutorial: command-line interface (CLI)
+# Tutorial: command-line interface
 
 ## Prerequisites
 
