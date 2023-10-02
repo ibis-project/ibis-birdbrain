@@ -88,6 +88,288 @@
     "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nModular and composable\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 15, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nCalls and computations\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 14, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 13, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to Marvin and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 12, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "Reference",
+    "section": "",
+    "text": "Tools for the filesystem\n\n\n\nfilesystem\nFilesystem tools\n\n\n\n\n\n\nTools for EDA\n\n\n\neda\nEDA tools\n\n\n\n\n\n\nTools for code\n\n\n\ncode\nCode tools\n\n\n\n\n\n\nTools for the Internet\n\n\n\ninternet\nInternet tools"
+  },
+  {
+    "objectID": "reference/index.html#filesystem-tools",
+    "href": "reference/index.html#filesystem-tools",
+    "title": "Reference",
+    "section": "",
+    "text": "Tools for the filesystem\n\n\n\nfilesystem\nFilesystem tools"
+  },
+  {
+    "objectID": "reference/index.html#eda-tools",
+    "href": "reference/index.html#eda-tools",
+    "title": "Reference",
+    "section": "",
+    "text": "Tools for EDA\n\n\n\neda\nEDA tools"
+  },
+  {
+    "objectID": "reference/index.html#code-tools",
+    "href": "reference/index.html#code-tools",
+    "title": "Reference",
+    "section": "",
+    "text": "Tools for code\n\n\n\ncode\nCode tools"
+  },
+  {
+    "objectID": "reference/index.html#internet-tools",
+    "href": "reference/index.html#internet-tools",
+    "title": "Reference",
+    "section": "",
+    "text": "Tools for the Internet\n\n\n\ninternet\nInternet tools"
+  },
+  {
+    "objectID": "reference/filesystem.html",
+    "href": "reference/filesystem.html",
+    "title": "filesystem",
+    "section": "",
+    "text": "filesystem\nFilesystem tools\n\n\nread_file\ntools.filesystem.read_file(path)\nReads a file and returns its content.\n\n\nlist_files_and_dirs\ntools.filesystem.list_files_and_dirs(path='.', depth=-1, additional_ignore_dirs=[])\nLists all files and directories in a directory.\n\n\nwrite_file\ntools.filesystem.write_file(path, content, overwrite=False)\nWrites a file.\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Tools",
+      "filesystem"
+    ]
+  },
+  {
+    "objectID": "contribute/contributing.html",
+    "href": "contribute/contributing.html",
+    "title": "Contributing",
+    "section": "",
+    "text": "To contribute…",
+    "crumbs": [
+      "Contribute",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "contribute/contributing.html#required-dependencies",
+    "href": "contribute/contributing.html#required-dependencies",
+    "title": "Contributing",
+    "section": "",
+    "text": "To contribute…",
+    "crumbs": [
+      "Contribute",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html",
+    "href": "tutorials/cli.html",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "Install Ibis Birdbrain\n\n\n\n\nWith Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯\n\n\n\nYou can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:\n\n\n\nLearn how to work with Ibis Birdbrain in Python.",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#prerequisites",
+    "href": "tutorials/cli.html#prerequisites",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "Install Ibis Birdbrain",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#overview",
+    "href": "tutorials/cli.html#overview",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "With Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#starting-an-interactive-python-session",
+    "href": "tutorials/cli.html#starting-an-interactive-python-session",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "You can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#next-steps",
+    "href": "tutorials/cli.html#next-steps",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "Learn how to work with Ibis Birdbrain in Python.",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html",
+    "href": "concepts/llms.html",
+    "title": "Large language models",
+    "section": "",
+    "text": "Large language models (LLMs) represent decades of research and development of neural networks. While relatively impressive LLMs have been around for years, recent innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user.\nWe are primarily concerned with applying LLMs to data, but we’ll take a brief look at how they work and why we should use them.\n\n\nAn artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.\n\n\n\nA large language model is a neural network trained on vast amounts of text data.\n\n\n\nA LLM takes text as input and produces text as output.\n\n\n\nText in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.\n\n\n\nSome limitations include:\n\ncost\nlatency\naccuracy\n…",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-is-an-artificial-neural-network",
+    "href": "concepts/llms.html#what-is-an-artificial-neural-network",
+    "title": "Large language models",
+    "section": "",
+    "text": "An artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-is-a-large-language-model",
+    "href": "concepts/llms.html#what-is-a-large-language-model",
+    "title": "Large language models",
+    "section": "",
+    "text": "A large language model is a neural network trained on vast amounts of text data.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-are-the-inputs-and-outputs",
+    "href": "concepts/llms.html#what-are-the-inputs-and-outputs",
+    "title": "Large language models",
+    "section": "",
+    "text": "A LLM takes text as input and produces text as output.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-do-llms-work-well-for",
+    "href": "concepts/llms.html#what-do-llms-work-well-for",
+    "title": "Large language models",
+    "section": "",
+    "text": "Text in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-are-the-limitations-and-considerations",
+    "href": "concepts/llms.html#what-are-the-limitations-and-considerations",
+    "title": "Large language models",
+    "section": "",
+    "text": "Some limitations include:\n\ncost\nlatency\naccuracy\n…",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/platforms.html",
+    "href": "concepts/platforms.html",
+    "title": "Data and AI platforms",
+    "section": "",
+    "text": "Data and AI platforms are…",
+    "crumbs": [
+      "Data and AI platforms"
+    ]
+  },
+  {
+    "objectID": "why.html",
+    "href": "why.html",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "Ibis is the portable Python dataframe library.\nIbis Birdbrain is the portable Python AI-powered data bot, built on Ibis with support for all data platforms Ibis’s 18+ backends support. Ibis Birdbrain is also built on Marvin with support for all AI platforms Marvin supports.\n\n\n\n\nWhen things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex\n\n\n\n\nComposable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
+    "crumbs": [
+      "Why Ibis Birdbrain?"
+    ]
+  },
+  {
+    "objectID": "why.html#standards",
+    "href": "why.html#standards",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "When things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex",
+    "crumbs": [
+      "Why Ibis Birdbrain?"
+    ]
+  },
+  {
+    "objectID": "why.html#composable-data-systems-are-mice",
+    "href": "why.html#composable-data-systems-are-mice",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "Composable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
+    "crumbs": [
+      "Why Ibis Birdbrain?"
+    ]
+  },
+  {
+    "objectID": "release_notes.html",
+    "href": "release_notes.html",
+    "title": "Release notes",
+    "section": "",
+    "text": "Release notes\nTBD\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "concepts/ops.html",
+    "href": "concepts/ops.html",
+    "title": "LLMOps, MLOps, DevOps",
+    "section": "",
+    "text": "The ML landscape is plagued by “the toy problem” – building something cool is easy, putting something in production is hard.",
+    "crumbs": [
+      "LLMOps, MLOps, DevOps"
+    ]
+  },
+  {
+    "objectID": "concepts/user-interfaces.html",
+    "href": "concepts/user-interfaces.html",
+    "title": "User interfaces",
+    "section": "",
+    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "concepts/user-interfaces.html#command-line-interface-cli",
+    "href": "concepts/user-interfaces.html#command-line-interface-cli",
+    "title": "User interfaces",
+    "section": "",
+    "text": "A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "concepts/user-interfaces.html#python",
+    "href": "concepts/user-interfaces.html#python",
+    "title": "User interfaces",
+    "section": "",
+    "text": "Python can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "concepts/user-interfaces.html#language-user-interface-lui",
+    "href": "concepts/user-interfaces.html#language-user-interface-lui",
+    "title": "User interfaces",
+    "section": "",
+    "text": "Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "demo.html",
+    "href": "demo.html",
+    "title": "demo",
+    "section": "",
+    "text": "Back to top"
+  },
+  {
     "objectID": "tutorials/python.html",
     "href": "tutorials/python.html",
     "title": "Tutorial: Python",
@@ -168,239 +450,28 @@
     ]
   },
   {
-    "objectID": "demo.html",
-    "href": "demo.html",
-    "title": "demo",
+    "objectID": "reference/eda.html",
+    "href": "reference/eda.html",
+    "title": "eda",
     "section": "",
-    "text": "Back to top"
+    "text": "eda\nEDA tools\n\n\nquery_tables\ntools.eda.query_tables(question)\nQueries the tables in the database to answer the question\n\n\nread_excel_file\ntools.eda.read_excel_file(filepath, sheet_name='Sheet1')\nReads an Excel file from the full filepath\nfilepath should be of the form: /.\n\n\nread_delta_table\ntools.eda.read_delta_table(filepath)\nReads a Delta Lake table directory from the full filepath\nfilepath should be of the form: /\n\n\nlist_tables\ntools.eda.list_tables()\nReturns a list of available tables to query\n\n\nget_table_schemas\ntools.eda.get_table_schemas(table_names)\nReturns the schemas of a list of tables\n\n\n\n\n Back to top"
   },
   {
-    "objectID": "concepts/user-interfaces.html",
-    "href": "concepts/user-interfaces.html",
-    "title": "User interfaces",
+    "objectID": "reference/internet.html",
+    "href": "reference/internet.html",
+    "title": "internet",
     "section": "",
-    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
+    "text": "internet\nInternet tools\n\n\nsearch_internet\ntools.internet.search_internet(query='what is the Ibis project?', n_results=8)\nSearches the internet for the given query.\n\n\nwebpage_to_str\ntools.internet.webpage_to_str(url='https://ibis-project.org')\nReads a webpage link into a string. Useful for summarizing webpages.\n\n\nopen_browser\ntools.internet.open_browser(url)\nOpens the URL in a web browser.\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "reference/code.html",
+    "href": "reference/code.html",
+    "title": "code",
+    "section": "",
+    "text": "code\nCode tools\n\n\ntext_to_python\ntools.code.text_to_python(question)\nReturns a Python code given text.\n\n\nfix_python_error\ntools.code.fix_python_error(code, error)\nFixes a Python error in the code.\n\n\npython_function_to_udf\ntools.code.python_function_to_udf(code)\nConverts a Python function to an Ibis UDF.\n\n\nrun_python_code\ntools.code.run_python_code(code)\nExecute Python code as a string and return the output\n\n\n\n\n Back to top",
     "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/user-interfaces.html#command-line-interface-cli",
-    "href": "concepts/user-interfaces.html#command-line-interface-cli",
-    "title": "User interfaces",
-    "section": "",
-    "text": "A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.",
-    "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/user-interfaces.html#python",
-    "href": "concepts/user-interfaces.html#python",
-    "title": "User interfaces",
-    "section": "",
-    "text": "Python can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.",
-    "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/user-interfaces.html#language-user-interface-lui",
-    "href": "concepts/user-interfaces.html#language-user-interface-lui",
-    "title": "User interfaces",
-    "section": "",
-    "text": "Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
-    "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/ops.html",
-    "href": "concepts/ops.html",
-    "title": "LLMOps, MLOps, DevOps",
-    "section": "",
-    "text": "The ML landscape is plagued by “the toy problem” – building something cool is easy, putting something in production is hard.",
-    "crumbs": [
-      "LLMOps, MLOps, DevOps"
-    ]
-  },
-  {
-    "objectID": "release_notes.html",
-    "href": "release_notes.html",
-    "title": "Release notes",
-    "section": "",
-    "text": "Release notes\nTBD\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "why.html",
-    "href": "why.html",
-    "title": "Why Ibis Birdbrain?",
-    "section": "",
-    "text": "Ibis is the portable Python dataframe library.\nIbis Birdbrain is the portable Python AI-powered data bot, built on Ibis with support for all data platforms Ibis’s 18+ backends support. Ibis Birdbrain is also built on Marvin with support for all AI platforms Marvin supports.\n\n\n\n\nWhen things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex\n\n\n\n\nComposable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
-    "crumbs": [
-      "Why Ibis Birdbrain?"
-    ]
-  },
-  {
-    "objectID": "why.html#standards",
-    "href": "why.html#standards",
-    "title": "Why Ibis Birdbrain?",
-    "section": "",
-    "text": "When things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex",
-    "crumbs": [
-      "Why Ibis Birdbrain?"
-    ]
-  },
-  {
-    "objectID": "why.html#composable-data-systems-are-mice",
-    "href": "why.html#composable-data-systems-are-mice",
-    "title": "Why Ibis Birdbrain?",
-    "section": "",
-    "text": "Composable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
-    "crumbs": [
-      "Why Ibis Birdbrain?"
-    ]
-  },
-  {
-    "objectID": "concepts/platforms.html",
-    "href": "concepts/platforms.html",
-    "title": "Data and AI platforms",
-    "section": "",
-    "text": "Data and AI platforms are…",
-    "crumbs": [
-      "Data and AI platforms"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html",
-    "href": "concepts/llms.html",
-    "title": "Large language models",
-    "section": "",
-    "text": "Large language models (LLMs) represent decades of research and development of neural networks. While relatively impressive LLMs have been around for years, recent innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user.\nWe are primarily concerned with applying LLMs to data, but we’ll take a brief look at how they work and why we should use them.\n\n\nAn artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.\n\n\n\nA large language model is a neural network trained on vast amounts of text data.\n\n\n\nA LLM takes text as input and produces text as output.\n\n\n\nText in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.\n\n\n\nSome limitations include:\n\ncost\nlatency\naccuracy\n…",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-is-an-artificial-neural-network",
-    "href": "concepts/llms.html#what-is-an-artificial-neural-network",
-    "title": "Large language models",
-    "section": "",
-    "text": "An artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-is-a-large-language-model",
-    "href": "concepts/llms.html#what-is-a-large-language-model",
-    "title": "Large language models",
-    "section": "",
-    "text": "A large language model is a neural network trained on vast amounts of text data.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-are-the-inputs-and-outputs",
-    "href": "concepts/llms.html#what-are-the-inputs-and-outputs",
-    "title": "Large language models",
-    "section": "",
-    "text": "A LLM takes text as input and produces text as output.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-do-llms-work-well-for",
-    "href": "concepts/llms.html#what-do-llms-work-well-for",
-    "title": "Large language models",
-    "section": "",
-    "text": "Text in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-are-the-limitations-and-considerations",
-    "href": "concepts/llms.html#what-are-the-limitations-and-considerations",
-    "title": "Large language models",
-    "section": "",
-    "text": "Some limitations include:\n\ncost\nlatency\naccuracy\n…",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "tutorials/cli.html",
-    "href": "tutorials/cli.html",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "Install Ibis Birdbrain\n\n\n\n\nWith Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯\n\n\n\nYou can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:\n\n\n\nLearn how to work with Ibis Birdbrain in Python.",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
-  },
-  {
-    "objectID": "tutorials/cli.html#prerequisites",
-    "href": "tutorials/cli.html#prerequisites",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "Install Ibis Birdbrain",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
-  },
-  {
-    "objectID": "tutorials/cli.html#overview",
-    "href": "tutorials/cli.html#overview",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "With Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
-  },
-  {
-    "objectID": "tutorials/cli.html#starting-an-interactive-python-session",
-    "href": "tutorials/cli.html#starting-an-interactive-python-session",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "You can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
-  },
-  {
-    "objectID": "tutorials/cli.html#next-steps",
-    "href": "tutorials/cli.html#next-steps",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "Learn how to work with Ibis Birdbrain in Python.",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
-  },
-  {
-    "objectID": "contribute/contributing.html",
-    "href": "contribute/contributing.html",
-    "title": "Contributing",
-    "section": "",
-    "text": "To contribute…",
-    "crumbs": [
-      "Contribute",
-      "Contributing"
-    ]
-  },
-  {
-    "objectID": "contribute/contributing.html#required-dependencies",
-    "href": "contribute/contributing.html#required-dependencies",
-    "title": "Contributing",
-    "section": "",
-    "text": "To contribute…",
-    "crumbs": [
-      "Contribute",
-      "Contributing"
+      "Tools",
+      "code"
     ]
   },
   {
