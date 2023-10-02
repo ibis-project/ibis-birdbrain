@@ -51,6 +51,7 @@ website:
       - sidebar:getting-started
       - sidebar:concepts
       #- sidebar:how-to
+      - sidebar:reference
 
     right:
       - posts.qmd
@@ -86,6 +87,15 @@ website:
       collapse-level: 2
       contents:
         - auto: contribute
+    - id: reference
+      title: "Reference"
+      style: "docked"
+      collapse-level: 2
+      contents:
+        - section: Tools
+          contents:
+            - reference/code.qmd
+            - reference/filesystem.qmd
 
 # format
 format:
@@ -104,4 +114,70 @@ format:
 # resources
 resources:
   - CNAME
+
+quartodoc:
+  package: ibis_birdbrain
+  title: Reference
+  sidebar: reference/_sidebar.yml
+  dynamic: true
+  render_interlinks: false
+  options:
+    member_options:
+      signature_name: short
+  sections:
+    - title: Filesystem tools
+      desc: Tools for the filesystem
+      package: ibis_birdbrain.tools.filesystem
+      contents:
+      - kind: page
+        path: filesystem
+        summary:
+          name: filesystem
+          desc: Filesystem tools
+        contents:
+          - read_file
+          - list_files_and_dirs
+          - write_file
+    - title: EDA tools
+      desc: Tools for EDA
+      package: ibis_birdbrain.tools.eda
+      contents:
+        - kind: page
+          path: eda
+          summary:
+            name: eda
+            desc: EDA tools
+          contents:
+            - query_tables
+            - read_excel_file
+            - read_delta_table
+            - list_tables
+            - get_table_schema
+    - title: Code tools
+      desc: Tools for code
+      package: ibis_birdbrain.tools.code
+      contents:
+      - kind: page
+        path: code
+        summary:
+          name: code
+          desc: Code tools
+        contents:
+          - text_to_python
+          - fix_python_error
+          - python_function_to_udf
+          - run_python_code
+    - title: Internet tools
+      desc: Tools for the Internet
+      package: ibis_birdbrain.tools.internet
+      contents:
+      - kind: page
+        path: internet
+        summary:
+          name: internet
+          desc: Internet tools
+        contents:
+          - search_internet
+          - webpage_to_str
+          - open_browser
 
