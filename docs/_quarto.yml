@@ -96,8 +96,8 @@ format:
       light: darkly
       #dark: vapor
       #light: vapor
-    fontcolor: fuchsia
-    linkcolor: fuchsia
+    #fontcolor: fuchsia
+    #linkcolor: fuchsia
     css: styles.css
     toc: true
 
