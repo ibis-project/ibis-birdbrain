@@ -39,4 +39,4 @@ MARVIN_AZURE_OPENAI_API_TYPE="azure"
 
 ## Next steps
 
-[Learn how get started with Ibis Birdbrain's CLI](./cli.qmd).
+[Learn how get started with Ibis Birdbrain's CLI](tutorials/cli.qmd).
