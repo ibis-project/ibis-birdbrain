@@ -1,7 +1,12 @@
-def ai_run(interactive=False):
+def ipy_run(interactive=False):
+    import ibis
     import marvin
+    import IPython
+
+    from rich import print
 
     from ibis_birdbrain.ai import Console
+    from ibis_birdbrain.tools.eda import con
     from ibis_birdbrain.bots.birdbrain import bot
 
     # aliases
@@ -14,14 +19,8 @@ def ai_run(interactive=False):
     console.print(f"{bot.name}", style="bold violet blink")
     console.print(f"model: {marvin.settings.llm_model}", style="bold blue")
 
-    if interactive:
-        import ibis
-        import IPython
+    # configure Ibis
+    ibis.options.interactive = True
 
-        from rich import print
-
-        from ibis_birdbrain.tools.eda import con
-
-        ibis.options.interactive = True
-
-        IPython.embed(colors="neutral")
+    # start IPython
+    IPython.embed(colors="neutral")

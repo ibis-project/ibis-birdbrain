@@ -6,11 +6,12 @@ import marvin
 
 from typing_extensions import Annotated
 
-from ibis_birdbrain.commands.ai import ai_run
+from ibis_birdbrain.commands.ipy import ipy_run
 from ibis_birdbrain.commands.testing import testing_run
 
 # typer config
 app = typer.Typer(no_args_is_help=True)
+
 
 # global options
 def version(value: bool):
@@ -30,15 +31,11 @@ def test():
 
 
 @app.command()
-def ai(
-    interactive: Annotated[
-        bool, typer.Option("--interactive", "-i", help="run ai in interactivce mode")
-    ] = False,
-):
+def ipy():
     """
-    ai
+    ipy
     """
-    ai_run(interactive=interactive)
+    ipy_run()
 
 
 # main

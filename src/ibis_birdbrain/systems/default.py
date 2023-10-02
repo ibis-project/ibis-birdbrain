@@ -23,9 +23,8 @@ filesystem."""
 
 
 class UserPreferencesSystem(System):
-    content: str = (
-        """Use simple, plain language with minimal but precise technical
-        jargon.""")
+    content: str = """Use simple, plain language with minimal but precise technical
+        jargon."""
 
 
 class FixesSystem(System):

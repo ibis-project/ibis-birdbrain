@@ -20,4 +20,4 @@ marvin.settings.azure_openai.deployment_name = os.getenv(
 )
 
 # TODO: elsewhere?
-marvin.settings.llm_model = 'azure_openai/gpt-4-32k'
+marvin.settings.llm_model = "azure_openai/gpt-4-32k"

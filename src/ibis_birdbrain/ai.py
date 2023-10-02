@@ -9,6 +9,7 @@ from rich.console import Console
 
 from ibis_birdbrain.utils import read_config
 
+
 class Bot:
     def __init__(self, name, description, tools, prompts, state) -> None:
         ai = AIApplication(
@@ -34,7 +35,6 @@ class Bot:
             backend_uri = "duckdb://birdbrain.ddb"
 
         self.con = ibis.connect(backend_uri)
-
 
     def __call__(self, text: str) -> str | None:
         res = self.ai(text).content
@@ -63,4 +63,3 @@ class Bot:
                 self.con.create_table("history", ibis.memtable(data))
             else:
                 self.con.insert("history", ibis.memtable(data))
-

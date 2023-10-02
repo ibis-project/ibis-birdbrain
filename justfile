@@ -10,9 +10,9 @@ alias fmt := format
 default:
     just --list
 
-# ai
-ai *args:
-    birdbrain ai -i {{ args }}
+# ipy
+ipy *args:
+    birdbrain ipy {{ args }}
 
 # setup
 setup:

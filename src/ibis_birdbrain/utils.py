@@ -8,6 +8,7 @@ log.basicConfig(
     level=log.ERROR,
 )
 
+
 # functions
 def read_config(config_file: str = "config.toml", config_section: str | None = None):
     """Reads the config file and returns the config section"""

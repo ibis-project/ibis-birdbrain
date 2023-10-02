@@ -23,17 +23,17 @@ $ birdbrain
 │ --help                        Show this message and exit.                      │
 ╰────────────────────────────────────────────────────────────────────────────────╯
 ╭─ Commands ─────────────────────────────────────────────────────────────────────╮
-│ ai                                      ai                                     │
+│ ipy                                     ipy                                     │
 │ test                                    test                                   │
 ╰────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 ## Starting an interactive Python session
 
-You can use the `ai` subcommand with the `--interactive/-i` option to start an interactive Python session with Ibis Birdbrain ready to use:
+You can use the `ipy` subcommand to start an interactive Python session with Ibis Birdbrain ready to use:
 
 ```bash
-$ birdbrain ai --interactive
+$ birdbrain ipy
 ```
 
 ```html

@@ -6,7 +6,6 @@ set dotenv-load
 project := "dag"
 
 # aliases
-alias ai := ipy
 alias eda := ipy
 alias run := job
 
@@ -36,7 +35,7 @@ sql:
 
 # ipy
 ipy:
-    @birdbrain ai -i
+    @birdbrain ipy
 
 # clean
 clean:
