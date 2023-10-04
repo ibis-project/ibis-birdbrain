@@ -2,7 +2,7 @@
 
 A user interface (UI) in our context is the mechanism by which a human interacts with software.
 
-## Command-line interface (CLI)
+## Command-line interface
 
 A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).
 
@@ -12,10 +12,10 @@ CLIs are great for containing common data analysis tasks expressed in a single, 
 
 Python can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.
 
-## Language user interface (LUI)
+## Language user interface
 
 Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.
 
 :::{.callout-warning}
-This paradigm is highly experimental and should be put in production (automated) with caution.
+This LUI paradigm is highly experimental and should be put in production (automated) with caution.
 :::

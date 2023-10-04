@@ -1,5 +1,5 @@
 ---
-title: "Calls and computations"
+title: "Context, calls, and computations"
 author: "Cody Peterson"
 date: "2023-10-14"
 categories:
@@ -8,10 +8,12 @@ categories:
 
 ## Introduction
 
-The Generative AI hype cycle has led to a new wave of terminology to understand. In this post, we'll use basic programming language to explain and explore 
-the concepts of "chains" of LLMs and retrieval-augmented generation (RAG) approaches to working with data.
+The recent Generative AI hype cycle has led to a lot of new terminology to
+understand. In this post, we'll cover some key concepts from the groud up and
+explain the basics of working with LLMs in the context of data.
 
-This post assumes [basic familiarity with Marvin and Ibis](../llms-and-data-pt0) and [the three approaches to applying LLMs to data](../llms-and-data-pt1).
+This post assumes [basic familiarity with Marvin and Ibis](../llms-and-data-pt0)
+and [the three approaches to applying LLMs to data](../llms-and-data-pt1).
 
 ```{python}
 # | code-fold: true
@@ -31,6 +33,7 @@ t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <3>
 2. Load the environment variable to setup Marvin to call our OpenAI account.
 3. Setup the demo datain an Ibis backend.
 
+First, we'll setup Ibis and Marvin with some simple example data:
 
 ```{python}
 import ibis  # <1>
@@ -50,39 +53,66 @@ t = con.table("penguins")  # <3>
 2. Configure Ibis (interactive) and Marvin (GPT-4).
 3. Connect to the data and load a table into a variable.
 
-## Calls and computations
+## Context
 
-When an AI platform's large language model API is called, it returns text as the result of some computation on input text. See the [LLM concept article](/concepts/llms.qmd) for details.
+Context is a fancy way of talking about the input to a LLM.
 
-### Calls
+## Calls
 
-A call is just that -- a call to **something**. In Python, this is typically always something else in Python, that itself may make calls to other programming languages or external services.
+We make calls with inputs to functions or systems and get outputs. We can think
+of calling the LLM with our input (context) and getting an output (text).
+
+## Computations
+
+A function or system often computes something. We can be pedantic about calls
+versus computations, but in general the connotation around computations is more
+time and resource intensive than a call. At the end of the day, they will both
+take some computer cycles.
+
+## Retrieval augmented generation (RAG)
+
+Instead of you typing out context for the bot, we can **retrieve** context from
+somewhere, **augment** our strings sent to the bot with this context, and then
+**generate** a response from the bot.
+
+As a contrived example, instead of saying "The capitol of foo is bar", we can
+retrieve the capitol of foo from a database, augment it with our context, and
+then generate a response from the bot. You may notice that [we already did this
+in the firt post in the series -- let's review that code
+again](../llms-and-data-pt0):
 
 ```{python}
-@marvin.ai_fn  # <1>
-def _generate_sql_select(
-    text: str, table_name: str, table_schema: Schema
-) -> str:  # <1>
-    """Generate SQL SELECT from text."""  # <1>
+from ibis.expr.schema import Schema
+from ibis.expr.types.relations import Table
 
 
-def sql_from_text(text: str, t: Table) -> Table:  # <2>
-    """Run SQL from text."""  # <2>
-    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(";"))  # <2>
+@marvin.ai_fn
+def sql_select(
+    text: str, table_name: str = t.get_name(), schema: Schema = t.schema()
+) -> str:
+    """writes the SQL SELECT statement to query the table according to the text"""
+
+
+query = "the unique combination of species and islands"
+sql = sql_select(query).strip(";")
+sql
 ```
 
-1. A non-deterministic, LLM-powered AI function.
-2. A deterministic, human-authored function that calls the AI function.
+Notice that we **retrieved** the table name and schema with calls to the Ibis
+table (`t.get_name()` and `t.schema()`). We then **augment** our context (the
+query in natural language) with this information and **generate** a response
+from the bot.
 
+This works reasonably well for simple SQL queries:
 
+```{python}
+t.sql(sql)
+```
 
-### Computations
-
-A computation is just that -- a computation of **something**. In general, a computation is represented by a system that takes an input and returns an output.
-
-## Comparison to MLOps and DevOps
-
-## Summary
+I would argue in this case there wasn't any real **computation** done by our
+**calls** to the Ibis table -- we were just retrieving some relatively static
+metadata -- but we could have done some more complex computations (on any of 18+
+data platforms).
 
 ## Next steps
 
