@@ -10,15 +10,24 @@ categories:
 
 ## Introduction
 
-In this "LLMs and data" series, we'll explore how to apply large-language models (LLMs) to data analytics. We'll walk through the steps to build Ibis Birdbrain.
+In this "LLMs and data" series, we'll explore how to apply large-language models
+(LLMs) to data analytics. We'll walk through the steps to build Ibis Birdbrain.
 
-Throughout the series, we'll be using [Marvin](https://www.askmarvin.ai/welcome/overview/) and [Ibis](https://ibis-project.org). A brief introduction to each is provided below.
+Throughout the series, we'll be using
+[Marvin](https://www.askmarvin.ai/welcome/overview/) and
+[Ibis](https://ibis-project.org). A brief introduction to each is provided
+below.
 
 ## Marvin
 
-[Marvin](https://www.askmarvin.ai/welcome/overview/) is an AI engineering framework that makes it easy to build up to an interactive conversational application.
+[Marvin](https://www.askmarvin.ai/welcome/overview/) is an AI engineering
+framework that makes it easy to build up to an interactive conversational
+application.
 
-Marvin makes calls to an AI platform. You typically use an API key set as an environment variable -- in this case, we'll load a `.env` file that contians secrets for the AI platform that Marvin will use. We also set the large language model model.
+Marvin makes calls to an AI platform. You typically use an API key set as an
+environment variable -- in this case, we'll load a `.env` file that contians
+secrets for the AI platform that Marvin will use. We also set the large language
+model model.
 
 ```{python}
 import marvin  # <1>
@@ -45,7 +54,9 @@ test_str
 
 ### Functions
 
-AI functions are one of the building blocks in Marvin and allow yout to specify a typedpython function with no code -- only a docstring -- to achieve a wide variety of tasks.
+AI functions are one of the building blocks in Marvin and allow yout to specify
+a typed python function with no code -- only a docstring -- to achieve a wide
+variety of tasks.
 
 We'll demonstrate this with an AI function that trnaslates text:
 
@@ -77,7 +88,9 @@ sleep(3) # <1>
 
 ### Models
 
-AI models are another building block for generatingpython classes from input text. It's a great way to build structured data from unstructured data that can be customized for your needs. 
+AI models are another building block for generating python classes from input
+text. It's a great way to build structured data from unstructured data that can
+be customized for your needs. 
 
 We'll demosntrate this with an AI model that translates text:
 
@@ -91,8 +104,8 @@ marvin.settings.llm_model = "openai/gpt-3.5-turbo"
 class ExtractParts(BaseModel):
     """Extracts parts of a sentence"""
     subject: str = Field(..., description="The subject of the sentence.")
-    predicate: str = Field(..., description="The predicate of the sentence.")
     objects: list[str] = Field(..., description="The objects of the sentence.")
+    predicate: str = Field(..., description="The predicate of the sentence.")
     modifiers: list[str] = Field(..., description="The modifiers of the sentence.")
 
 ExtractParts(test_str)
@@ -107,7 +120,10 @@ sleep(1) # <1>
 
 ### Classifiers
 
-AI classifiers are another building block for generatingpython classes from input text. It's the most efficient (time and cost) method for applying LLMs as it only results in a single output token, selecting an output in a specified Enum.
+AI classifiers are another building block for generating python classes from
+input text. It's the most efficient (time and cost) method for applying LLMs as
+it only results in a single output token, selecting an output in a specified
+Enum.
 
 We'll demonstrate this by classifying the language of some text:
 
@@ -148,9 +164,13 @@ sleep(3) # <1>
 
 ## Ibis
 
-[Ibis](https://ibis-project.org) is the portable Python dataframe library that enables Ibis Birdbrain to work on many data platforms at native scale.
+[Ibis](https://ibis-project.org) is the portable Python dataframe library that
+enables Ibis Birdbrain to work on many data platforms at native scale.
 
-Ibis makes calls to a data platform, providing an API but pushing the compute to (local or remote) query engines and storage. DuckDB is the default and we'll typically use it for demo puroses. You can work with an in-memory instance, but we'll often create a database file from example data:
+Ibis makes calls to a data platform, providing an API but pushing the compute to
+(local or remote) query engines and storage. DuckDB is the default and we'll
+typically use it for demo puroses. You can work with an in-memory instance, but
+we'll often create a database file from example data:
 
 ```{python}
 import ibis  # <1>
@@ -163,7 +183,8 @@ t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <2>
 1. Import the libraries we need.
 2. Setup the demo datain an Ibis backend.
 
-You will typically connect to an existing data platform via your corresponding Ibis backend and have access to a number of tables:
+You will typically connect to an existing data platform via your corresponding
+Ibis backend and have access to a number of tables:
 
 ```{python}
 import ibis  # <1>
@@ -180,7 +201,8 @@ t = con.table("penguins")  # <3>
 
 ### Backend
 
-A backend provides the connection and basic management of the data platform. Above, we created the `con` variable that is an instance of a DuckDB backend:
+A backend provides the connection and basic management of the data platform.
+Above, we created the `con` variable that is an instance of a DuckDB backend:
 
 ```{python}
 con
@@ -205,7 +227,8 @@ backends
 
 ### Table
 
-You typically work with a table, conventionally named `t` for demo or exploratory purposes:
+You typically work with a table, conventionally named `t` for demo or
+exploratory purposes:
 
 ```{python}
 t
@@ -258,6 +281,8 @@ t.sql(sql_select(query + " and include their counts in from highest to lowest").
 
 ## Next steps
 
-You can get involved with [Ibis Birdbrain](https://github.com/ibis-project/ibis-birdbrain), our open-source data & AI project for building next-generation natural language interfaces to data.
+You can get involved with [Ibis
+Birdbrain](https://github.com/ibis-project/ibis-birdbrain), our open-source data
+& AI project for building next-generation natural language interfaces to data.
 
 [Read the next post in this series](../llms-and-data-pt1).

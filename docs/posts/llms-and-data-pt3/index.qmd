@@ -1,5 +1,5 @@
 ---
-title: "Modular and composable"
+title: "Composable data + AI systems"
 author: "Cody Peterson"
 date: "2023-10-15"
 categories:
@@ -8,110 +8,71 @@ categories:
 
 ## Introduction
 
-```{.python}
-# | code-fold: true
-import ibis  # <1>
-import marvin  # <1>
+When writing (data and AI) code, it's important to use the right abstraction for
+your job to be done. A modular and composable data and AI system is easier than
+ever with the new generation of LLM-powered tools, but lacks a standard,
+modular, interoperable, customizable, and extensible framework. Can Ibis
+Birdbrain be that standard? 
 
-from dotenv import load_dotenv  # <1>
+## Standards
 
-load_dotenv()  # <2>
+> > When things don't work as they should, it often means that standards are absent.
+> >
+> > \- [The International Organization for Standardization (ISO)](https://www.iso.org/standards.html)
+> 
+> \- [The Composable Codex](https://voltrondata.com/codex/standards-over-silos)
 
-con = ibis.connect("duckdb://penguins.ddb")  # <3>
-t = ibis.examples.penguins.fetch()  # <3>
-t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <3>
-```
+The standard that has emerged from the recent LLM applications is the power of a
+conversation in interacting with a computer. If we can give that interaction tht
+ability to interact with data platforms, we can achieve a lot through natural
+language.
 
-1. Import the libraries we need.
-2. Load the environment variable to setup Marvin to call our OpenAI account.
-3. Setup the demo datain an Ibis backend.
+## Composable data (and AI) systems are MICE
 
-```{.python}
-import ibis  # <1>
-import marvin  # <1>
+[Composable data systems are MICE: modular, interoperable, customizable, and
+extensible](https://voltrondata.com/codex/standards-over-silos).
 
-from ibis.expr.schema import Schema  # <1>
-from ibis.expr.types.relations import Table  # <1>
+With any new tech, there's a lot of duplication of effort and reinvention of
+wheels. Ibis Birdbrain aims to be an open-source standard for building data and
+AI systems in Python that adheres to MICE best practices and works with any data
+and AI platform. It achieves this by building on top of
+[Ibis](https://ibis-project.org/) and
+[Marvin](https://www.askmarvin.ai/components/overview/), handling calls to the
+data and AI platforms respectively. Ibis and Marvin are themselves built on
+many other open-source projects, but provide the right level of abstraction for
+building composable data and AI systems, independently. Ibis Birdbrain glues
+them together enables a natural language interface that's interoperable between
+18+ data platforms and any AI platform Marvin supports.
 
-ibis.options.interactive = True  # <2>
-marvin.settings.llm_model = "openai/gpt-4"  # <2>
+glue that enables working via natural language with any data platform Ibis
+supports and any AI platform Marvin supports.
 
-con = ibis.connect("duckdb://penguins.ddb")  # <3>
-t = con.table("penguins")  # <3>
-```
+:::{.callout-important}
+Ibis Birdbrain is very early in development and looking for community input and
+contributors. We believe it's important for there to be a standard, and I can
+see Ibis Birdbrain going in several directions:
 
-1. Import Ibis and Marvin.
-2. Configure Ibis (interactive) and Marvin (GPT-4).
-3. Connect to the data and load a table into a variable.
+1. A useful template for building a language user interface with data tools
+2. A standard for building data and AI systems with MICE components
 
-```{.python}
-@marvin.ai_fn  # <1>
-def _generate_sql_select(
-    text: str, table_name: str, table_schema: Schema
-) -> str:  # <1>
-    """Generate SQL SELECT from text."""  # <1>
+If you're interested in either of these directions, please get involved with the
+project! 
 
+Ibis Birdbrain is under [Ibis project
+governance](https://github.com/ibis-project/governance/blob/main/governance.md).
+:::
 
-def sql_from_text(text: str, t: Table) -> Table:  # <2>
-    """Run SQL from text."""  # <2>
-    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(";"))  # <2>
-```
+## Looking ahead
 
-1. A non-deterministic, LLM-powered AI function.
-2. A deterministic, human-authored function that calls the AI function.
+I am not a software engineer, I just saw a cool application of Ibis and Marvin.
+The objective of releasing Ibis Birdbrain as an open-source project under Ibis
+governance is to enable the community to build a standard for composable data
+and AI systems. My hope is for the Ibis, Marvin, and broader data/AI Python
+communities to build the standard in the open, and properietary applications on
+top of those standards. This is important for a composable data ecosystem that
+can be modular, interoperable, customizable, and extensible.
 
-```{.python}
-t2 = sql_from_text("the unique combination of species and islands", t)
-t2
-```
-
-```{.python}
-t3 = sql_from_text(
-    "the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'",
-    t,
-)
-t3
-```
-
-## Summary
-
-To summarize this post:
-
-```{.python}
-from rich import print
-from pydantic import BaseModel, Field
-
-with open("index.qmd", "r") as f:
-    self_text = f.read()
-
-# save some money and avoid rate limiting
-marvin.settings.llm_model = "openai/gpt-3.5-turbo-16k"  # <2>
-
-@marvin.ai_model
-class Summary(BaseModel):
-    """Summary of text."""
-
-    summary_line: str = Field(..., description="The one-line summary of the text.")
-    summary_paragraph: str = Field(
-        ..., description="The one-paragraph summary of the text."
-    )
-    conclusion: str = Field(
-        ..., description="The conclusion the reader should draw from the text."
-    )
-    key_points: list[str] = Field(..., description="The key points of the text.")
-    critiques: list[str] = Field(
-        ..., description="Professional, fair critiques of the text."
-    )
-    suggested_improvements: list[str] = Field(
-        ..., description="Suggested improvements for the text."
-    )
-    sentiment: float = Field(..., description="The sentiment of the text.")
-    sentiment_label: str = Field(..., description="The sentiment label of the text.")
-    author_bias: str = Field(..., description="The author bias of the text.")
-
-
-print(Summary(self_text))
-```
+## How is Ibis Birdbrain MICE now? What's next?
 
 ## Next steps
 
@@ -119,4 +80,4 @@ You can get involved with [Ibis
 Birdbrain](https://github.com/ibis-project/ibis-birdbrain), our open-source data
 & AI project for building next-generation natural language interfaces to data.
 
-[Read the next post in this series](../llms-and-data-pt4).
+[Read the next post in this series, building Ibis Birdbrain](../llms-and-data-pt4).

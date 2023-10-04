@@ -114,6 +114,38 @@ I would argue in this case there wasn't any real **computation** done by our
 metadata -- but we could have done some more complex computations (on any of 18+
 data platforms).
 
+## Thought leadership
+
+TODO: human rewrite
+
+In the realm of Generative AI, particularly when working with Language Learning
+Models (LLMs), understanding the concept of 'context' is crucial. Context, in this
+domain, refers to the inputs that are fed into an LLM, and the corresponding
+outputs they generate. This post breaks down the complexities of this process into
+understandable fragments, including retrieval of context, its augmentation, and,
+thereafter, the generation of a response.
+
+An illustrative example is provided, showcasing a database interaction. It
+demonstrates how the data retrieved can be used to augment the context before the
+bot generates a response. This valuable insight underlines the practical
+application of the theory, reinforcing the understanding of the readers.
+
+We also venture into the difference between simple static metadata retrieval and
+the more intricate computations. This distinction echoes the breadth and depth of
+the processes involved in Generative AI.
+
+As we continue to explore and unravel the potential of Generative AI and LLMs,
+this post serves as a fundamental building block. It creates a pathway for
+enthusiasts and professionals alike to delve deeper into this exciting field. By
+breaking down complex concepts into comprehensible segments, it fosters an
+environment of learning and growth.
+
+This marks just the beginning of our journey into the world of Generative AI. As
+we dig deeper, we will continue to explore, learn and share with our readers. Stay
+tuned for more insightful content in this series. [1]
+
+[1] https://github.com/ibis-project/ibis-birdbrain
+
 ## Next steps
 
 You can get involved with [Ibis

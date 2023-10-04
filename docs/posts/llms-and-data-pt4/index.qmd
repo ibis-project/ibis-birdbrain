@@ -4,12 +4,26 @@ author: "Cody Peterson"
 date: "2023-10-16"
 categories:
     - "LLMs and data"
-draft: true
 ---
 
 ## Introduction
 
-```{.python}
+As a product manager, I don't spend most of my time managing products. I suspect most data developers (analysts, engineers, scientists, etc.) don't spend most of their time writing data code. There are many auxiliary tasks that are required in doing many technical jobs. These include:
+
+- searching the Internet for information
+- reading, summarizing, and synthesizing information
+- performing boring computer tasks
+- translating between different languages (e.g. SQL and Python; English and Spanish)
+- copying and modifying existing code
+- querying some basic informatin from data platforms
+
+What if we could, through natural language, have a bot perform many of these tasks (in addition to basic data analysis) on our behalf?
+
+## We're using Python, let's use Python
+
+We're already using Python for Ibis and Marvin. Let's use it for auxillary tools. We'll setup our data and AI platform connections and some simple example data to work with.
+
+```{python}
 # | code-fold: true
 import ibis  # <1>
 import marvin  # <1>
@@ -27,7 +41,7 @@ t = con.create_table("penguins", t.to_pyarrow(), overwrite=True)  # <3>
 2. Load the environment variable to setup Marvin to call our OpenAI account.
 3. Setup the demo datain an Ibis backend.
 
-```{.python}
+```{python}
 import ibis  # <1>
 import marvin  # <1>
 
@@ -45,74 +59,33 @@ t = con.table("penguins")  # <3>
 2. Configure Ibis (interactive) and Marvin (GPT-4).
 3. Connect to the data and load a table into a variable.
 
-```{.python}
-@marvin.ai_fn  # <1>
-def _generate_sql_select(
-    text: str, table_name: str, table_schema: Schema
-) -> str:  # <1>
-    """Generate SQL SELECT from text."""  # <1>
+## Filesystem tools
 
+## Internet tools
 
-def sql_from_text(text: str, t: Table) -> Table:  # <2>
-    """Run SQL from text."""  # <2>
-    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(";"))  # <2>
-```
+## AI-powered tools
 
-1. A non-deterministic, LLM-powered AI function.
-2. A deterministic, human-authored function that calls the AI function.
+## Introducing Ibis Birdbrain
 
-```{.python}
-t2 = sql_from_text("the unique combination of species and islands", t)
-t2
-```
+Introduce the bot. Need to overview the tools here I think, but should probably skip most details.
 
-```{.python}
-t3 = sql_from_text(
-    "the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'",
-    t,
-)
-t3
-```
+## A comparison with MLOps
 
-## Summary
+TODO: point on how most of the work is not ML
 
-To summarize this post:
+Before "MLOps" was a standard term, the [Sculley et al paper](https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf) from 2015 described the key issues with building real-world ML systems.
 
-```{.python}
-from rich import print
-from pydantic import BaseModel, Field
+![Figure 1: Only a small fraction of real-world ML systems is composed of the ML code, as shown by the small black box in the middle. The required surround infrastructure is vast and complex.](images/figure1.png)
 
-with open("index.qmd", "r") as f:
-    self_text = f.read()
+You can substitute "LLM" for "ML" in the above figure.
 
-# save some money and avoid rate limiting
-marvin.settings.llm_model = "openai/gpt-3.5-turbo-16k"  # <2>
+### The "toy problem" problem
 
-@marvin.ai_model
-class Summary(BaseModel):
-    """Summary of text."""
+ML and LLMs are cool! They're fun to play with and it's easy to get distracted with fun applications. Often, ML is learned through solving toy problems, and ...
 
-    summary_line: str = Field(..., description="The one-line summary of the text.")
-    summary_paragraph: str = Field(
-        ..., description="The one-paragraph summary of the text."
-    )
-    conclusion: str = Field(
-        ..., description="The conclusion the reader should draw from the text."
-    )
-    key_points: list[str] = Field(..., description="The key points of the text.")
-    critiques: list[str] = Field(
-        ..., description="Professional, fair critiques of the text."
-    )
-    suggested_improvements: list[str] = Field(
-        ..., description="Suggested improvements for the text."
-    )
-    sentiment: float = Field(..., description="The sentiment of the text.")
-    sentiment_label: str = Field(..., description="The sentiment label of the text.")
-    author_bias: str = Field(..., description="The author bias of the text.")
+### The application landscape is vast
 
-
-print(Summary(self_text))
-```
+...and thus requires modular, interoperable, customizable, and extensible tools. TODO: more comparison to MLOps.
 
 ## Next steps
 
