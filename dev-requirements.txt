@@ -3,8 +3,6 @@ black
 build
 twine
 ipython
-nbformat
-nbclient
 python-dotenv
 
 # internet
