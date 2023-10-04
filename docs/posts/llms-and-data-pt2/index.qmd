@@ -13,7 +13,7 @@ understand. In this post, we'll cover some key concepts from the groud up and
 explain the basics of working with LLMs in the context of data.
 
 This post assumes [basic familiarity with Marvin and Ibis](../llms-and-data-pt0)
-and [the three approaches to applying LLMs to data](../llms-and-data-pt1).
+and [three approaches to applying LLMs to data](../llms-and-data-pt1).
 
 ```{python}
 # | code-fold: true
