@@ -9,7 +9,7 @@
 <meta name="author" content="Cody Peterson">
 <meta name="dcterms.date" content="2023-10-14">
 
-<title>Ibis Birdbrain - Calls and computations</title>
+<title>Ibis Birdbrain - Context, calls, and computations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,10 +101,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta name="twitter:title" content="Ibis Birdbrain - Calls and computations">
+<meta name="twitter:title" content="Ibis Birdbrain - Context, calls, and computations">
 <meta name="twitter:description" content="AI for your data project">
 <meta name="twitter:card" content="summary">
 </head>
@@ -229,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Calls and computations</h1>
+      <h1 class="title">Context, calls, and computations</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">LLMs and data</div>
               </div>
@@ -266,13 +269,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#calls-and-computations" id="toc-calls-and-computations" class="nav-link" data-scroll-target="#calls-and-computations">Calls and computations</a>
-  <ul class="collapse">
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
   <li><a href="#calls" id="toc-calls" class="nav-link" data-scroll-target="#calls">Calls</a></li>
   <li><a href="#computations" id="toc-computations" class="nav-link" data-scroll-target="#computations">Computations</a></li>
-  </ul></li>
-  <li><a href="#comparison-to-mlops-and-devops" id="toc-comparison-to-mlops-and-devops" class="nav-link" data-scroll-target="#comparison-to-mlops-and-devops">Comparison to MLOps and DevOps</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#retrieval-augmented-generation-rag" id="toc-retrieval-augmented-generation-rag" class="nav-link" data-scroll-target="#retrieval-augmented-generation-rag">Retrieval augmented generation (RAG)</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/posts/llms-and-data-pt2/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -286,9 +286,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The Generative AI hype cycle has led to a new wave of terminology to understand. In this post, we’ll use basic programming language to explain and explore the concepts of “chains” of LLMs and retrieval-augmented generation (RAG) approaches to working with data.</p>
-<p>This post assumes <a href="../llms-and-data-pt0">basic familiarity with Marvin and Ibis</a> and <a href="../llms-and-data-pt1">the three approaches to applying LLMs to data</a>.</p>
-<div id="08040ceb" class="cell" data-execution_count="1">
+<p>The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.</p>
+<p>This post assumes <a href="../llms-and-data-pt0">basic familiarity with Marvin and Ibis</a> and <a href="../llms-and-data-pt1">three approaches to applying LLMs to data</a>.</p>
+<div id="96a739c5" class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
@@ -319,7 +319,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dl>
 </div>
 </div>
-<div id="0e3fa209" class="cell" data-execution_count="2">
+<p>First, we’ll setup Ibis and Marvin with some simple example data:</p>
+<div id="3e073728" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> marvin</span>
 <span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -349,47 +350,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="calls-and-computations" class="level2">
-<h2 class="anchored" data-anchor-id="calls-and-computations">Calls and computations</h2>
-<p>When an AI platform’s large language model API is called, it returns text as the result of some computation on input text. See the <a href="../../concepts/llms.html">LLM concept article</a> for details.</p>
-<section id="calls" class="level3">
-<h3 class="anchored" data-anchor-id="calls">Calls</h3>
-<p>A call is just that – a call to <strong>something</strong>. In Python, this is typically always something else in Python, that itself may make calls to other programming languages or external services.</p>
-<div id="f06217f8" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_fn</span></span>
-<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _generate_sql_select(</span>
-<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>    text: <span class="bu">str</span>, table_name: <span class="bu">str</span>, table_schema: Schema</span>
-<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate SQL SELECT from text."""</span></span>
-<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-8" class="code-annotation-target"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sql_from_text(text: <span class="bu">str</span>, t: Table) <span class="op">-&gt;</span> Table:</span>
-<span id="annotated-cell-3-9"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Run SQL from text."""</span></span>
-<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(<span class="st">";"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="1,4,5" data-code-annotation="1">A non-deterministic, LLM-powered AI function.</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="8,9,10" data-code-annotation="2">A deterministic, human-authored function that calls the AI function.</span>
-</dd>
-</dl>
+<section id="context" class="level2">
+<h2 class="anchored" data-anchor-id="context">Context</h2>
+<p>Context is a fancy way of talking about the input to a LLM.</p>
+</section>
+<section id="calls" class="level2">
+<h2 class="anchored" data-anchor-id="calls">Calls</h2>
+<p>We make calls with inputs to functions or systems and get outputs. We can think of calling the LLM with our input (context) and getting an output (text).</p>
+</section>
+<section id="computations" class="level2">
+<h2 class="anchored" data-anchor-id="computations">Computations</h2>
+<p>A function or system often computes something. We can be pedantic about calls versus computations, but in general the connotation around computations is more time and resource intensive than a call. At the end of the day, they will both take some computer cycles.</p>
+</section>
+<section id="retrieval-augmented-generation-rag" class="level2">
+<h2 class="anchored" data-anchor-id="retrieval-augmented-generation-rag">Retrieval augmented generation (RAG)</h2>
+<p>Instead of you typing out context for the bot, we can <strong>retrieve</strong> context from somewhere, <strong>augment</strong> our strings sent to the bot with this context, and then <strong>generate</strong> a response from the bot.</p>
+<p>As a contrived example, instead of saying “The capitol of foo is bar”, we can retrieve the capitol of foo from a database, augment it with our context, and then generate a response from the bot. You may notice that <a href="../llms-and-data-pt0">we already did this in the firt post in the series – let’s review that code again</a>:</p>
+<div id="61633004" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.schema <span class="im">import</span> Schema</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.types.relations <span class="im">import</span> Table</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">@marvin.ai_fn</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sql_select(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    text: <span class="bu">str</span>, table_name: <span class="bu">str</span> <span class="op">=</span> t.get_name(), schema: Schema <span class="op">=</span> t.schema()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""writes the SQL SELECT statement to query the table according to the text"""</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"the unique combination of species and islands"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sql <span class="op">=</span> sql_select(query).strip(<span class="st">";"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>sql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>'SELECT DISTINCT species, island FROM penguins'</code></pre>
 </div>
 </div>
-</section>
-<section id="computations" class="level3">
-<h3 class="anchored" data-anchor-id="computations">Computations</h3>
-<p>A computation is just that – a computation of <strong>something</strong>. In general, a computation is represented by a system that takes an input and returns an output.</p>
-</section>
-</section>
-<section id="comparison-to-mlops-and-devops" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-to-mlops-and-devops">Comparison to MLOps and DevOps</h2>
-</section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Notice that we <strong>retrieved</strong> the table name and schema with calls to the Ibis table (<code>t.get_name()</code> and <code>t.schema()</code>). We then <strong>augment</strong> our context (the query in natural language) with this information and <strong>generate</strong> a response from the bot.</p>
+<p>This works reasonably well for simple SQL queries:</p>
+<div id="5da42f82" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t.sql(sql)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │
+├───────────┼───────────┤
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Gentoo   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Chinstrap</span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │
+└───────────┴───────────┘
+</pre>
+</div>
+</div>
+<p>I would argue in this case there wasn’t any real <strong>computation</strong> done by our <strong>calls</strong> to the Ibis table – we were just retrieving some relatively static metadata – but we could have done some more complex computations (on any of 18+ data platforms).</p>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>

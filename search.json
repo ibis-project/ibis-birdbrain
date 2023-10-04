@@ -85,7 +85,7 @@
     "href": "posts.html",
     "title": "Posts",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nModular and composable\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 15, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nCalls and computations\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 14, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 13, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to Marvin and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 12, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nModular and composable\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 15, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nContext, calls, and computations\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 14, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 13, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to Marvin and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 12, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
     "objectID": "reference/index.html",
@@ -327,14 +327,14 @@
     "href": "concepts/user-interfaces.html",
     "title": "User interfaces",
     "section": "",
-    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
+    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis LUI paradigm is highly experimental and should be put in production (automated) with caution.",
     "crumbs": [
       "User interfaces"
     ]
   },
   {
-    "objectID": "concepts/user-interfaces.html#command-line-interface-cli",
-    "href": "concepts/user-interfaces.html#command-line-interface-cli",
+    "objectID": "concepts/user-interfaces.html#command-line-interface",
+    "href": "concepts/user-interfaces.html#command-line-interface",
     "title": "User interfaces",
     "section": "",
     "text": "A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.",
@@ -353,11 +353,11 @@
     ]
   },
   {
-    "objectID": "concepts/user-interfaces.html#language-user-interface-lui",
-    "href": "concepts/user-interfaces.html#language-user-interface-lui",
+    "objectID": "concepts/user-interfaces.html#language-user-interface",
+    "href": "concepts/user-interfaces.html#language-user-interface",
     "title": "User interfaces",
     "section": "",
-    "text": "Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis paradigm is highly experimental and should be put in production (automated) with caution.",
+    "text": "Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis LUI paradigm is highly experimental and should be put in production (automated) with caution.",
     "crumbs": [
       "User interfaces"
     ]
@@ -569,42 +569,49 @@
   {
     "objectID": "posts/llms-and-data-pt2/index.html",
     "href": "posts/llms-and-data-pt2/index.html",
-    "title": "Calls and computations",
+    "title": "Context, calls, and computations",
     "section": "",
-    "text": "The Generative AI hype cycle has led to a new wave of terminology to understand. In this post, we’ll use basic programming language to explain and explore the concepts of “chains” of LLMs and retrieval-augmented generation (RAG) approaches to working with data.\nThis post assumes basic familiarity with Marvin and Ibis and the three approaches to applying LLMs to data.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
+    "text": "The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.\nThis post assumes basic familiarity with Marvin and Ibis and three approaches to applying LLMs to data.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\nFirst, we’ll setup Ibis and Marvin with some simple example data:\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#introduction",
     "href": "posts/llms-and-data-pt2/index.html#introduction",
-    "title": "Calls and computations",
+    "title": "Context, calls, and computations",
     "section": "",
-    "text": "The Generative AI hype cycle has led to a new wave of terminology to understand. In this post, we’ll use basic programming language to explain and explore the concepts of “chains” of LLMs and retrieval-augmented generation (RAG) approaches to working with data.\nThis post assumes basic familiarity with Marvin and Ibis and the three approaches to applying LLMs to data.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
+    "text": "The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.\nThis post assumes basic familiarity with Marvin and Ibis and three approaches to applying LLMs to data.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\nFirst, we’ll setup Ibis and Marvin with some simple example data:\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
   },
   {
-    "objectID": "posts/llms-and-data-pt2/index.html#calls-and-computations",
-    "href": "posts/llms-and-data-pt2/index.html#calls-and-computations",
-    "title": "Calls and computations",
-    "section": "Calls and computations",
-    "text": "Calls and computations\nWhen an AI platform’s large language model API is called, it returns text as the result of some computation on input text. See the LLM concept article for details.\n\nCalls\nA call is just that – a call to something. In Python, this is typically always something else in Python, that itself may make calls to other programming languages or external services.\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\n\n\n\n\nComputations\nA computation is just that – a computation of something. In general, a computation is represented by a system that takes an input and returns an output."
+    "objectID": "posts/llms-and-data-pt2/index.html#context",
+    "href": "posts/llms-and-data-pt2/index.html#context",
+    "title": "Context, calls, and computations",
+    "section": "Context",
+    "text": "Context\nContext is a fancy way of talking about the input to a LLM."
   },
   {
-    "objectID": "posts/llms-and-data-pt2/index.html#comparison-to-mlops-and-devops",
-    "href": "posts/llms-and-data-pt2/index.html#comparison-to-mlops-and-devops",
-    "title": "Calls and computations",
-    "section": "Comparison to MLOps and DevOps",
-    "text": "Comparison to MLOps and DevOps"
+    "objectID": "posts/llms-and-data-pt2/index.html#calls",
+    "href": "posts/llms-and-data-pt2/index.html#calls",
+    "title": "Context, calls, and computations",
+    "section": "Calls",
+    "text": "Calls\nWe make calls with inputs to functions or systems and get outputs. We can think of calling the LLM with our input (context) and getting an output (text)."
   },
   {
-    "objectID": "posts/llms-and-data-pt2/index.html#summary",
-    "href": "posts/llms-and-data-pt2/index.html#summary",
-    "title": "Calls and computations",
-    "section": "Summary",
-    "text": "Summary"
+    "objectID": "posts/llms-and-data-pt2/index.html#computations",
+    "href": "posts/llms-and-data-pt2/index.html#computations",
+    "title": "Context, calls, and computations",
+    "section": "Computations",
+    "text": "Computations\nA function or system often computes something. We can be pedantic about calls versus computations, but in general the connotation around computations is more time and resource intensive than a call. At the end of the day, they will both take some computer cycles."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt2/index.html#retrieval-augmented-generation-rag",
+    "href": "posts/llms-and-data-pt2/index.html#retrieval-augmented-generation-rag",
+    "title": "Context, calls, and computations",
+    "section": "Retrieval augmented generation (RAG)",
+    "text": "Retrieval augmented generation (RAG)\nInstead of you typing out context for the bot, we can retrieve context from somewhere, augment our strings sent to the bot with this context, and then generate a response from the bot.\nAs a contrived example, instead of saying “The capitol of foo is bar”, we can retrieve the capitol of foo from a database, augment it with our context, and then generate a response from the bot. You may notice that we already did this in the firt post in the series – let’s review that code again:\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n\n@marvin.ai_fn\ndef sql_select(\n    text: str, table_name: str = t.get_name(), schema: Schema = t.schema()\n) -&gt; str:\n    \"\"\"writes the SQL SELECT statement to query the table according to the text\"\"\"\n\n\nquery = \"the unique combination of species and islands\"\nsql = sql_select(query).strip(\";\")\nsql\n\n'SELECT DISTINCT species, island FROM penguins'\n\n\nNotice that we retrieved the table name and schema with calls to the Ibis table (t.get_name() and t.schema()). We then augment our context (the query in natural language) with this information and generate a response from the bot.\nThis works reasonably well for simple SQL queries:\n\nt.sql(sql)\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┓\n┃ species   ┃ island    ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━┩\n│ string    │ string    │\n├───────────┼───────────┤\n│ Adelie    │ Torgersen │\n│ Adelie    │ Biscoe    │\n│ Adelie    │ Dream     │\n│ Gentoo    │ Biscoe    │\n│ Chinstrap │ Dream     │\n└───────────┴───────────┘\n\n\n\nI would argue in this case there wasn’t any real computation done by our calls to the Ibis table – we were just retrieving some relatively static metadata – but we could have done some more complex computations (on any of 18+ data platforms)."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#next-steps",
     "href": "posts/llms-and-data-pt2/index.html#next-steps",
-    "title": "Calls and computations",
+    "title": "Context, calls, and computations",
     "section": "Next steps",
     "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series."
   }
