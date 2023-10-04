@@ -273,6 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#calls" id="toc-calls" class="nav-link" data-scroll-target="#calls">Calls</a></li>
   <li><a href="#computations" id="toc-computations" class="nav-link" data-scroll-target="#computations">Computations</a></li>
   <li><a href="#retrieval-augmented-generation-rag" id="toc-retrieval-augmented-generation-rag" class="nav-link" data-scroll-target="#retrieval-augmented-generation-rag">Retrieval augmented generation (RAG)</a></li>
+  <li><a href="#thought-leadership" id="toc-thought-leadership" class="nav-link" data-scroll-target="#thought-leadership">Thought leadership</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/posts/llms-and-data-pt2/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -288,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.</p>
 <p>This post assumes <a href="../llms-and-data-pt0">basic familiarity with Marvin and Ibis</a> and <a href="../llms-and-data-pt1">three approaches to applying LLMs to data</a>.</p>
-<div id="96a739c5" class="cell" data-execution_count="1">
+<div id="7bf65911" class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
@@ -320,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>First, we’ll setup Ibis and Marvin with some simple example data:</p>
-<div id="3e073728" class="cell" data-execution_count="2">
+<div id="acdb1f03" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> marvin</span>
 <span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -366,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="retrieval-augmented-generation-rag">Retrieval augmented generation (RAG)</h2>
 <p>Instead of you typing out context for the bot, we can <strong>retrieve</strong> context from somewhere, <strong>augment</strong> our strings sent to the bot with this context, and then <strong>generate</strong> a response from the bot.</p>
 <p>As a contrived example, instead of saying “The capitol of foo is bar”, we can retrieve the capitol of foo from a database, augment it with our context, and then generate a response from the bot. You may notice that <a href="../llms-and-data-pt0">we already did this in the firt post in the series – let’s review that code again</a>:</p>
-<div id="61633004" class="cell" data-execution_count="3">
+<div id="a2500d07" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.schema <span class="im">import</span> Schema</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.types.relations <span class="im">import</span> Table</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -381,15 +382,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"the unique combination of species and islands"</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sql <span class="op">=</span> sql_select(query).strip(<span class="st">";"</span>)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>sql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>'SELECT DISTINCT species, island FROM penguins'</code></pre>
 </div>
 </div>
 <p>Notice that we <strong>retrieved</strong> the table name and schema with calls to the Ibis table (<code>t.get_name()</code> and <code>t.schema()</code>). We then <strong>augment</strong> our context (the query in natural language) with this information and <strong>generate</strong> a response from the bot.</p>
 <p>This works reasonably well for simple SQL queries:</p>
-<div id="5da42f82" class="cell" data-execution_count="4">
+<div id="95337292" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t.sql(sql)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┓
 ┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃
 ┡━━━━━━━━━━━╇━━━━━━━━━━━┩
@@ -405,6 +406,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>I would argue in this case there wasn’t any real <strong>computation</strong> done by our <strong>calls</strong> to the Ibis table – we were just retrieving some relatively static metadata – but we could have done some more complex computations (on any of 18+ data platforms).</p>
+</section>
+<section id="thought-leadership" class="level2">
+<h2 class="anchored" data-anchor-id="thought-leadership">Thought leadership</h2>
+<p>TODO: human rewrite</p>
+<p>In the realm of Generative AI, particularly when working with Language Learning Models (LLMs), understanding the concept of ‘context’ is crucial. Context, in this domain, refers to the inputs that are fed into an LLM, and the corresponding outputs they generate. This post breaks down the complexities of this process into understandable fragments, including retrieval of context, its augmentation, and, thereafter, the generation of a response.</p>
+<p>An illustrative example is provided, showcasing a database interaction. It demonstrates how the data retrieved can be used to augment the context before the bot generates a response. This valuable insight underlines the practical application of the theory, reinforcing the understanding of the readers.</p>
+<p>We also venture into the difference between simple static metadata retrieval and the more intricate computations. This distinction echoes the breadth and depth of the processes involved in Generative AI.</p>
+<p>As we continue to explore and unravel the potential of Generative AI and LLMs, this post serves as a fundamental building block. It creates a pathway for enthusiasts and professionals alike to delve deeper into this exciting field. By breaking down complex concepts into comprehensible segments, it fosters an environment of learning and growth.</p>
+<p>This marks just the beginning of our journey into the world of Generative AI. As we dig deeper, we will continue to explore, learn and share with our readers. Stay tuned for more insightful content in this series. [1]</p>
+<p>[1] https://github.com/ibis-project/ibis-birdbrain</p>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
