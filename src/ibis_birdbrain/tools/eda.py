@@ -72,18 +72,18 @@ def read_excel_file(filepath: str, sheet_name: str = "Sheet1") -> Table:
 
 
 @tool
-def query_tables(question: str) -> Table:
-    """Queries the tables in the database to answer the question"""
+def generate_and_execute_sql(question: str) -> (str, Table):
+    """Generates and executes SQL SELECT statement for the tables in the database to answer the question"""
     table_names = choose_table_names(question, options=list_tables())
     table_schemas = get_table_schemas(table_names)
     sql = gen_sql_query(table_names, table_schemas, question).strip(";")
+
     try:
-        res = con.table(table_names[0]).sql(sql)
+        res = con.sql(sql)
     except Exception as e:
-        sql = fix_sql_query(table_names, table_schemas, sql, str(e)).strip(";")
+        sql = fix_sql_query(sql, str(e)).strip(";")
         try:
-            res = con.table(table_names[0]).sql(res)
+            res = con.sql(res)
         except Exception as e:
             raise ValueError(f"Could not execute SQL: {res} with error: {e}")
-
-    return str(res)
+    return sql, res

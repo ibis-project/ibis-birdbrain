@@ -15,11 +15,11 @@ from ibis_birdbrain.tools.internet import (
     webpage_to_str,
 )
 from ibis_birdbrain.tools.text import summarize_text, translate_text
-from ibis_birdbrain.tools.code import text_to_python, fix_python_error, run_python_code
+from ibis_birdbrain.tools.code import text_to_python, fix_python_error, run_python_code, python_function_to_udf
 from ibis_birdbrain.tools.filesystem import read_file, list_files_and_dirs, write_file
 from ibis_birdbrain.tools.eda import (
     list_tables,
-    query_tables,
+    generate_and_execute_sql,
     get_table_schemas,
     read_delta_table,
     read_excel_file,
@@ -53,9 +53,10 @@ tools = [
     text_to_python,
     fix_python_error,
     run_python_code,
+    python_function_to_udf,
     # Ibis
     list_tables,
-    query_tables,
+    generate_and_execute_sql,
     get_table_schemas,
     read_delta_table,
     read_excel_file,

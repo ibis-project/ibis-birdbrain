@@ -17,9 +17,8 @@ ibis-framework[duckdb,polars,deltalake] @ git+https://github.com/ibis-project/ib
 xlsx2csv
 XlsxWriter
 
-# viz
-plotly
-streamlit
+# gui
+reflex
 
 # ai
 openai

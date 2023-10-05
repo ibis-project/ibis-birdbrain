@@ -159,4 +159,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# reflex
+*.db
+*.py[cod]
+.web
+__pycache__/
+
 *.ddb*

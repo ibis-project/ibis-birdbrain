@@ -20,20 +20,12 @@ class BirdbrainState(BaseModel):
     ibis_github: str = "https://github.com/ibis-project/ibis"
     marvin_docs: str = "https://www.askmarvin.ai/components/overview"
     marvin_github: str = "https://github.com/prefectHQ/marvin"
-    self_source_code: str = "https://github.com/ibis-project/ibis-birdbrain"
+    reflex_docs: str = "https://reflex.dev/docs/components/overview"
+    reflex_github: str = "https://github.com/reflex-dev/reflex"
+    birdbrain_docs: str = "https://ibis-project.github.io/ibis-birdbrain"
+    birdbrain_github: str = "https://github.com/ibis-project/ibis-birdbrain"
 
-    # local files
     local_data_files: list[str] = []
 
     # additional links
     additional_links: list[str] = []
-
-    # sql query hitory
-    sql_history: list[str] = []
-
-    # research info
-    analysis_topic: str = ""
-    analysis_description: str = ""
-    analysis_abstract: str = ""
-    analysis_references: list[str] = []
-    analysis_analysis: str = ""

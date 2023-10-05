@@ -46,8 +46,12 @@ preview:
     @quarto preview docs
 
 # streamlit stuff
-app:
+app-st:
     @streamlit run examples/streamlit_app/app.py
+
+# reflex
+app:
+    @reflex run
 
 # format
 format:
@@ -62,5 +66,5 @@ clean:
     @rm -rf dist || True
 
 # open-app
-open-app:
-    @open https://ibis-birdbrain.streamlit.app
+open:
+    @open http://localhost:3000
