@@ -18,7 +18,7 @@ xlsx2csv
 XlsxWriter
 
 # gui
-reflex
+#reflex
 
 # ai
 openai
