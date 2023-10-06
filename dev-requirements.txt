@@ -17,12 +17,13 @@ ibis-framework[duckdb,polars,deltalake] @ git+https://github.com/ibis-project/ib
 xlsx2csv
 XlsxWriter
 
-# gui
-#reflex
 
 # ai
 openai
 marvin[ddg]~=1.3.0
+
+# gui
+#reflex
 
 # docs
 quartodoc
