@@ -39,7 +39,7 @@ else:
 @tool
 def generate_tpch_data(sf: float = 1.0) -> None:
     """Generates TPCH data at scale factor sf (default 1.0)"""
-    con.raw_sql(f"call dbgen(sf={sf});")
+    con.raw_sql(f"call dbgen(sf={sf}, catalog=tpch);")
 
 
 @tool

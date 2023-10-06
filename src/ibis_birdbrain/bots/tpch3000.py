@@ -29,6 +29,7 @@ from ibis_birdbrain.tools.tpch3000 import (
     generate_sql,
     execute_sql,
     generate_tpch_data,
+    clear_tables,
     write_tables_to_parquet,
 )
 from ibis_birdbrain.tools.advanced import (
@@ -63,6 +64,7 @@ tools = [
     generate_sql,
     execute_sql,
     generate_tpch_data,
+    clear_tables,
     write_tables_to_parquet,
     # advanced
 ]
