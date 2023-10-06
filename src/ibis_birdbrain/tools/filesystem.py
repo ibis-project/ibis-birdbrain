@@ -50,6 +50,7 @@ def list_files_and_dirs(
 
     ignore_dirs = [
         ".git",
+        ".web",
         "_site",
         "_output",
         "_freeze",

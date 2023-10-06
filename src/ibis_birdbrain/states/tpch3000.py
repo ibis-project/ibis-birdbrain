@@ -22,6 +22,8 @@ class BirdbrainTPCHState(BaseModel):
     birdbrain_docs: str = "https://ibis-project.github.io/ibis-birdbrain"
     birdbrain_github: str = "https://github.com/ibis-project/ibis-birdbrain"
 
+    relevant_docs: list[str] = []
+
     local_data_files: list[str] = []
 
     # additional links

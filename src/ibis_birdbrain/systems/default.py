@@ -24,7 +24,7 @@ Ask the developer for assistant or additional context if their ask is unclear.
 
 
 class FixesSystem(System):
-    content: str = """YOU MUST use full filesystem paths and should use depth=-1 in most cases.
+    content: str = """YOU MUST only respond with the exact filepath response from functions. You should use depth=-1 in most cases for listing dirs and files.
 
 YOU MUST only open a URL in the browser once per ask, it always works."""
 

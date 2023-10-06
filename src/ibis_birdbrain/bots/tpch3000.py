@@ -36,6 +36,7 @@ from ibis_birdbrain.tools.advanced import (
     read_files_and_summarize,
     read_webpage_and_summarize,
 )
+from ibis_birdbrain.tools.docs import get_relevant_docs
 from ibis_birdbrain.tools.github import use_github_cli
 
 # bot setup
@@ -47,12 +48,12 @@ description = TPCHSystem().content
 # bot tools
 tools = [
     # internet
-    open_browser,
-    search_internet,
-    webpage_to_str,
+    #open_browser,
+    #search_internet,
+    #webpage_to_str,
     # text
     summarize_text,
-    translate_text,
+    #translate_text,
     # code
     text_to_python,
     fix_python_error,
@@ -67,6 +68,13 @@ tools = [
     clear_tables,
     write_tables_to_parquet,
     # advanced
+    read_files_and_summarize,
+    # filesystem
+    read_file,
+    list_files_and_dirs,
+    write_file,
+    # docs
+    get_relevant_docs,
 ]
 
 # bot

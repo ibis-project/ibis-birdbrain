@@ -65,6 +65,7 @@ smoke-test:
 clean:
     @rm -rf dist || True
     @rm -rf *.ddb* || True
+    @rm -rf data/*.parquet || True
 
 # open-app
 open:
