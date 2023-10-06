@@ -6,12 +6,13 @@ def ipy_run(interactive=False, tpch=False):
     from rich import print
 
     from ibis_birdbrain.ai import Console
-    from ibis_birdbrain.tools.eda import con
 
     if tpch:
         from ibis_birdbrain.bots.tpch3000 import bot
+        from ibis_birdbrain.tools.tpch3000 import con
     else:
         from ibis_birdbrain.bots.birdbrain import bot
+        from ibis_birdbrain.tools.eda import con
 
     # aliases
     ai = bot

@@ -1,4 +1,5 @@
 # imports
+import os
 import ibis
 
 import ibis.expr.datatypes as dt
@@ -65,10 +66,11 @@ def list_tables() -> list[str]:
 @tool
 def write_tables_to_parquet(table_names: list[str]) -> None:
     """Writes tables to parquet files"""
+    os.makedirs("data", exist_ok=True)
     if table_names == []:
         table_names = list_tables()
     for table_name in table_names:
-        con.table(table_name).to_parquet(f"{table_name}.parquet", compression="snappy")
+        con.table(table_name).to_parquet(f"data/{table_name}.parquet")
 
 
 @tool
