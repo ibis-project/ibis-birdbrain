@@ -169,7 +169,7 @@
     "href": "posts.html",
     "title": "Posts",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nAuxiliary tools\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 16, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nComposable data + AI systems\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 15, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nContext, calls, and computations\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 14, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 13, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to Marvin and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 12, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nAuxiliary tools\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 16, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nComposable data + AI systems\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 15, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nComputations and control flow: it’s just programming\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 14, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 13, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to Marvin and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 12, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
     "objectID": "reference/index.html",
@@ -538,7 +538,7 @@
     "href": "reference/eda.html",
     "title": "eda",
     "section": "",
-    "text": "eda\nEDA tools\n\n\nquery_tables\ntools.eda.query_tables(question)\nQueries the tables in the database to answer the question\n\n\nread_excel_file\ntools.eda.read_excel_file(filepath, sheet_name='Sheet1')\nReads an Excel file from the full filepath\nfilepath should be of the form: /.\n\n\nread_delta_table\ntools.eda.read_delta_table(filepath)\nReads a Delta Lake table directory from the full filepath\nfilepath should be of the form: /\n\n\nlist_tables\ntools.eda.list_tables()\nReturns a list of available tables to query\n\n\nget_table_schemas\ntools.eda.get_table_schemas(table_names)\nReturns the schemas of a list of tables\n\n\n\n\n Back to top"
+    "text": "eda\nEDA tools\n\n\nread_excel_file\ntools.eda.read_excel_file(filepath, sheet_name='Sheet1')\nReads an Excel file from the full filepath\nfilepath should be of the form: /.\n\n\nread_delta_table\ntools.eda.read_delta_table(filepath)\nReads a Delta Lake table directory from the full filepath\nfilepath should be of the form: /\n\n\nlist_tables\ntools.eda.list_tables()\nReturns a list of available tables to query\n\n\nget_table_schemas\ntools.eda.get_table_schemas(table_names)\nReturns the schemas of a list of tables\n\n\n\n\n Back to top"
   },
   {
     "objectID": "reference/internet.html",
@@ -552,7 +552,7 @@
     "href": "reference/code.html",
     "title": "code",
     "section": "",
-    "text": "code\nCode tools\n\n\ntext_to_python\ntools.code.text_to_python(question)\nReturns a Python code given text.\n\n\nfix_python_error\ntools.code.fix_python_error(code, error)\nFixes a Python error in the code.\n\n\npython_function_to_udf\ntools.code.python_function_to_udf(code)\nConverts a Python function to an Ibis UDF.\n\n\nrun_python_code\ntools.code.run_python_code(code)\nExecute Python code as a string and return the output\n\n\n\n\n Back to top",
+    "text": "code\nCode tools\n\n\ntext_to_python\ntools.code.text_to_python(question)\nReturns a Python code given text.\n\n\nfix_python_error\ntools.code.fix_python_error(code, error)\nFixes a Python error in the code.\n\n\npython_function_to_udf\ntools.code.python_function_to_udf(code)\nConverts a Python function to an Ibis UDF.\n\n\nrun_python_code\ntools.code.run_python_code(code)\nExecute Python code as a string and return the output and time to run\n\n\n\n\n Back to top",
     "crumbs": [
       "Tools",
       "code"
@@ -653,56 +653,56 @@
   {
     "objectID": "posts/llms-and-data-pt2/index.html",
     "href": "posts/llms-and-data-pt2/index.html",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "",
     "text": "The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.\nThis post assumes basic familiarity with Marvin and Ibis and three approaches to applying LLMs to data.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\nFirst, we’ll setup Ibis and Marvin with some simple example data:\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#introduction",
     "href": "posts/llms-and-data-pt2/index.html#introduction",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "",
     "text": "The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.\nThis post assumes basic familiarity with Marvin and Ibis and three approaches to applying LLMs to data.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\nFirst, we’ll setup Ibis and Marvin with some simple example data:\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#context",
     "href": "posts/llms-and-data-pt2/index.html#context",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "Context",
     "text": "Context\nContext is a fancy way of talking about the input to a LLM."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#calls",
     "href": "posts/llms-and-data-pt2/index.html#calls",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "Calls",
     "text": "Calls\nWe make calls with inputs to functions or systems and get outputs. We can think of calling the LLM with our input (context) and getting an output (text)."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#computations",
     "href": "posts/llms-and-data-pt2/index.html#computations",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "Computations",
     "text": "Computations\nA function or system often computes something. We can be pedantic about calls versus computations, but in general the connotation around computations is more time and resource intensive than a call. At the end of the day, they will both take some computer cycles."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#retrieval-augmented-generation-rag",
     "href": "posts/llms-and-data-pt2/index.html#retrieval-augmented-generation-rag",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "Retrieval augmented generation (RAG)",
     "text": "Retrieval augmented generation (RAG)\nInstead of you typing out context for the bot, we can retrieve context from somewhere, augment our strings sent to the bot with this context, and then generate a response from the bot.\nAs a contrived example, instead of saying “The capitol of foo is bar”, we can retrieve the capitol of foo from a database, augment it with our context, and then generate a response from the bot. You may notice that we already did this in the firt post in the series – let’s review that code again:\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n\n@marvin.ai_fn\ndef sql_select(\n    text: str, table_name: str = t.get_name(), schema: Schema = t.schema()\n) -&gt; str:\n    \"\"\"writes the SQL SELECT statement to query the table according to the text\"\"\"\n\n\nquery = \"the unique combination of species and islands\"\nsql = sql_select(query).strip(\";\")\nsql\n\n'SELECT DISTINCT species, island FROM penguins'\n\n\nNotice that we retrieved the table name and schema with calls to the Ibis table (t.get_name() and t.schema()). We then augment our context (the query in natural language) with this information and generate a response from the bot.\nThis works reasonably well for simple SQL queries:\n\nt.sql(sql)\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┓\n┃ species   ┃ island    ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━┩\n│ string    │ string    │\n├───────────┼───────────┤\n│ Adelie    │ Torgersen │\n│ Adelie    │ Biscoe    │\n│ Adelie    │ Dream     │\n│ Gentoo    │ Biscoe    │\n│ Chinstrap │ Dream     │\n└───────────┴───────────┘\n\n\n\nI would argue in this case there wasn’t any real computation done by our calls to the Ibis table – we were just retrieving some relatively static metadata – but we could have done some more complex computations (on any of 18+ data platforms)."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#thought-leadership",
     "href": "posts/llms-and-data-pt2/index.html#thought-leadership",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "Thought leadership",
     "text": "Thought leadership\nTODO: human rewrite\nIn the realm of Generative AI, particularly when working with Language Learning Models (LLMs), understanding the concept of ‘context’ is crucial. Context, in this domain, refers to the inputs that are fed into an LLM, and the corresponding outputs they generate. This post breaks down the complexities of this process into understandable fragments, including retrieval of context, its augmentation, and, thereafter, the generation of a response.\nAn illustrative example is provided, showcasing a database interaction. It demonstrates how the data retrieved can be used to augment the context before the bot generates a response. This valuable insight underlines the practical application of the theory, reinforcing the understanding of the readers.\nWe also venture into the difference between simple static metadata retrieval and the more intricate computations. This distinction echoes the breadth and depth of the processes involved in Generative AI.\nAs we continue to explore and unravel the potential of Generative AI and LLMs, this post serves as a fundamental building block. It creates a pathway for enthusiasts and professionals alike to delve deeper into this exciting field. By breaking down complex concepts into comprehensible segments, it fosters an environment of learning and growth.\nThis marks just the beginning of our journey into the world of Generative AI. As we dig deeper, we will continue to explore, learn and share with our readers. Stay tuned for more insightful content in this series. [1]\n[1] https://github.com/ibis-project/ibis-birdbrain"
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html#next-steps",
     "href": "posts/llms-and-data-pt2/index.html#next-steps",
-    "title": "Context, calls, and computations",
+    "title": "Computations and control flow: it’s just programming",
     "section": "Next steps",
     "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series."
   }

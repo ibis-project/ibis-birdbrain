@@ -268,7 +268,7 @@ Important
   <pubDate>Sun, 15 Oct 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Context, calls, and computations</title>
+  <title>Computations and control flow: it’s just programming</title>
   <dc:creator>Cody Peterson</dc:creator>
   <link>https://ibis-project.github.io/posts/llms-and-data-pt2/</link>
   <description><![CDATA[ 
@@ -281,7 +281,7 @@ Important
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.</p>
 <p>This post assumes <a href="../llms-and-data-pt0">basic familiarity with Marvin and Ibis</a> and <a href="../llms-and-data-pt1">three approaches to applying LLMs to data</a>.</p>
-<div id="7bf65911" class="cell" data-execution_count="1">
+<div id="675d651b" class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-1" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><span class="im" style="color: #00769E;
@@ -337,7 +337,7 @@ font-style: inherit;">True</span>)</span><div class="code-annotation-gutter-bg">
 </div>
 </div>
 <p>First, we’ll setup Ibis and Marvin with some simple example data:</p>
-<div id="acdb1f03" class="cell" data-execution_count="2">
+<div id="297c21b2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="annotated-cell-2" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> ibis</span>
@@ -413,7 +413,7 @@ font-style: inherit;">"penguins"</span>)</span><div class="code-annotation-gutte
 <h2 class="anchored" data-anchor-id="retrieval-augmented-generation-rag">Retrieval augmented generation (RAG)</h2>
 <p>Instead of you typing out context for the bot, we can <strong>retrieve</strong> context from somewhere, <strong>augment</strong> our strings sent to the bot with this context, and then <strong>generate</strong> a response from the bot.</p>
 <p>As a contrived example, instead of saying “The capitol of foo is bar”, we can retrieve the capitol of foo from a database, augment it with our context, and then generate a response from the bot. You may notice that <a href="../llms-and-data-pt0">we already did this in the firt post in the series – let’s review that code again</a>:</p>
-<div id="a2500d07" class="cell" data-execution_count="3">
+<div id="1e60f7bd" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> ibis.expr.schema <span class="im" style="color: #00769E;
@@ -462,15 +462,15 @@ font-style: inherit;">=</span> sql_select(query).strip(<span class="st" style="c
 background-color: null;
 font-style: inherit;">";"</span>)</span>
 <span id="cb1-14">sql</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>'SELECT DISTINCT species, island FROM penguins'</code></pre>
 </div>
 </div>
 <p>Notice that we <strong>retrieved</strong> the table name and schema with calls to the Ibis table (<code>t.get_name()</code> and <code>t.schema()</code>). We then <strong>augment</strong> our context (the query in natural language) with this information and <strong>generate</strong> a response from the bot.</p>
 <p>This works reasonably well for simple SQL queries:</p>
-<div id="95337292" class="cell" data-execution_count="4">
+<div id="07c59dc8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">t.sql(sql)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┓
 ┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃
 ┡━━━━━━━━━━━╇━━━━━━━━━━━┩

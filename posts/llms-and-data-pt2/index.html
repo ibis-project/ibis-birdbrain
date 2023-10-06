@@ -9,7 +9,7 @@
 <meta name="author" content="Cody Peterson">
 <meta name="dcterms.date" content="2023-10-14">
 
-<title>Ibis Birdbrain - Context, calls, and computations</title>
+<title>Ibis Birdbrain - Computations and control flow: it’s just programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta name="twitter:title" content="Ibis Birdbrain - Context, calls, and computations">
+<meta name="twitter:title" content="Ibis Birdbrain - Computations and control flow: it’s just programming">
 <meta name="twitter:description" content="AI for your data project">
 <meta name="twitter:card" content="summary">
 </head>
@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Context, calls, and computations</h1>
+      <h1 class="title">Computations and control flow: it’s just programming</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">LLMs and data</div>
               </div>
@@ -289,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The recent Generative AI hype cycle has led to a lot of new terminology to understand. In this post, we’ll cover some key concepts from the groud up and explain the basics of working with LLMs in the context of data.</p>
 <p>This post assumes <a href="../llms-and-data-pt0">basic familiarity with Marvin and Ibis</a> and <a href="../llms-and-data-pt1">three approaches to applying LLMs to data</a>.</p>
-<div id="7bf65911" class="cell" data-execution_count="1">
+<div id="675d651b" class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
@@ -321,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>First, we’ll setup Ibis and Marvin with some simple example data:</p>
-<div id="acdb1f03" class="cell" data-execution_count="2">
+<div id="297c21b2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> marvin</span>
 <span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -367,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="retrieval-augmented-generation-rag">Retrieval augmented generation (RAG)</h2>
 <p>Instead of you typing out context for the bot, we can <strong>retrieve</strong> context from somewhere, <strong>augment</strong> our strings sent to the bot with this context, and then <strong>generate</strong> a response from the bot.</p>
 <p>As a contrived example, instead of saying “The capitol of foo is bar”, we can retrieve the capitol of foo from a database, augment it with our context, and then generate a response from the bot. You may notice that <a href="../llms-and-data-pt0">we already did this in the firt post in the series – let’s review that code again</a>:</p>
-<div id="a2500d07" class="cell" data-execution_count="3">
+<div id="1e60f7bd" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.schema <span class="im">import</span> Schema</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis.expr.types.relations <span class="im">import</span> Table</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -382,15 +382,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"the unique combination of species and islands"</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sql <span class="op">=</span> sql_select(query).strip(<span class="st">";"</span>)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>sql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>'SELECT DISTINCT species, island FROM penguins'</code></pre>
 </div>
 </div>
 <p>Notice that we <strong>retrieved</strong> the table name and schema with calls to the Ibis table (<code>t.get_name()</code> and <code>t.schema()</code>). We then <strong>augment</strong> our context (the query in natural language) with this information and <strong>generate</strong> a response from the bot.</p>
 <p>This works reasonably well for simple SQL queries:</p>
-<div id="95337292" class="cell" data-execution_count="4">
+<div id="07c59dc8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t.sql(sql)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┓
 ┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃
 ┡━━━━━━━━━━━╇━━━━━━━━━━━┩
