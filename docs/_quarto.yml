@@ -148,7 +148,6 @@ quartodoc:
             name: eda
             desc: EDA tools
           contents:
-            - query_tables
             - read_excel_file
             - read_delta_table
             - list_tables
