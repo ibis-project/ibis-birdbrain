@@ -4,7 +4,7 @@ import marvin
 
 import reflex as rx
 
-#from ibis_birdbrain.bots.birdbrain import bot
+# from ibis_birdbrain.bots.birdbrain import bot
 from ibis_birdbrain.bots.tpch3000 import bot
 
 # configure ibis and birdbrain
