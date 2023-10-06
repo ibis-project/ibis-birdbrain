@@ -1,7 +1,8 @@
 # imports
 from ibis_birdbrain.ai import Bot
 
-from ibis_birdbrain.states.default import BirdbrainState
+from ibis_birdbrain.states.tpch3000 import BirdbrainTPCHState
+from ibis_birdbrain.systems.tpch3000 import TPCHSystem
 from ibis_birdbrain.systems.default import (
     BirdbrainSystem,
     FixesSystem,
@@ -22,12 +23,12 @@ from ibis_birdbrain.tools.code import (
     python_function_to_udf,
 )
 from ibis_birdbrain.tools.filesystem import read_file, list_files_and_dirs, write_file
-from ibis_birdbrain.tools.eda import (
+from ibis_birdbrain.tools.tpch3000 import (
     list_tables,
     get_table_schemas,
-    generate_and_execute_sql,
-    read_delta_table,
-    read_excel_file,
+    generate_sql,
+    execute_sql,
+    generate_tpch_data,
 )
 from ibis_birdbrain.tools.advanced import (
     read_files_and_summarize,
@@ -36,9 +37,9 @@ from ibis_birdbrain.tools.advanced import (
 from ibis_birdbrain.tools.github import use_github_cli
 
 # bot setup
-state = BirdbrainState()
+state = BirdbrainTPCHState()
 prompts = [FixesSystem(), CiteSourcesSystem(), UserPreferencesSystem()]
-description = BirdbrainSystem().content
+description = TPCHSystem().content
 
 
 # bot tools
@@ -50,10 +51,6 @@ tools = [
     # text
     summarize_text,
     translate_text,
-    # filesystem
-    read_file,
-    list_files_and_dirs,
-    write_file,
     # code
     text_to_python,
     fix_python_error,
@@ -62,14 +59,10 @@ tools = [
     # Ibis
     list_tables,
     get_table_schemas,
-    generate_and_execute_sql,
-    read_delta_table,
-    read_excel_file,
+    generate_sql,
+    execute_sql,
+    generate_tpch_data,
     # advanced
-    read_files_and_summarize,
-    read_webpage_and_summarize,
-    # github
-    # use_github_cli,
 ]
 
 # bot

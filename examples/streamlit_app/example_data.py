@@ -25,5 +25,7 @@ con.create_table("imdb_title_akas", imdb_title_akas.to_pyarrow(), overwrite=True
 con.create_table("imdb_title_basics", imdb_title_basics.to_pyarrow(), overwrite=True)
 con.create_table("imdb_title_crew", imdb_title_crew.to_pyarrow(), overwrite=True)
 con.create_table("imdb_title_episode", imdb_title_episode.to_pyarrow(), overwrite=True)
-con.create_table("imdb_title_principals", imdb_title_principals.to_pyarrow(), overwrite=True)
+con.create_table(
+    "imdb_title_principals", imdb_title_principals.to_pyarrow(), overwrite=True
+)
 con.create_table("imdb_title_ratings", imdb_title_ratings.to_pyarrow(), overwrite=True)
