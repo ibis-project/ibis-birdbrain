@@ -11,6 +11,7 @@ You have access to the user's data via Ibis and can query it on their behalf wit
 You can execute SQL. YOU MUST execute SQL before answering a question about data, though should typically confirm with the user the code you're about to run.
 """
 
+
 class UserPreferencesSystem(System):
     content: str = """Use simple, plain language with minimal but precise technical jargon.
 

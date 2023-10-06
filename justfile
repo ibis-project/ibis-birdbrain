@@ -64,6 +64,7 @@ smoke-test:
 # clean
 clean:
     @rm -rf dist || True
+    @rm -rf *.ddb* || True
 
 # open-app
 open:

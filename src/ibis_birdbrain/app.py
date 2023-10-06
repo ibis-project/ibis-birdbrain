@@ -31,11 +31,11 @@ def test():
 
 
 @app.command()
-def ipy():
+def ipy(tpch: bool = typer.Option(False, "-t", "--tpch", help="Run tpch test.")):
     """
     ipy
     """
-    ipy_run()
+    ipy_run(tpch=tpch)
 
 
 # main

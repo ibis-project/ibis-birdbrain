@@ -12,7 +12,9 @@ def choose_table_names(text: str, options: list[str]) -> list[str]:
 
 @ai_fn
 def gen_sql_query(
-    table_names: list[str], table_schemas: list[str], question: str = "how many rows are there?"
+    table_names: list[str],
+    table_schemas: list[str],
+    question: str = "how many rows are there?",
 ) -> str:
     """Given a question about tables in a database, returns the SQL query
     string. MUST ONLY use SELECT and JOIN multiple tables as needed."""

@@ -1,5 +1,5 @@
 ---
-title: "Context, calls, and computations"
+title: "Computations and control flow: it's just programming"
 author: "Cody Peterson"
 date: "2023-10-14"
 categories:

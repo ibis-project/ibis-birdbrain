@@ -1,4 +1,5 @@
 # imports
+import time
 from ibis_birdbrain.tools import tool
 
 from io import StringIO
@@ -34,8 +35,11 @@ import ibis
 
 
 @tool
-def run_python_code(code: str) -> str:
-    """Execute Python code as a string and return the output"""
+def run_python_code(code: str) -> (str, float):
+    """Execute Python code as a string and return the output and time to run"""
+
+    t1 = time.time()
+
     code = f"""
 import subprocess
 
@@ -54,4 +58,5 @@ return out.stdout, out.stderr"""
         stdout = ""
         stderr = f"Error: {e}"
 
-    return f"Code ran successfully!\nstdout: {stdout}\nstderr: {stderr}"
+    t2 = time.time()
+    return f"Code ran successfully!\nstdout: {stdout}\nstderr: {stderr}", t2 - t1

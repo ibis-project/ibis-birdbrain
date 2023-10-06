@@ -1,4 +1,4 @@
-def ipy_run(interactive=False):
+def ipy_run(interactive=False, tpch=False):
     import ibis
     import marvin
     import IPython
@@ -6,8 +6,13 @@ def ipy_run(interactive=False):
     from rich import print
 
     from ibis_birdbrain.ai import Console
-    from ibis_birdbrain.tools.eda import con
-    from ibis_birdbrain.bots.birdbrain import bot
+
+    if tpch:
+        from ibis_birdbrain.bots.tpch3000 import bot
+        from ibis_birdbrain.tools.tpch3000 import con
+    else:
+        from ibis_birdbrain.bots.birdbrain import bot
+        from ibis_birdbrain.tools.eda import con
 
     # aliases
     ai = bot
@@ -21,6 +26,14 @@ def ipy_run(interactive=False):
 
     # configure Ibis
     ibis.options.interactive = True
+    ibis.options.repr.interactive.max_rows = 20
+    ibis.options.repr.interactive.max_columns = 20
+    ibis.options.repr.interactive.max_length = 20
+    ibis.options.repr.interactive.max_string = 100
+    ibis.options.repr.interactive.max_depth = 3
+
+    # configure Ibis Birdbrain
+    bot.interactive = True
 
     # start IPython
     IPython.embed(colors="neutral")

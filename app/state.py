@@ -4,11 +4,11 @@ import marvin
 
 import reflex as rx
 
-from ibis_birdbrain.bots.birdbrain import bot
+# from ibis_birdbrain.bots.birdbrain import bot
+from ibis_birdbrain.bots.tpch3000 import bot
 
 # configure ibis and birdbrain
-bot.interactive = False # this is unintuitive
-ibis.options.interactive = True
+bot.interactive = False  # this is unintuitive
 
 
 class QA(rx.Base):
@@ -47,9 +47,7 @@ class State(rx.State):
     def create_chat(self):
         """Create a new chat."""
         # Insert a default question.
-        self.chats[self.new_chat_name] = [
-            QA(question="hello,", answer="birdbrain")
-        ]
+        self.chats[self.new_chat_name] = [QA(question="hello,", answer="birdbrain")]
         self.current_chat = self.new_chat_name
 
     def toggle_modal(self):
@@ -64,9 +62,7 @@ class State(rx.State):
         """Delete the current chat."""
         del self.chats[self.current_chat]
         if len(self.chats) == 0:
-            self.chats = {
-                "New Chat": [QA(question="hello,", answer="birdbrain")]
-            }
+            self.chats = {"new chat": [QA(question="hello,", answer="birdbrain")]}
         self.current_chat = list(self.chats.keys())[0]
         self.toggle_drawer()
 
@@ -107,15 +103,13 @@ class State(rx.State):
         yield
 
         # Build the messages.
-        messages = [
-            { "role": "system", "content": "You are Ibis Birdbrain"}
-        ]
+        messages = [{"role": "system", "content": "You are Ibis Birdbrain"}]
 
         for qa in self.chats[self.current_chat][1:]:
-            messages.append({ "role": "user", "content": qa.question})
-            messages.append({ "role": "assistant", "content": qa.answer})
+            messages.append({"role": "user", "content": qa.question})
+            messages.append({"role": "assistant", "content": qa.answer})
 
-        messages.append({ "role": "user", "content": self.question})
+        messages.append({"role": "user", "content": self.question})
 
         # Start a new session to answer the question.
         qa = QA(question=self.question, answer="")
