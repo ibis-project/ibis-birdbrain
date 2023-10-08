@@ -1,8 +1,5 @@
 # imports
-import os
-import toml
 import typer
-import marvin
 
 from typing_extensions import Annotated
 
@@ -11,14 +8,6 @@ from ibis_birdbrain.commands.testing import testing_run
 
 # typer config
 app = typer.Typer(no_args_is_help=True)
-
-
-# global options
-def version(value: bool):
-    if value:
-        version = toml.load("pyproject.toml")["project"]["version"]
-        typer.echo(f"{version}")
-        raise typer.Exit()
 
 
 # subcommands
@@ -31,22 +20,15 @@ def test():
 
 
 @app.command()
-def ipy(tpch: bool = typer.Option(False, "-t", "--tpch", help="Run tpch test.")):
+def ipy():
     """
     ipy
     """
-    ipy_run(tpch=tpch)
+    ipy_run()
 
 
-# main
 @app.callback()
-def cli(
-    version: bool = typer.Option(
-        None, "--version", help="Show version.", callback=version, is_eager=True
-    ),
-):
-    version = version
-    # Do other global stuff, handle other global options here
+def cli() -> None:
     return
 
 
