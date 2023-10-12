@@ -45,14 +45,6 @@ release:
 preview:
     @quarto preview docs
 
-# streamlit stuff
-app-st:
-    @streamlit run examples/streamlit_app/app.py
-
-# reflex
-app:
-    @reflex run
-
 # format
 format:
     black .
@@ -66,7 +58,16 @@ clean:
     @rm -rf dist || True
     @rm -rf *.ddb* || True
     @rm -rf data/*.parquet || True
+    @rm -rf data/ddbs/* || True
 
 # open-app
 open:
     @open http://localhost:3000
+
+# open-docs
+open-docs:
+    @open https://ibis-project.github.io/ibis-birdbrain/
+
+# open-project
+open-project:
+    @open https://github.com/orgs/ibis-project/projects/2

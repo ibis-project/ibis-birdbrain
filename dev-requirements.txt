@@ -8,6 +8,7 @@ python-dotenv
 # internet
 requests
 html2text
+duckduckgo-search
 
 # cli
 typer[all]
@@ -17,13 +18,8 @@ ibis-framework[duckdb,polars,deltalake] @ git+https://github.com/ibis-project/ib
 xlsx2csv
 XlsxWriter
 
-
 # ai
-openai
-marvin[ddg]~=1.3.0
-
-# gui
-#reflex
+marvin==1.3.0
 
 # docs
 quartodoc

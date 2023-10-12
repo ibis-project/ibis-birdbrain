@@ -1,7 +1,0 @@
-[system]
-backend_uri="duckdb://birdbrain.ddb"
-
-[eda]
-#backend_uri="duckdb://tpch.ddb"
-#backend_uri="duckdb://"
-backend_uri="duckdb://md:tpch"

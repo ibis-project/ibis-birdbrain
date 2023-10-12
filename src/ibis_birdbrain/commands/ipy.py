@@ -1,4 +1,4 @@
-def ipy_run(interactive=False):
+def ipy_run():
     import time
     import ibis
     import marvin

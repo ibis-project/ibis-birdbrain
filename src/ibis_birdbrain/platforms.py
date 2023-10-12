@@ -53,6 +53,24 @@ class DataConnection:
         """
         return self.con.list_tables()
 
+    def table(self, name: str) -> Table:
+        """
+        Get a table.
+        """
+        return self.con.table(name)
+
+    def insert(self, name: str, t: Table) -> None:
+        """
+        Insert a table.
+        """
+        self.con.insert(name, t)
+
+    def create_table(self, name: str, t: Table) -> None:
+        """
+        Create a table.
+        """
+        self.con.create_table(name, t)
+
     def get_tables(self) -> dict[str, Schema]:
         """
         Get tables.
@@ -65,13 +83,6 @@ class DataConnection:
     def query(self, text) -> Table:
         """
         Query the data into a table.
-        """
-        t = self.con.table(text)
-        return t
-
-    def query_docs(self, text) -> Table:
-        """
-        Query the docs data into a table.
         """
         t = self.con.table(text)
         return t
