@@ -1,7 +1,7 @@
 ---
 title: "Three approaches"
 author: "Cody Peterson"
-date: "2023-10-13"
+date: "2023-11-13"
 execute: 
   warning: false
 categories:

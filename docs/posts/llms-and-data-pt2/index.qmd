@@ -1,7 +1,7 @@
 ---
 title: "Computations and control flow: it's just programming"
 author: "Cody Peterson"
-date: "2023-10-14"
+date: "2023-11-14"
 categories:
     - "LLMs and data"
 ---
