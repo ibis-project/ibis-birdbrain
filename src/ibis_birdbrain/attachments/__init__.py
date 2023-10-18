@@ -8,6 +8,7 @@ from typing import Any
 from datetime import datetime
 
 from plotly.graph_objs import Figure
+from ibis.backends.base import BaseBackend
 from ibis.expr.types.relations import Table
 
 # configure Ibis
@@ -21,17 +22,22 @@ ibis.options.repr.interactive.max_length = 20
 class Attachment:
     """An attachment."""
 
-    id: str = str(uuid4())
-    created_at: datetime = datetime.now()
-
-    # an attachment has...
+    id: str
+    created_at: datetime
     name: str
     description: str
-
-    # and...
     content: Any
 
-    def __init__(self, name="attachment", description="", content=None):
+    def __init__(
+        self,
+        id=str(uuid4()),
+        created_at=datetime.now(),
+        name="attachment",
+        description="",
+        content=None,
+    ):
+        self.id = id
+        self.created_at = created_at
         self.name = name
         self.description = description
         self.content = content
@@ -41,28 +47,41 @@ class Attachment:
 
     def decode(self, t: Table) -> str:
         ...
+    
+    def open(self) -> Any:
+        return self.content
 
     def __str__(self):
-        return f"""Attachment:
-    **id**: {self.id}
-    **created_at**: {self.created_at}
-    **name**: {self.name}
-    **description**: {self.description}"""
+        return f"""
+    {self.__class__.__name__}:
+        **id**: {self.id}
+        **name**: {self.name}
+        **created_at**: {self.created_at}
+        **description**: {self.description}"""
 
     def __repr__(self):
         return str(self)
 
+class DatabaseAttachment(Attachment):
+    """A database attachment."""
 
-class StringAttachment(Attachment):
-    """A string attachment."""
+    content: BaseBackend
+
+    def __init__(self, content):
+        super().__init__()
+        self.content = content
+        self.con = content # alias
+        self.sql_dialect = content.name
+
+class TextAttachment(Attachment):
+    """A text attachment."""
 
     content: str
 
     def __init__(self, content):
         super().__init__()
         self.content = content
-
-        if len(self.content // 4) > 100:
+        if (len(self.content) // 4) > 100:
             self.display_content = self.content[:50] + "..." + self.content[-50:]
         else:
             self.display_content = self.content
@@ -77,7 +96,7 @@ class StringAttachment(Attachment):
         return (
             super().__str__()
             + f"""
-    **string**: {self.display_content}"""
+        **text**: {self.display_content}"""
         )
 
 
@@ -89,6 +108,9 @@ class TableAttachment(Attachment):
     def __init__(self, content):
         super().__init__()
         self.content = content
+        self.content = content
+        self.name = content.get_name()
+        self.description = str(content.schema())
 
     def encode(self) -> Table:
         ...
@@ -100,7 +122,7 @@ class TableAttachment(Attachment):
         return (
             super().__str__()
             + f"""
-    **table**:\n{self.content}"""
+        **table**:\n{self.content}"""
         )
 
 
@@ -118,3 +140,38 @@ class ChartAttachment(Attachment):
 
     def decode(self):
         ...
+
+class Attachments:
+    """A collection of attachments."""
+
+    attachments: dict[str, Attachment]
+
+    def __init__(self, attachments: list[Attachment] = []) -> None:
+        """Initialize the attachments."""
+        self.attachments = attachments
+
+    def add_attachment(self, attachment: Attachment):
+        """Add an attachment to the collection."""
+        self.attachments.append(attachment)
+
+    def append(self, attachment: Attachment):
+        """Alias for add_attachment."""
+        self.add_attachment(attachment)
+
+    def __getitem__(self, name: str):
+        """Get an attachment from the collection."""
+        return self.attachments[str]
+
+    def __len__(self):
+        """Get the length of the collection."""
+        return len(self.attachments.valeues())
+
+    def __iter__(self):
+        """Iterate over the collection."""
+        return iter(self.attachments)
+
+    def __str__(self):
+        return f"\n".join([str(a) for a in self.attachments])
+
+    def __repr__(self):
+        return str(self)

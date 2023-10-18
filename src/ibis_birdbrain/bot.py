@@ -4,55 +4,64 @@ Ibis Birdbrain bot.
 
 # imports
 import ibis
-
 import plotly.express as px
 
 from uuid import uuid4
+from datetime import datetime
+
 from rich.console import Console
 from ibis.backends.base import BaseBackend
 
 from ibis_birdbrain.tasks import Task
-from ibis_birdbrain.messages import Message, Email
+from ibis_birdbrain.messages import Message, Email, Messages
 from ibis_birdbrain.attachments import (
-    StringAttachment,
+    Attachment,
+    TextAttachment,
     TableAttachment,
     ChartAttachment,
+    Attachments,
 )
 
-from typing import Any
-
-from random import choice
+from random import choice  # temp
 
 
 # classes
 class Bot:
     """Ibis Birdbrain bot."""
 
-    bot_id: str = str(uuid4())
-    console: Console = Console()
-    messages: list[Message] = []
-
+    id: str
+    created_at: datetime
+    console: Console
+    messages: Messages
     name: str
     description: str
     system: str
     version: str
-
     sys_con: BaseBackend | None
     doc_con: BaseBackend | None
-    data_cons: dict[str, BaseBackend] | None
+    data_con: BaseBackend | None
+    data_bases: list[str]
 
     def __init__(
         self,
+        id=str(uuid4()),
+        console=Console(),
+        created_at=datetime.now(),
+        messages=Messages(),
         name="assistant",
         description="the portable Python AI-powered data bot",
         system="",
         version="infinity",
         sys_con=None,
         doc_con=None,
-        data_cons=None,
+        data_con=None,
+        data_bases=None,
     ) -> None:
         """Initialize the bot."""
-
+        self.id = id
+        self.created_at = created_at
+        self.console = console
+        self.messages = messages
         self.name = name
         self.description = description
         self.system = system
@@ -64,37 +73,47 @@ class Bot:
         self.doc_con = (
             doc_con if doc_con is not None else ibis.connect("duckdb://docs.ddb")
         )
-        self.data_cons = data_cons if data_cons is not None else {}
-        self.data_cons["local_duckdb"] = ibis.connect("duckdb://")
+        self.data_con = data_con if data_con is not None else ibis.connect("duckdb://")
+        self.data_bases = data_bases if data_bases is not None else []
 
-    def __call__(self, text: str) -> Any:
+    def __call__(
+        self,
+        text: str,
+        subject: str = "help me with my data",
+        attachment: Attachments = Attachments(),
+    ) -> Message:
         """Call upon the bot."""
-        message = Email(to_address=[self.name], from_address="user", body=text)
+        message = Email(
+            to_address=self.name, from_address="user", body=text, subject=subject
+        )
         self.messages.append(message)
 
-        t = self.data_cons["tpch"].table("lineitem").limit(1000)
-
-        a = StringAttachment(content="squawk!")
+        # t = ibis.examples.penguins.fetch()
+        t = self.data_con.table("stars")
+        a = TextAttachment(content=f"squawk!\n\nyou've been squawked!")
         b = ChartAttachment(
             content=px.bar(
-                t.group_by("l_returnflag").agg(ibis._.count().name("count")),
-                x="l_returnflag",
+                t.group_by("company")
+                .agg(ibis._.count().name("count"))
+                .order_by(ibis._["count"].desc()),
+                x="company",
                 y="count",
             )
         )
         c = TableAttachment(content=t)
 
         message = Email(
-            to_address=["user"],
+            to_address="user",
             from_address=self.name,
             subject=f"re: {self.messages[-1].subject}",
+            body="squawk!",
             attachments=[choice([a, b, c])],
         )
-        if choice([True, False]):
+        if choice([False, True, False]):
             message.add_attachment(choice([a, b, c]))
         self.messages.append(message)
         return message
 
     def __repr__(self):
         """Represent the bot."""
-        return f"<Bot name={self.name} description={self.description} version={self.version} id={self.bot_id}>"
+        return f"<Bot name={self.name} description={self.description} version={self.version} id={self.id}>"
