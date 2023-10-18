@@ -48,9 +48,7 @@ def generate_plotly_express_figure(
     y_variable: str = "y",
 ):
     """Generates a Plotly Express figure from a language query, table variable, x variable, and y variable
-    j
-For instance, generate_plotly_express_figure("bar of species by count", "t", t.schema(), "species", "count") should return the string:
+        j
+    For instance, generate_plotly_express_figure("bar of species by count", "t", t.schema(), "species", "count") should return the string:
 
-'px.bar(t.group_by("species").agg(ibis._.count().name('count'))'
-"""
-    
+    'px.bar(t.group_by("species").agg(ibis._.count().name('count'))'"""

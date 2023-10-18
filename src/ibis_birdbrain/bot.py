@@ -75,14 +75,21 @@ class Bot:
         t = self.data_cons["tpch"].table("lineitem").limit(1000)
 
         a = StringAttachment(content="squawk!")
-        b = ChartAttachment(content=px.bar(
-            t.group_by("l_returnflag").agg(ibis._.count().name("count")),
-            x="l_returnflag",
-            y="count",
-        ))
+        b = ChartAttachment(
+            content=px.bar(
+                t.group_by("l_returnflag").agg(ibis._.count().name("count")),
+                x="l_returnflag",
+                y="count",
+            )
+        )
         c = TableAttachment(content=t)
 
-        message = Email(to_address=["user"], from_address=self.name, subject=f"re: {self.messages[-1].subject}", attachments=[choice([a, b, c])], )
+        message = Email(
+            to_address=["user"],
+            from_address=self.name,
+            subject=f"re: {self.messages[-1].subject}",
+            attachments=[choice([a, b, c])],
+        )
         if choice([True, False]):
             message.add_attachment(choice([a, b, c]))
         self.messages.append(message)

@@ -19,7 +19,8 @@ class Message:
     body: str
     attachments: list[Attachment]
 
-    def __init__(self,
+    def __init__(
+        self,
         to_address: list[str] = [],
         from_address: str = "",
         subject: str = "",
@@ -38,12 +39,13 @@ class Message:
 
     def decode(self):
         ...
-    
+
     def __str__(self):
         return f"Message({self.id})"
 
     def __repr__(self):
         return str(self)
+
 
 class Email(Message):
     """An email."""

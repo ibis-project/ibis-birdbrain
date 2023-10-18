@@ -16,6 +16,7 @@ ibis.options.repr.interactive.max_rows = 10
 ibis.options.repr.interactive.max_columns = 20
 ibis.options.repr.interactive.max_length = 20
 
+
 # classes
 class Attachment:
     """An attachment."""
@@ -34,7 +35,6 @@ class Attachment:
         self.name = name
         self.description = description
         self.content = content
-
 
     def encode(self) -> Table:
         ...
@@ -74,8 +74,12 @@ class StringAttachment(Attachment):
         ...
 
     def __str__(self):
-        return super().__str__() + f"""
+        return (
+            super().__str__()
+            + f"""
     **string**: {self.display_content}"""
+        )
+
 
 class TableAttachment(Attachment):
     """A table attachment."""
@@ -93,8 +97,11 @@ class TableAttachment(Attachment):
         ...
 
     def __str__(self):
-        return super().__str__() + f"""
+        return (
+            super().__str__()
+            + f"""
     **table**:\n{self.content}"""
+        )
 
 
 class ChartAttachment(Attachment):
@@ -102,7 +109,7 @@ class ChartAttachment(Attachment):
 
     content: Figure
 
-    def __init__(self, content)):
+    def __init__(self, content):
         super().__init__()
         self.content = content
 
