@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ibis-birdbrain"
-version = "0.0.16"
+version = "0.1.0"
 authors = [
   { name="Cody", email="cody@dkdc.dev" },
 ]
-description = "data + AI"
+description = "the portable Python ML-powered data bot"
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
@@ -24,8 +24,9 @@ dependencies = [
   'typer[all]',
   'requests',
   'html2text',
+  'duckduckgo-search',
   'openai',
-  'marvin[ddg]~=1.3.0',
+  'marvin~=1.3.0',
   'ibis-framework[duckdb,polars,deltalake]',
   'plotly',
   'streamlit',
@@ -36,5 +37,5 @@ dependencies = [
 "Bug Tracker" = "https://github.com/ibis-project/ibis-birdbrain/issues"
 
 [project.scripts]
-birdbrain = "ibis_birdbrain.app:app"
+birdbrain = "ibis_birdbrain.cli:app"
 

@@ -1,7 +1,12 @@
 [system]
-backend_uri="duckdb://birdbrain.ddb"
+backend_uri = "duckdb://md:birdbrain"
 
-[eda]
-#backend_uri="duckdb://tpch.ddb"
-#backend_uri="duckdb://"
-backend_uri="duckdb://md:tpch"
+[docs]
+backend_uri = "duckdb://md:birdbrain_docs"
+
+[data]
+backend_uris = [
+    "duckdb://md:tpch",
+    "duckdb://md:imdb",
+    "duckdb://md:ibis_analytics",
+]

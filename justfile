@@ -12,6 +12,7 @@ default:
 
 # ipy
 ipy *args:
+    #@ipython -i app.py
     birdbrain ipy {{ args }}
 
 # setup
@@ -46,12 +47,8 @@ preview:
     @quarto preview docs
 
 # streamlit stuff
-app-st:
-    @streamlit run examples/streamlit_app/app.py
-
-# reflex
 app:
-    @reflex run
+    @streamlit run src/ibis_birdbrain/app.py
 
 # format
 format:
@@ -67,6 +64,3 @@ clean:
     @rm -rf *.ddb* || True
     @rm -rf data/*.parquet || True
 
-# open-app
-open:
-    @open http://localhost:3000

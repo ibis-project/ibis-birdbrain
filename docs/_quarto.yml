@@ -9,7 +9,7 @@ website:
   title: "Ibis Birdbrain"
   site-url: https://ibis-project.github.io
   site-path: ibis-birdbrain
-  description: "AI for your data project"
+  description: "the portable Python ML-powered data bot"
   favicon: images/logo.png
 
   # options

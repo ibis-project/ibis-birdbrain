@@ -13,6 +13,7 @@ html2text
 typer[all]
 
 # data
+duckdb>=0.9.1
 ibis-framework[duckdb,polars,deltalake] @ git+https://github.com/ibis-project/ibis
 xlsx2csv
 XlsxWriter
