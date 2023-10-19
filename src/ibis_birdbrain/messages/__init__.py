@@ -19,8 +19,6 @@ class Message:
 
     def __init__(
         self,
-        id=str(uuid4()),
-        created_at=datetime.now(),
         to_address="",
         from_address="",
         subject="",
@@ -28,13 +26,14 @@ class Message:
         attachments=Attachments(),
     ) -> None:
         """Initialize the message."""
-        self.id = id
-        self.created_at = created_at
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+
         self.to_address = to_address
         self.from_address = from_address
         self.subject = subject
         self.body = body
-        self.attachments = attachments
+        self.attachments = Attachments(attachments=attachments)
 
     def encode(self):
         ...
@@ -51,25 +50,7 @@ class Message:
         self.add_attachment(attachment)
 
     def __str__(self):
-        return f"Message({self.id})"
-
-    def __repr__(self):
-        return str(self)
-
-
-class Email(Message):
-    """An email."""
-
-    def __str__(self):
-        return f"""
-To: {self.to_address}
-From: {self.from_address}
-Sent at: {self.created_at}
-Subject: {self.subject}
-
-{self.body}
-
-Attachments: {self.attachments}\n---"""
+        return f"{self.__class__.__name__}({self.id})"
 
     def __repr__(self):
         return str(self)
@@ -105,7 +86,12 @@ class Messages:
         return iter(self.messages)
 
     def __str__(self):
-        return f"\n".join([str(m) for m in self.messages])
+        return f"\n\n".join([str(m) for m in self.messages])
 
     def __repr__(self):
         return str(self)
+
+# exports
+from ibis_birdbrain.messages.email import Email
+
+__all__ = ["Message", "Messages", "Email"]

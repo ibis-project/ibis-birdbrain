@@ -12,14 +12,13 @@ from datetime import datetime
 from rich.console import Console
 from ibis.backends.base import BaseBackend
 
-from ibis_birdbrain.tasks import Task
-from ibis_birdbrain.messages import Message, Email, Messages
+from ibis_birdbrain.lui import Lui
+from ibis_birdbrain.messages import Messages, Message, Email
 from ibis_birdbrain.attachments import (
-    Attachment,
+    Attachments,
     TextAttachment,
     TableAttachment,
     ChartAttachment,
-    Attachments,
 )
 
 from random import choice  # temp
@@ -37,60 +36,60 @@ class Bot:
     description: str
     system: str
     version: str
-    sys_con: BaseBackend | None
-    doc_con: BaseBackend | None
-    data_con: BaseBackend | None
+    sys_con: BaseBackend
+    doc_con: BaseBackend
+    data_con: BaseBackend
     data_bases: list[str]
 
     def __init__(
         self,
-        id=str(uuid4()),
-        console=Console(),
-        created_at=datetime.now(),
         messages=Messages(),
         name="assistant",
         description="the portable Python AI-powered data bot",
         system="",
         version="infinity",
-        sys_con=None,
-        doc_con=None,
-        data_con=None,
-        data_bases=None,
+        sys_con=ibis.connect("duckdb://birdbrain.ddb"),
+        doc_con=ibis.connect("duckdb://docs.ddb"),
+        data_con=ibis.connect("duckdb://"),
+        data_bases=[],
     ) -> None:
         """Initialize the bot."""
-        self.id = id
-        self.created_at = created_at
-        self.console = console
+        self.id = uuid4()
+        self.created_at = datetime.now()
+        self.console = Console()
+
         self.messages = messages
         self.name = name
         self.description = description
         self.system = system
         self.version = version
-
-        self.sys_con = (
-            sys_con if sys_con is not None else ibis.connect("duckdb://sys.ddb")
-        )
-        self.doc_con = (
-            doc_con if doc_con is not None else ibis.connect("duckdb://docs.ddb")
-        )
-        self.data_con = data_con if data_con is not None else ibis.connect("duckdb://")
-        self.data_bases = data_bases if data_bases is not None else []
+        self.sys_con = sys_con
+        self.doc_con = doc_con
+        self.data_con = data_con
+        self.data_bases = data_bases
 
     def __call__(
         self,
         text: str,
         subject: str = "help me with my data",
-        attachment: Attachments = Attachments(),
+        attachments: Attachments = Attachments(),
     ) -> Message:
         """Call upon the bot."""
+
+        # TODO: LUI for attachments
         message = Email(
-            to_address=self.name, from_address="user", body=text, subject=subject
+            to_address=self.name,
+            from_address="user",
+            body=text,
+            subject=subject,
+            attachments=attachments,
         )
         self.messages.append(message)
 
+        # TODO: LUI for tasks
         # t = ibis.examples.penguins.fetch()
-        t = self.data_con.table("stars")
-        a = TextAttachment(content=f"squawk!\n\nyou've been squawked!")
+        t = self.data_con.table("stars", schema="ibis_analytics.main")
+        a = TextAttachment(content=f"squawk!"*100+" you've been squawked!")
         b = ChartAttachment(
             content=px.bar(
                 t.group_by("company")
@@ -102,6 +101,7 @@ class Bot:
         )
         c = TableAttachment(content=t)
 
+        # TODO: LUI for response
         message = Email(
             to_address="user",
             from_address=self.name,
@@ -113,7 +113,7 @@ class Bot:
             message.add_attachment(choice([a, b, c]))
         self.messages.append(message)
         return message
-
+    
     def __repr__(self):
         """Represent the bot."""
         return f"<Bot name={self.name} description={self.description} version={self.version} id={self.id}>"

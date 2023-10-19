@@ -5,8 +5,9 @@ backend_uri = "duckdb://md:birdbrain"
 backend_uri = "duckdb://md:birdbrain_docs"
 
 [data]
-backend_uris = [
-    "duckdb://md:tpch",
-    "duckdb://md:imdb",
-    "duckdb://md:ibis_analytics",
+backend_uri = "duckdb://md:"
+databases = [
+    "tpch",
+    "imdb",
+    "ibis_analytics",
 ]

@@ -12,7 +12,6 @@ default:
 
 # ipy
 ipy *args:
-    #@ipython -i app.py
     birdbrain ipy {{ args }}
 
 # setup

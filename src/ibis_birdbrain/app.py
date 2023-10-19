@@ -12,7 +12,7 @@ import plotly.express as px
 from dotenv import load_dotenv
 
 from ibis_birdbrain.bot import Bot
-from ibis_birdbrain.messages import Message, Email
+from ibis_birdbrain.messages import Email
 from ibis_birdbrain.attachments import (
     TextAttachment,
     TableAttachment,
@@ -32,7 +32,7 @@ st.set_page_config(layout="wide")
 # data platforms
 sys_con = ibis.connect(f"{config['system']['backend_uri']}", read_only=False)
 docs_con = ibis.connect(f"{config['docs']['backend_uri']}", read_only=True)
-data_con = ibis.connect(f"{config['data']['backend_uri']}", read_only=True)
+data_con = ibis.connect(f"{config['data']['backend_uri']}", read_only=False)
 data_bases = config["data"]["databases"]
 
 # ai bot
