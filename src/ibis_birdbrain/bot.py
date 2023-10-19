@@ -89,7 +89,7 @@ class Bot:
         # TODO: LUI for tasks
         # t = ibis.examples.penguins.fetch()
         t = self.data_con.table("stars", schema="ibis_analytics.main")
-        a = TextAttachment(content=f"squawk!"*100+" you've been squawked!")
+        a = TextAttachment(content=f"squawk! " * 100 + " you've been squawked!")
         b = ChartAttachment(
             content=px.bar(
                 t.group_by("company")
@@ -113,7 +113,7 @@ class Bot:
             message.add_attachment(choice([a, b, c]))
         self.messages.append(message)
         return message
-    
+
     def __repr__(self):
         """Represent the bot."""
         return f"<Bot name={self.name} description={self.description} version={self.version} id={self.id}>"

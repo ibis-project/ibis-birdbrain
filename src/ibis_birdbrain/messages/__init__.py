@@ -91,6 +91,7 @@ class Messages:
     def __repr__(self):
         return str(self)
 
+
 # exports
 from ibis_birdbrain.messages.email import Email
 

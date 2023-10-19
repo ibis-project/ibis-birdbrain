@@ -3,6 +3,7 @@ from plotly.graph_objs import Figure
 
 from ibis_birdbrain.attachments import Attachment
 
+
 # classes
 class ChartAttachment(Attachment):
     """A chart attachment."""

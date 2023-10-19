@@ -44,12 +44,13 @@ class Attachment:
     def __repr__(self):
         return str(self)
 
+
 class Attachments:
     """A collection of attachments."""
 
     attachments: dict[str, Attachment]
 
-    def __init__(self, attachments: list[Attachment]=[]) -> None:
+    def __init__(self, attachments: list[Attachment] = []) -> None:
         """Initialize the attachments."""
         self.temp = attachments
         self.attachments = dict({a.id: a for a in attachments})
@@ -83,14 +84,15 @@ class Attachments:
 
 # exports
 from ibis_birdbrain.attachments.viz import ChartAttachment
-from ibis_birdbrain.attachments.docs import TextAttachment
 from ibis_birdbrain.attachments.data import DatabaseAttachment, TableAttachment
+from ibis_birdbrain.attachments.docs import TextAttachment, WebpageAttachment
 
 __all__ = [
     "Attachment",
+    "Attachments",
     "DatabaseAttachment",
     "TableAttachment",
     "ChartAttachment",
     "TextAttachment",
-    "Attachments",
+    "WebpageAttachment",
 ]

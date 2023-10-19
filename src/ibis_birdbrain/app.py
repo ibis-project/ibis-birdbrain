@@ -52,9 +52,7 @@ def process_message(message: Email):
         elif isinstance(attachment, TableAttachment):
             results.append(st.dataframe(attachment.open(), use_container_width=True))
         elif isinstance(attachment, ChartAttachment):
-            results.append(
-                st.plotly_chart(attachment.open(), use_container_width=True)
-            )
+            results.append(st.plotly_chart(attachment.open(), use_container_width=True))
         else:
             results.append(st.markdown("Unknown attachment type"))
 

@@ -12,6 +12,7 @@ ibis.options.repr.interactive.max_rows = 10
 ibis.options.repr.interactive.max_columns = 20
 ibis.options.repr.interactive.max_length = 20
 
+
 # classes
 class DatabaseAttachment(Attachment):
     """A database attachment."""
@@ -21,8 +22,9 @@ class DatabaseAttachment(Attachment):
     def __init__(self, content):
         super().__init__()
         self.content = content
-        self.con = content # alias
+        self.con = content  # alias
         self.sql_dialect = content.name
+
 
 class TableAttachment(Attachment):
     """A table attachment."""
@@ -34,7 +36,7 @@ class TableAttachment(Attachment):
         self.content = content
         self.content = content
         self.name = content.get_name()
-        self.description = "\n"+str(content.schema())
+        self.description = "\n" + str(content.schema())
 
     def encode(self) -> Table:
         ...

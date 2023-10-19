@@ -1,6 +1,7 @@
 # imports
 from ibis_birdbrain.messages import Message
 
+
 # classes
 class Email(Message):
     """An email."""

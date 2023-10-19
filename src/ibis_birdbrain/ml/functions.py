@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 from ibis.expr.schema import Schema
 
+from ibis_birdbrain.attachments import DatabaseAttachment, TableAttachment
+
 
 # config
 load_dotenv()
@@ -13,13 +15,18 @@ marvin.settings.llm_model = "azure_openai/gpt-4"
 
 # functions
 @marvin.ai_fn
-def choose_con(text: str, cons: list[str]) -> str:
-    """Chooses a connection from a list of connections based on a language query"""
+def filter_docs(docs: list[str], instructions: str) -> list[str]:  # type: ignore
+    """Filters relevant documents from a list based on instructions."""
 
 
-@marvin.ai_fn
-def choose_tables(text: str, tables: dict[str, Schema]) -> list[str]:
-    """Chooses a table from a list of tables based on a language query"""
+# @marvin.ai_fn
+# def filter_cons(cons: dict[str, DatabaseAttachment], text: str) -> list[str]:  # type: ignore
+#    """Filters relevant connections from a list of connections."""
+#
+
+# @marvin.ai_fn
+# def filter_tables(tables: dict[str, Schema], text: str) -> list[str]:  # type: ignore
+# """filter relevant  tables from a list of tables."""
 
 
 @marvin.ai_fn
