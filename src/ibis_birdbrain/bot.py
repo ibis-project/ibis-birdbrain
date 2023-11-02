@@ -1,12 +1,12 @@
 """
-Ibis Birdbrain bot.
+Ibis Birdbrain.
 """
 
 # imports
 import ibis
-import plotly.express as px
 
 from uuid import uuid4
+from typing import Any
 from datetime import datetime
 
 from rich.console import Console
@@ -14,14 +14,7 @@ from ibis.backends.base import BaseBackend
 
 from ibis_birdbrain.lui import Lui
 from ibis_birdbrain.messages import Messages, Message, Email
-from ibis_birdbrain.attachments import (
-    Attachments,
-    TextAttachment,
-    TableAttachment,
-    ChartAttachment,
-)
-
-from random import choice  # temp
+from ibis_birdbrain.attachments import Attachments
 
 
 # classes
@@ -31,6 +24,8 @@ class Bot:
     id: str
     created_at: datetime
     console: Console
+
+    lui: Lui
     messages: Messages
     name: str
     description: str
@@ -43,6 +38,7 @@ class Bot:
 
     def __init__(
         self,
+        lui=Lui(),
         messages=Messages(),
         name="assistant",
         description="the portable Python AI-powered data bot",
@@ -68,51 +64,21 @@ class Bot:
         self.data_con = data_con
         self.data_bases = data_bases
 
+        self.lui = lui
+
     def __call__(
         self,
         text: str,
-        subject: str = "help me with my data",
+        stuff: list[Any] = [],
         attachments: Attachments = Attachments(),
     ) -> Message:
         """Call upon the bot."""
 
-        # TODO: LUI for attachments
-        message = Email(
-            to_address=self.name,
-            from_address="user",
-            body=text,
-            subject=subject,
-            attachments=attachments,
-        )
-        self.messages.append(message)
+        input_message = self.lui.preprocess(text)
+        system_message = self.lui.system(input_message)
+        output_message = self.lui.postprocess(system_message)
 
-        # TODO: LUI for tasks
-        # t = ibis.examples.penguins.fetch()
-        t = self.data_con.table("stars", schema="ibis_analytics.main")
-        a = TextAttachment(content=f"squawk! " * 100 + " you've been squawked!")
-        b = ChartAttachment(
-            content=px.bar(
-                t.group_by("company")
-                .agg(ibis._.count().name("count"))
-                .order_by(ibis._["count"].desc()),
-                x="company",
-                y="count",
-            )
-        )
-        c = TableAttachment(content=t)
-
-        # TODO: LUI for response
-        message = Email(
-            to_address="user",
-            from_address=self.name,
-            subject=f"re: {self.messages[-1].subject}",
-            body="squawk!",
-            attachments=[choice([a, b, c])],
-        )
-        if choice([False, True, False]):
-            message.add_attachment(choice([a, b, c]))
-        self.messages.append(message)
-        return message
+        self.messages.append(output_message)
 
     def __repr__(self):
         """Represent the bot."""

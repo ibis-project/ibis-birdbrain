@@ -23,7 +23,7 @@ class Message:
         from_address="",
         subject="",
         body="",
-        attachments=Attachments(),
+        attachments: list[Attachment] = [],
     ) -> None:
         """Initialize the message."""
         self.id = str(uuid4())

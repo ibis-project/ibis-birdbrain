@@ -9,9 +9,38 @@ class TextAttachment(Attachment):
 
     content: str
 
-    def __init__(self, content):
-        super().__init__()
-        self.content = content
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if (len(self.content) // 4) > 200:
+            self.display_content = self.content[:50] + "..." + self.content[-50:]
+        else:
+            self.display_content = self.content
+
+    def encode(self):
+        ...
+
+    def decode(self):
+        ...
+
+    def __str__(self):
+        return (
+            super().__str__()
+            + f"""
+    **text**:\n{self.content}"""
+        )
+
+
+class WebpageAttachment(Attachment):
+    """A webpage attachment."""
+
+    content: str
+    url: str
+
+    def __init__(self, *args, url="https://ibis-project.org", **kwargs):
+        super().__init__(*args, **kwargs)
+        self.url = url
+        if self.content is None:
+            self.content = webpage_to_str(self.url)
         if (len(self.content) // 4) > 100:
             self.display_content = self.content[:50] + "..." + self.content[-50:]
         else:
@@ -27,36 +56,12 @@ class TextAttachment(Attachment):
         return (
             super().__str__()
             + f"""
-        **text**: {self.content}"""
-        )
-
-
-class WebpageAttachment(TextAttachment):
-    """A webpage attachment."""
-
-    url: str
-
-    def __init__(self, content=None, url="https://ibis-project.org"):
-        super().__init__(url)
-        self.url = url
-        if content is None:
-            self.content = webpage_to_str(self.url)
-
-    def encode(self):
-        ...
-
-    def decode(self):
-        ...
-
-    def __str__(self):
-        return (
-            super().__str__()
-            + f"""
-        **url**: {self.url}"""
+    **url**: {self.url}
+    **content**:\n{self.display_content}"""
         )
 
     def open(self, browser=False):
         if browser:
             open_browser(self.url)
         else:
-            return self.content
+            return self.url

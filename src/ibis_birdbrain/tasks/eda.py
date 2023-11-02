@@ -4,41 +4,46 @@ from ibis_birdbrain.attachments import (
     DatabaseAttachment,
     TableAttachment,
     ChartAttachment,
+    TextAttachment,
+    WebpageAttachment,
 )
 
 
 # tasks
-def summarize_database(m: Message) -> Message:
-    """Summarize the database."""
+def summarize_databases(m: Message) -> Message:
+    """Summarize databases."""
     instructions = m.body
-    response = Message(
+    response = Email(
         to_address=m.from_address, from_address=m.to_address, subject=f"re: {m.subject}"
     )
 
     for attachment in m.attachments:
         if isinstance(attachment, DatabaseAttachment):
-            table_summaries = Messages()
-            for table in attachment.tables:
-                table_summaries.append(summarize_table(table))
+            db_summary = summarize_database(attachment)
+            response.attachments.append(db_summary)
+
+    response.body = "Here is a summary of the databases."
 
     return response
+
+
+def summarize_database(db: DatabaseAttachment) -> TextAttachment:
+    """Summarize a database."""
+    tables = db.con.list_tables()
+
+    return TextAttachment(
+        "\n".join(tables),
+        name=db.name,
+    )
 
 
 def summarize_table(m: Message) -> Message:
     """Summarize a table."""
     instructions = m.body
-    response = Message(
+    response = Email(
         to_address=m.from_address, from_address=m.to_address, subject=f"re: {m.subject}"
     )
 
-    return Message(body="Summarizing a table...")
+    response.body = "Here is a summary of the table."
 
-
-def visualize_table(m: Message) -> Message:
-    """Visualize a table."""
-    instructions = m.body
-    response = Message(
-        to_address=m.from_address, from_address=m.to_address, subject=f"re: {m.subject}"
-    )
-
-    return Message(body="Visualizing a table...")
+    return response

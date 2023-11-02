@@ -10,17 +10,17 @@ from ibis.expr.types.relations import Table
 class Attachment:
     """An attachment."""
 
+    content: Any
     id: str
     created_at: datetime
-    name: str
-    description: str
-    content: Any
+    name: str | None
+    description: str | None
 
     def __init__(
         self,
-        name="attachment",
-        description="",
-        content=None,
+        content,
+        name=None,
+        description=None,
     ):
         self.id = str(uuid4())
         self.created_at = datetime.now()
@@ -39,7 +39,11 @@ class Attachment:
         return self.content
 
     def __str__(self):
-        return f"{self.__class__.__name__}({self.id})"
+        return f"""{self.__class__.__name__}
+    **guid**: {self.id}
+    **time**: {self.created_at}
+    **name**: {self.name}
+    **desc**: {self.description}"""
 
     def __repr__(self):
         return str(self)
@@ -52,7 +56,6 @@ class Attachments:
 
     def __init__(self, attachments: list[Attachment] = []) -> None:
         """Initialize the attachments."""
-        self.temp = attachments
         self.attachments = dict({a.id: a for a in attachments})
 
     def add_attachment(self, attachment: Attachment):

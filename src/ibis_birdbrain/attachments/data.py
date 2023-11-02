@@ -19,11 +19,25 @@ class DatabaseAttachment(Attachment):
 
     content: BaseBackend
 
-    def __init__(self, content):
-        super().__init__()
-        self.content = content
-        self.con = content  # alias
-        self.sql_dialect = content.name
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.con = self.content  # alias
+        try:
+            self.sql_dialect = self.content.name
+        except:
+            self.sql_dialect = "unknown"
+        try:
+            self.name = (
+                self.content.current_database + "." + self.content.current_schema
+            )
+        except:
+            self.name = "unknown.main"
+        try:
+            self.description = "tables:\n\t" + "\n\t".join(
+                [t for t in self.content.list_tables()]
+            )
+        except:
+            self.description = "tables:\n\t"
 
 
 class TableAttachment(Attachment):
@@ -31,12 +45,14 @@ class TableAttachment(Attachment):
 
     content: Table
 
-    def __init__(self, content):
-        super().__init__()
-        self.content = content
-        self.content = content
-        self.name = content.get_name()
-        self.description = "\n" + str(content.schema())
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        try:
+            self.name = self.content.get_name()
+        except AttributeError:
+            self.name = None
+        self.schema = self.content.schema()
+        self.description = "\n" + str(self.schema)
 
     def encode(self) -> Table:
         ...
@@ -48,5 +64,5 @@ class TableAttachment(Attachment):
         return (
             super().__str__()
             + f"""
-        **table**:\n{self.content}"""
+    **table**:\n{self.content}"""
         )

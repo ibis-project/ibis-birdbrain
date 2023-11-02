@@ -28,4 +28,10 @@ def open_browser(url: str) -> str:
 def webpage_to_str(url: str = "https://ibis-project.org") -> str:
     """Reads a webpage link into a string. Useful for summarizing webpages."""
     response = requests.get(url)
-    return html2text(response.text)
+    return (
+        html2text(response.text)
+        # .replace("\n", " ")
+        # .replace("\r", " ")
+        # .replace("\t", " ")
+        # .replace("  ", " ")
+    )

@@ -10,12 +10,18 @@ class ChartAttachment(Attachment):
 
     content: Figure
 
-    def __init__(self, content):
-        super().__init__()
-        self.content = content
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def encode(self):
         ...
 
     def decode(self):
         ...
+
+    def __str__(self):
+        return (
+            super().__str__()
+            + f"""
+    **chart**:\n{self.content}"""
+        )

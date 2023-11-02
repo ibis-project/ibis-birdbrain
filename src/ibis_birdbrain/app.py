@@ -15,6 +15,7 @@ from ibis_birdbrain.bot import Bot
 from ibis_birdbrain.messages import Email
 from ibis_birdbrain.attachments import (
     TextAttachment,
+    WebpageAttachment,
     TableAttachment,
     ChartAttachment,
 )
@@ -49,6 +50,8 @@ def process_message(message: Email):
     for attachment in message.attachments:
         if isinstance(attachment, TextAttachment):
             results.append(st.markdown(attachment.open()))
+        elif isinstance(attachment, WebpageAttachment):
+            results.append(st.markdown(attachment.open()))  # TODO: better
         elif isinstance(attachment, TableAttachment):
             results.append(st.dataframe(attachment.open(), use_container_width=True))
         elif isinstance(attachment, ChartAttachment):

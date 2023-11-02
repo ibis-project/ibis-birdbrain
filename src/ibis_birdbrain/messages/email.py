@@ -16,6 +16,7 @@ Subject: {self.subject}
 {self.body}
 
 Attachments:
+
 {self.attachments}\n---"""
 
     def __repr__(self):
