@@ -16,3 +16,12 @@ def str_to_list_of_str(s: str, max_chunk_len: int = 1000, sep: str = "\n") -> li
         result.extend(chunk.split(sep))
 
     return result
+
+
+def shorten_str(s: str, max_len: int = 20) -> str:
+    """Converts a string to a display string."""
+
+    if len(s) > max_len:
+        return f"{s[:max_len]}..."
+    else:
+        return s

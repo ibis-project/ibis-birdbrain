@@ -19,22 +19,25 @@ class DatabaseAttachment(Attachment):
 
     content: BaseBackend
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, data_base=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.con = self.content  # alias
+        if data_base is None:
+            data_base = self.con.current_database
+        self.data_base = data_base
         try:
             self.sql_dialect = self.content.name
         except:
             self.sql_dialect = "unknown"
         try:
             self.name = (
-                self.content.current_database + "." + self.content.current_schema
+                self.data_base + "." + self.content.current_schema
             )
         except:
             self.name = "unknown.main"
         try:
             self.description = "tables:\n\t" + "\n\t".join(
-                [t for t in self.content.list_tables()]
+                [t for t in self.content.list_tables(database=data_base)]
             )
         except:
             self.description = "tables:\n\t"

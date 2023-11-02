@@ -13,8 +13,11 @@ from rich.console import Console
 from ibis.backends.base import BaseBackend
 
 from ibis_birdbrain.lui import Lui
-from ibis_birdbrain.messages import Messages, Message, Email
-from ibis_birdbrain.attachments import Attachments
+from ibis_birdbrain.messages import Messages, Message
+
+from ibis_birdbrain.systems import DEFAULT_NAME, DEFAULT_USER_NAME
+
+from ibis_birdbrain.utils.strings import shorten_str
 
 
 # classes
@@ -28,6 +31,7 @@ class Bot:
     lui: Lui
     messages: Messages
     name: str
+    user_name: str
     description: str
     system: str
     version: str
@@ -40,7 +44,8 @@ class Bot:
         self,
         lui=Lui(),
         messages=Messages(),
-        name="assistant",
+        name=DEFAULT_NAME,
+        user_name=DEFAULT_USER_NAME,
         description="the portable Python AI-powered data bot",
         system="",
         version="infinity",
@@ -56,6 +61,7 @@ class Bot:
 
         self.messages = messages
         self.name = name
+        self.user_name = user_name
         self.description = description
         self.system = system
         self.version = version
@@ -70,14 +76,28 @@ class Bot:
         self,
         text: str,
         stuff: list[Any] = [],
-        attachments: Attachments = Attachments(),
     ) -> Message:
         """Call upon the bot."""
 
-        input_message = self.lui.preprocess(text)
-        system_message = self.lui.system(input_message)
-        output_message = self.lui.postprocess(system_message)
+        # process input
+        input_message = self.lui.preprocess(text, stuff, self.data_con, self.data_bases, self.doc_con)
+        input_message.to_address = self.name
+        input_message.from_address = self.user_name
+        input_message.subject = shorten_str(text)
+        self.messages.append(input_message)
 
+        # process system
+        system_message = self.lui.system(input_message)
+        system_message.to_address = self.name
+        system_message.from_address = self.name
+        system_message.subject = f"[internal] re: {input_message.subject}"
+        self.messages.append(system_message)
+
+        # process output
+        output_message = self.lui.postprocess(system_message)
+        output_message.to_address = self.user_name
+        output_message.from_address = self.name
+        output_message.subject = f"re: {input_message.subject}"
         self.messages.append(output_message)
 
     def __repr__(self):
