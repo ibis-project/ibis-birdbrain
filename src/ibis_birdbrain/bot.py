@@ -80,7 +80,9 @@ class Bot:
         """Call upon the bot."""
 
         # process input
-        input_message = self.lui.preprocess(text, stuff, self.data_con, self.data_bases, self.doc_con)
+        input_message = self.lui.preprocess(
+            text, stuff, self.data_con, self.data_bases, self.doc_con
+        )
         input_message.to_address = self.name
         input_message.from_address = self.user_name
         input_message.subject = shorten_str(text)

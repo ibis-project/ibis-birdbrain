@@ -30,9 +30,7 @@ class DatabaseAttachment(Attachment):
         except:
             self.sql_dialect = "unknown"
         try:
-            self.name = (
-                self.data_base + "." + self.content.current_schema
-            )
+            self.name = self.data_base + "." + self.content.current_schema
         except:
             self.name = "unknown.main"
         try:
@@ -40,7 +38,7 @@ class DatabaseAttachment(Attachment):
                 [t for t in self.content.list_tables(database=data_base)]
             )
         except:
-            self.description = "tables:\n\t"
+            self.description = "empty database\n"
 
 
 class TableAttachment(Attachment):

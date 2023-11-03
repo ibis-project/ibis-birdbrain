@@ -26,6 +26,22 @@ def generate_response(
 
 
 @marvin.ai_fn
+def filter_attachments(
+    e: Email,
+    task_type: str = "eda",
+) -> list[str]:
+    """Filters relevant attachments from an email, returning a list of GUIDs of only relevant attachments per the text."""
+
+
+@marvin.ai_fn
+def choose_task(
+    t: str,
+    task_type: str = "eda",
+) -> str:
+    """Chooses a task (by name) based on the text and inferred task type."""
+
+
+@marvin.ai_fn
 def filter_docs(docs: list[str], instructions: str) -> list[str]:  # type: ignore
     """Filters relevant documents from a list based on instructions."""
 
