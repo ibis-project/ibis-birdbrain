@@ -42,6 +42,11 @@ def choose_task(
 
 
 @marvin.ai_fn
+def generate_database_description(db: DatabaseAttachment) -> str:
+    """Generates a one-sentence description of a database's data."""
+
+
+@marvin.ai_fn
 def filter_docs(docs: list[str], instructions: str) -> list[str]:  # type: ignore
     """Filters relevant documents from a list based on instructions."""
 

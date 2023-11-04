@@ -9,6 +9,7 @@ from ibis_birdbrain.systems import (
     DEFAULT_NAME,
     DEFAULT_INPUT_SYSTEM,
     DEFAULT_OUTPUT_SYSTEM,
+    DEFAULT_SYSTEM_SYSTEM,
 )
 
 from ibis_birdbrain.messages import Message, Email
@@ -42,11 +43,13 @@ class Lui:
         name: str = DEFAULT_NAME,
         input_system: str = DEFAULT_INPUT_SYSTEM,
         output_system: str = DEFAULT_OUTPUT_SYSTEM,
+        system_system: str = DEFAULT_SYSTEM_SYSTEM,
     ) -> None:
         """Initialize the LUI."""
         self.name = name
         self.input_system = input_system
         self.output_system = output_system
+        self.system_system = system_system
 
     def __call__(
         self, message: Message | str, instructions: str = "", context: str = ""
@@ -73,6 +76,7 @@ class Lui:
         body = m.body
         attachments = m.attachments
         r = generate_response(body, instructions=self.output_system)
+        r += f"\n\nSee attached.\n\n-{self.name}"
 
         # TODO:
         # - evaluate
@@ -86,25 +90,15 @@ class Lui:
         task = choose_task(tasks, task_type=task_type.value)
         attachments = filter_attachments(m, task_type=task_type.value)
         attachments = [m.attachments[i] for i in attachments]
-        print(task_type)
-        print(task)
         task_message = generate_response(
             body,
             instructions=self.input_system,
         )
         task_message = Email(
             body=task_message,
-            to_address=DEFAULT_NAME,
-            from_address=DEFAULT_NAME,
+            to_address=self.name,
+            from_address=self.name,
             attachments=attachments,
         )
         task_result = tasks.tasks[task](task_message)
-        print(task_result)
-        attachments = []  # TODO: temp
-        r = generate_response(body, instructions=self.input_system)
-
-        # TODO:
-        # - decide on task/user intent
-        # - filter relevant attachments
-        # - run tasks
-        return Email(body=r, attachments=attachments)
+        return task_result
