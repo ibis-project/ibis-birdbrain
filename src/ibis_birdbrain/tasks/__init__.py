@@ -1,6 +1,5 @@
 # imports
 from typing import Callable
-from ibis_birdbrain.tasks.eda import summarize_databases, summarize_table
 
 
 # classes
@@ -22,9 +21,35 @@ class Tasks:
 
 
 # exports
+from ibis_birdbrain.tasks.eda import (
+    exploratory_data_analysis,
+    transform_data,
+    visualize_data,
+)
+from ibis_birdbrain.tasks.code import write_code
+from ibis_birdbrain.tasks.learn import learn
+from ibis_birdbrain.tasks.information import information
+from ibis_birdbrain.tasks.attachments import open_attachments
+from ibis_birdbrain.tasks.summarize import (
+    summarize_docs,
+    summarize_web,
+    summarize_databases,
+    summarize_tables,
+)
+
+
 tasks = {
+    "exploratory_data_analysis": exploratory_data_analysis,
+    "transform_data": transform_data,
+    "write_code": write_code,
+    "visualize_data": visualize_data,
+    "learn": learn,
+    "information": information,
+    "open_attachments": open_attachments,
+    "summarize_docs": summarize_docs,
+    "summarize_web": summarize_web,
     "summarize_databases": summarize_databases,
-    "summarize_table": summarize_table,
+    "summarize_tables": summarize_tables,
 }
 tasks = Tasks(tasks)
 

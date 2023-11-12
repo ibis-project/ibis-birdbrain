@@ -1,5 +1,6 @@
 # imports
 from ibis_birdbrain.utils.web import webpage_to_str, open_browser
+from ibis_birdbrain.utils.strings import estimate_tokens, shorten_str
 from ibis_birdbrain.attachments import Attachment
 
 
@@ -11,8 +12,11 @@ class TextAttachment(Attachment):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if (len(self.content) // 4) > 200:
-            self.display_content = self.content[:50] + "..." + self.content[-50:]
+        if estimate_tokens(self.content) > 200:
+            self.display_content = (
+                shorten_str(self.content, 50)
+                + shorten_str(self.content[::-1], 50)[::-1]
+            )
         else:
             self.display_content = self.content
 
@@ -41,8 +45,11 @@ class WebpageAttachment(Attachment):
         self.url = url
         if self.content is None:
             self.content = webpage_to_str(self.url)
-        if (len(self.content) // 4) > 100:
-            self.display_content = self.content[:50] + "..." + self.content[-50:]
+        if estimate_tokens(self.content) > 100:
+            self.display_content = (
+                shorten_str(self.content, 50)
+                + shorten_str(self.content[::-1], 50)[::-1]
+            )
         else:
             self.display_content = self.content
 
@@ -65,3 +72,27 @@ class WebpageAttachment(Attachment):
             open_browser(self.url)
         else:
             return self.url
+
+
+class CodeAttachment(TextAttachment):
+    """A code attachment."""
+
+    content: str
+    language: str
+
+    def __init__(self, language="python", *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.language = language
+
+    def encode(self):
+        ...
+
+    def decode(self):
+        ...
+
+    def __str__(self):
+        return (
+            super().__str__()
+            + f"""
+    **code**:\n{self.content}"""
+        )

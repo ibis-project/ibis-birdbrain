@@ -7,47 +7,19 @@ from ibis_birdbrain.attachments import (
     TextAttachment,
     WebpageAttachment,
 )
-from ibis_birdbrain.ml.functions import generate_database_description
 
 
 # tasks
-def summarize_databases(m: Message) -> Message:
-    """Summarize databases."""
-    instructions = m.body
-    response = Email(
-        to_address=m.from_address, from_address=m.to_address, subject=f"re: {m.subject}"
-    )
-
-    for attachment in m.attachments:
-        if isinstance(attachment, DatabaseAttachment):
-            db_summary = summarize_database(attachment)
-            response.attachments.append(db_summary)
-
-    response.body = "Here is a summary of the databases."
-
-    return response
+def exploratory_data_analysis():
+    """Not implemented"""
+    ...
 
 
-def summarize_database(db: DatabaseAttachment) -> TextAttachment:
-    """Summarize a database."""
-    tables = db.open().list_tables(database=db.data_base)
-
-    a = TextAttachment(
-        "\n".join(tables),
-        name=f"{db.name} summary",
-    )
-    a.description = generate_database_description(a)
-
-    return a
+def transform_data():
+    """Not implemented"""
+    ...
 
 
-def summarize_table(m: Message) -> Message:
-    """Summarize a table."""
-    instructions = m.body
-    response = Email(
-        to_address=m.from_address, from_address=m.to_address, subject=f"re: {m.subject}"
-    )
-
-    response.body = "Here is a summary of the table."
-
-    return response
+def visualize_data():
+    """Not implemented"""
+    ...

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from ibis.expr.schema import Schema
 
-from ibis_birdbrain.messages import Email
+from ibis_birdbrain.messages import Email, Messages
 from ibis_birdbrain.attachments import DatabaseAttachment, TableAttachment
 
 
@@ -17,12 +17,35 @@ marvin.settings.llm_model = "azure_openai/gpt-4"
 # functions
 @marvin.ai_fn
 def generate_response(
-    e: Email,
+    m: Messages,
     instructions: str = "",
     additional_instructions: str = "",
     additional_context: str = "",
 ) -> str:
     """Generates a response from an email."""
+
+
+@marvin.ai_fn
+def choose_options(
+    m: Messages,
+    options: list[str],
+    instructions: str = "",
+    additional_instructions: str = "",
+    additional_context: str = "",
+    single_selection: bool = False,
+) -> list[str]:
+    """Chooses an option from a list of options based on an email thread's context.
+
+    Returns a list of only a single option if single_selection is True.
+    """
+
+
+@marvin.ai_fn
+def generate_code(
+    m: Messages,
+    task_type: str = "eda",
+) -> str:
+    """Generates code from an email."""
 
 
 @marvin.ai_fn

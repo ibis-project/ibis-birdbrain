@@ -1,5 +1,5 @@
 # python
-black
+ruff
 build
 twine
 ipython
@@ -8,6 +8,7 @@ python-dotenv
 # internet
 requests
 html2text
+duckduckgo-search
 
 # cli
 typer[all]
@@ -20,7 +21,7 @@ XlsxWriter
 
 
 # ai
-openai
+openai<=1.0
 marvin[ddg]~=1.3.0
 
 # gui

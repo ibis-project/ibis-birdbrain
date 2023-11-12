@@ -88,7 +88,11 @@ class Attachments:
 # exports
 from ibis_birdbrain.attachments.viz import ChartAttachment
 from ibis_birdbrain.attachments.data import DatabaseAttachment, TableAttachment
-from ibis_birdbrain.attachments.docs import TextAttachment, WebpageAttachment
+from ibis_birdbrain.attachments.text import (
+    TextAttachment,
+    CodeAttachment,
+    WebpageAttachment,
+)
 
 __all__ = [
     "Attachment",
@@ -97,5 +101,6 @@ __all__ = [
     "TableAttachment",
     "ChartAttachment",
     "TextAttachment",
+    "CodeAttachment",
     "WebpageAttachment",
 ]

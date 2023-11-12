@@ -1,6 +1,6 @@
 # imports
 
-# functions
-def information():
+
+def learn():
     """Not implemented."""
     ...

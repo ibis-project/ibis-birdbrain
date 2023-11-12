@@ -2,6 +2,21 @@
 
 
 # functions
+def estimate_tokens(s: str) -> int:
+    """Estimates the number of tokens in a string."""
+
+    return len(s) // 4
+
+
+def shorten_str(s: str, max_len: int = 20) -> str:
+    """Converts a string to a display string."""
+
+    if len(s) > max_len:
+        return f"{s[:max_len]}..."
+    else:
+        return s
+
+
 def str_to_list_of_str(s: str, max_chunk_len: int = 1000, sep: str = "\n") -> list[str]:
     """Splits a string into a list of strings."""
 
@@ -16,12 +31,3 @@ def str_to_list_of_str(s: str, max_chunk_len: int = 1000, sep: str = "\n") -> li
         result.extend(chunk.split(sep))
 
     return result
-
-
-def shorten_str(s: str, max_len: int = 20) -> str:
-    """Converts a string to a display string."""
-
-    if len(s) > max_len:
-        return f"{s[:max_len]}..."
-    else:
-        return s

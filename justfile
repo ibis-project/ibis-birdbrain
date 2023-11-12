@@ -51,7 +51,7 @@ app:
 
 # format
 format:
-    black .
+    ruff format .
 
 # smoke-test
 smoke-test:

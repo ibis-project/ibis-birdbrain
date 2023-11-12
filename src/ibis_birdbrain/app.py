@@ -36,7 +36,7 @@ docs_con = ibis.connect(f"{config['docs']['backend_uri']}", read_only=True)
 data_con = ibis.connect(f"{config['data']['backend_uri']}", read_only=False)
 data_bases = config["data"]["databases"]
 
-# ai bot
+# ml bot
 bot = Bot(sys_con=sys_con, doc_con=docs_con, data_con=data_con, data_bases=data_bases)
 
 

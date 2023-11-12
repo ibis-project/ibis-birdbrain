@@ -9,5 +9,6 @@ backend_uri = "duckdb://md:"
 databases = [
     "tpch",
     "imdb",
+    "penguins",
     "ibis_analytics",
 ]

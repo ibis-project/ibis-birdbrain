@@ -15,35 +15,10 @@ marvin.settings.llm_model = "azure_openai/gpt-4"
 
 
 # classifiers
-@marvin.ai_classifier
-class Something(Enum):
-    something = "Something"
-    something_else = "Something else"
-
-
-# garbage code below (and above) here
-# TODO: use Python stuff
-# task_types = [(t, t.__doc__) for t in dir(tasks) if not t.startswith("_")]
-# task_dict = {f: f for f in task_types}
-# TaskType = Enum("TaskType", task_dict)
-# TaskType = marvin.ai_classifier(TaskType)
-#
-# # TODO: use Python stuff
-# util_types = [(t, t.__doc__) for t in dir(utils) if not t.startswith("_")]
-# util_dict = {f: f for f in util_types}
-# UtilType = Enum("UtilType", util_dict)
-# UtilType = marvin.ai_classifier(UtilType)
-
-
-# TODO: better dynamic Enum shenanigans here later; hardcode for now
-@marvin.ai_classifier
-class TaskType(Enum):
-    """Classifiers user intent for a task based on their text input.
-
-    They may be asking for general information, trying to understand (learn) something,
-    exploring data, or visualizing data."""
-
-    information = "information"
-    understand = "understand"
-    eda = "eda"
-    visualize = "visualize"
+def to_ml_classifier(options: list[str], docstring: str = "Classifies text based on a list of options") -> Enum:
+    """Converts a list of options into a ML classifier."""
+    enum_dict = {f: f for f in options}
+    EnumType = Enum("EnumType", enum_dict)
+    EnumType = marvin.ai_classifier(EnumType)
+    EnumType.__doc__ = docstring
+    return EnumType

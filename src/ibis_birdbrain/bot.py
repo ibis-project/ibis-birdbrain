@@ -9,7 +9,6 @@ from uuid import uuid4
 from typing import Any
 from datetime import datetime
 
-from rich.console import Console
 from ibis.backends.base import BaseBackend
 
 from ibis_birdbrain.lui import Lui
@@ -26,7 +25,6 @@ class Bot:
 
     id: str
     created_at: datetime
-    console: Console
 
     lui: Lui
     messages: Messages
@@ -46,7 +44,7 @@ class Bot:
         messages=Messages(),
         name=DEFAULT_NAME,
         user_name=DEFAULT_USER_NAME,
-        description="the portable Python AI-powered data bot",
+        description="the portable Python ML-powered data bot",
         system="",
         version="infinity",
         sys_con=ibis.connect("duckdb://birdbrain.ddb"),
@@ -57,7 +55,6 @@ class Bot:
         """Initialize the bot."""
         self.id = uuid4()
         self.created_at = datetime.now()
-        self.console = Console()
 
         self.messages = messages
         self.name = name
@@ -81,7 +78,12 @@ class Bot:
 
         # process input
         input_message = self.lui.preprocess(
-            text, stuff, self.data_con, self.data_bases, self.doc_con
+            text,
+            stuff,
+            self.data_con,
+            self.data_bases,
+            self.doc_con,
+            first_message=(len(self.messages) == 0),
         )
         input_message.to_address = self.name
         input_message.from_address = self.user_name
