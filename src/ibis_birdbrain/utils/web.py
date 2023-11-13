@@ -20,13 +20,13 @@ def open_browser(url: str) -> str:
 
 
 def search_internet(query: str, n_results: int = 10) -> list[dict]:
-    """Searches the internet for n results"""
+    """Searches the internet for n results."""
     ddgs = DDGS()
     return [r for r in islice(ddgs.text(query, backend="lite"), n_results)]
 
 
 def webpage_to_str(url: str = "https://ibis-project.org") -> str:
-    """Reads a webpage link into a string. Useful for summarizing webpages."""
+    """Reads a webpage link into a string."""
     response = requests.get(url)
     return (
         html2text(response.text)

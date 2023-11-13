@@ -3,6 +3,7 @@ from uuid import uuid4
 from datetime import datetime
 
 from ibis_birdbrain.attachments import Attachment, Attachments
+from ibis_birdbrain.ml.classifiers import to_ml_classifier
 
 
 # classes
@@ -55,6 +56,16 @@ class Message:
     def __repr__(self):
         return str(self)
 
+    def attachment(self, text: str):
+        """Get an attachment from the message."""
+        attachment_options = list(self.attachments)
+        attachment_classifier = to_ml_classifier(attachment_options, docstring=f"Choose an attachment from context {self} based on the request of {text}")
+        attachment = attachment_classifier(text).value
+        return self.attachments[attachment]
+    
+    def a(self, text: str):
+        """Alias for attachment."""
+        return self.attachment(text)
 
 class Messages:
     """A collection of messages."""
@@ -91,6 +102,13 @@ class Messages:
     def __repr__(self):
         return str(self)
 
+    def all_attachment_guids(self) -> list[str]:
+        """Get all attachments."""
+        return list(set([a for m in self.messages for a in list(m.attachments)]))
+
+    def all_message_guids(self) -> list[str]:
+        """Get all messages."""
+        return list(set([m.id for m in self.messages]))
 
 # exports
 from ibis_birdbrain.messages.email import Email

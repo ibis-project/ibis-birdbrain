@@ -29,12 +29,12 @@ from ibis_birdbrain.tasks.eda import (
 from ibis_birdbrain.tasks.code import write_code
 from ibis_birdbrain.tasks.learn import learn
 from ibis_birdbrain.tasks.information import information
-from ibis_birdbrain.tasks.attachments import open_attachments
+from ibis_birdbrain.tasks.attachments import open_attachment
 from ibis_birdbrain.tasks.summarize import (
-    summarize_docs,
+    summarize_doc,
     summarize_web,
-    summarize_databases,
-    summarize_tables,
+    summarize_database,
+    summarize_table,
 )
 
 
@@ -45,11 +45,11 @@ tasks = {
     "visualize_data": visualize_data,
     "learn": learn,
     "information": information,
-    "open_attachments": open_attachments,
-    "summarize_docs": summarize_docs,
+    "open_attachment": open_attachment,
+    "summarize_doc": summarize_doc,
     "summarize_web": summarize_web,
-    "summarize_databases": summarize_databases,
-    "summarize_tables": summarize_tables,
+    "summarize_database": summarize_database,
+    "summarize_table": summarize_table,
 }
 tasks = Tasks(tasks)
 

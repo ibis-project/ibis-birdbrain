@@ -7,6 +7,8 @@ def ingest_docs_run(clear: bool = False, docs_path: str = "data/docs") -> None:
     import logging as log
 
     from ibis.backends.base import BaseBackend
+
+    from ibis_birdbrain.bot import BotData
     from ibis_birdbrain.utils.strings import shorten_str
 
     import toml
@@ -26,7 +28,6 @@ def ingest_docs_run(clear: bool = False, docs_path: str = "data/docs") -> None:
 
             log.info(f"Processing {doc_dir}...")
             files = sorted(_find_docs(os.path.join(docs_path, doc_dir)))
-            files = [file.replace(docs_path, "").strip("/") for file in files]
             contents = [_read_doc(file) for file in files]
             data = {
                 "filename": files,
@@ -68,8 +69,11 @@ def ingest_docs_run(clear: bool = False, docs_path: str = "data/docs") -> None:
             return "Error reading file"
 
     config = toml.load("config.toml")
+    data = config["data"]
+    data = BotData(data=data)
 
-    docs_con = ibis.connect(f"{config['docs']['backend_uri']}", read_only=False)
+    docs_con = data["docs"]
+
     if clear:
         for table in docs_con.list_tables():
             log.info(f"Dropping {table}")

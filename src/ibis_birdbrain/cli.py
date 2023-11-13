@@ -15,19 +15,19 @@ app = typer.Typer(no_args_is_help=True)
 
 # subcommands
 @app.command()
-def test():
-    """
-    test
-    """
-    testing_run()
-
-
-@app.command()
 def ipy():
     """
     ipy
     """
     ipy_run()
+
+
+@app.command()
+def test():
+    """
+    test
+    """
+    testing_run()
 
 
 @app.command()

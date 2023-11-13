@@ -11,7 +11,7 @@ from ibis_birdbrain.attachments import DatabaseAttachment, TableAttachment
 
 # config
 load_dotenv()
-marvin.settings.llm_model = "azure_openai/gpt-4"
+marvin.settings.llm_model = "azure_openai/gpt-4-32k"
 
 
 # functions

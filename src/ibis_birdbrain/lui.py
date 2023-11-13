@@ -23,12 +23,12 @@ from ibis_birdbrain.tasks import tasks
 
 from ibis_birdbrain.utils.messages import to_message
 
+from ibis_birdbrain.ml.classifiers import to_ml_classifier
 from ibis_birdbrain.ml.functions import (
     generate_response,
     filter_attachments,
     choose_task,
 )
-from ibis_birdbrain.ml.classifiers import TaskType
 
 
 # classes
@@ -60,25 +60,22 @@ class Lui:
         self,
         text: str,
         stuff: list[Any],
-        data_con: list[BaseBackend],
-        data_bases: list[str],
-        docs_con: BaseBackend,
+        data: dict[str, BaseBackend],
         first_message: bool = False,
     ) -> Message:
         """Preprocess input.""" ""
         m = to_message(text, stuff)
         if first_message:
-            for data_base in data_bases:
-                m.append(DatabaseAttachment(content=data_con, data_base=data_base))
-            m.append(DatabaseAttachment(content=docs_con))
+            for data_con_name, data_con in data.items():
+                m.append(DatabaseAttachment(name=data_con_name, content=data_con))
         return m
 
-    def system(self, m: Message) -> Message:
+    def system(self, m: Message) -> Any:
         """System process."""
         body = m.body
-        task_type = TaskType(body)
-        task = choose_task(tasks, task_type=task_type.value)
-        attachments = filter_attachments(m, task_type=task_type.value)
+        task_picker = to_ml_classifier(list(tasks.tasks.keys()), docstring=f"Chooses relevant tasks based on a message from tasks: {tasks}")
+        task = task_picker(str(m)).value
+        attachments = filter_attachments(m)
         attachments = [m.attachments[i] for i in attachments]
         task_message = generate_response(
             body,

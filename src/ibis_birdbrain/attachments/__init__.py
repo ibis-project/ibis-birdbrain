@@ -76,13 +76,16 @@ class Attachments:
 
     def __iter__(self):
         """Iterate over the collection."""
-        return iter(self.attachments.values())
+        return iter(self.attachments.keys())
 
     def __str__(self):
         return "\n\n".join([str(a) for a in self.attachments.values()])
 
     def __repr__(self):
         return str(self)
+
+    def __index__(self, id: str):
+        return self.attachments[id]
 
 
 # exports

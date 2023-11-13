@@ -1,14 +1,14 @@
-[system]
-backend_uri = "duckdb://md:birdbrain"
-
-[docs]
-backend_uri = "duckdb://md:birdbrain_docs"
-
 [data]
-backend_uri = "duckdb://md:"
-databases = [
-    "tpch",
-    "imdb",
-    "penguins",
-    "ibis_analytics",
-]
+# birdbrain
+system = "duckdb://md:birdbrain"
+memory = "duckdb://md:"
+docs = "duckdb://md:birdbrain_docs"
+
+# demos
+tpch = "duckdb://md:tpch"
+imdb = "duckdb://md:imdb"
+penguins = "duckdb://md:penguins"
+
+# actual prod dat
+ibis_github_pypi_metrics = "duckdb://md:ibis_analytics"
+

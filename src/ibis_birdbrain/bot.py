@@ -20,6 +20,28 @@ from ibis_birdbrain.utils.strings import shorten_str
 
 
 # classes
+class BotData:
+    """Ibis Birdbrain bot data."""
+
+    data: dict[str, BaseBackend]
+
+    def __init__(self, data: dict[str, str]) -> None:
+        """Initialize the bot data."""
+        self.data = {k: ibis.connect(v) for k, v in data.items()}
+
+    def __getitem__(self, key: str) -> BaseBackend:
+        """Get a data connection."""
+        return self.data[key]
+
+    def __setitem__(self, key: str, value: BaseBackend) -> None:
+        """Set a data connection."""
+        self.data[key] = value
+
+    def __repr__(self):
+        """Represent the bot data."""
+        return f"<BotData data={self.data}>"
+
+
 class Bot:
     """Ibis Birdbrain bot."""
 
@@ -33,13 +55,11 @@ class Bot:
     description: str
     system: str
     version: str
-    sys_con: BaseBackend
-    doc_con: BaseBackend
-    data_con: BaseBackend
-    data_bases: list[str]
+    data: BotData
 
     def __init__(
         self,
+        data,
         lui=Lui(),
         messages=Messages(),
         name=DEFAULT_NAME,
@@ -47,42 +67,32 @@ class Bot:
         description="the portable Python ML-powered data bot",
         system="",
         version="infinity",
-        sys_con=ibis.connect("duckdb://birdbrain.ddb"),
-        doc_con=ibis.connect("duckdb://docs.ddb"),
-        data_con=ibis.connect("duckdb://"),
-        data_bases=[],
     ) -> None:
         """Initialize the bot."""
         self.id = uuid4()
         self.created_at = datetime.now()
 
+        self.data = data
+        self.lui = lui
         self.messages = messages
         self.name = name
         self.user_name = user_name
         self.description = description
         self.system = system
         self.version = version
-        self.sys_con = sys_con
-        self.doc_con = doc_con
-        self.data_con = data_con
-        self.data_bases = data_bases
-
-        self.lui = lui
 
     def __call__(
         self,
         text: str,
         stuff: list[Any] = [],
-    ) -> Message:
+    ) -> Any:
         """Call upon the bot."""
 
         # process input
         input_message = self.lui.preprocess(
             text,
             stuff,
-            self.data_con,
-            self.data_bases,
-            self.doc_con,
+            self.data.data,
             first_message=(len(self.messages) == 0),
         )
         input_message.to_address = self.name
@@ -90,19 +100,22 @@ class Bot:
         input_message.subject = shorten_str(text)
         self.messages.append(input_message)
 
-        # process system
-        system_message = self.lui.system(input_message)
-        system_message.to_address = self.name
-        system_message.from_address = self.name
-        system_message.subject = f"[internal] re: {input_message.subject}"
-        self.messages.append(system_message)
+        return
 
-        # process output
-        output_message = self.lui.postprocess(system_message)
-        output_message.to_address = self.user_name
-        output_message.from_address = self.name
-        output_message.subject = f"re: {input_message.subject}"
-        self.messages.append(output_message)
+        # process system
+        # system_message = self.lui.system(input_message)
+        # return system_message
+        # system_message.to_address = self.name
+        # system_message.from_address = self.name
+        # system_message.subject = f"[internal] re: {input_message.subject}"
+        # self.messages.append(system_message)
+
+        ## process output
+        # output_message = self.lui.postprocess(system_message)
+        # output_message.to_address = self.user_name
+        # output_message.from_address = self.name
+        # output_message.subject = f"re: {input_message.subject}"
+        # self.messages.append(output_message)
 
     def __repr__(self):
         """Represent the bot."""
