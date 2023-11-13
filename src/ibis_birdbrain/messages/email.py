@@ -9,6 +9,7 @@ class Email(Message):
     def __str__(self):
         return f"""
 To: {self.to_address}
+Id: {self.id}
 From: {self.from_address}
 Sent at: {self.created_at}
 Subject: {self.subject}

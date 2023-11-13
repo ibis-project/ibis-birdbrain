@@ -1,14 +1,14 @@
 [data]
 # birdbrain
-system = "duckdb://md:birdbrain"
 memory = "duckdb://md:"
-docs = "duckdb://md:birdbrain_docs"
+system = "duckdb://md:birdbrain"
+documentation = "duckdb://md:birdbrain_docs"
 
 # demos
-tpch = "duckdb://md:tpch"
+#tpch = "duckdb://md:tpch"
 imdb = "duckdb://md:imdb"
-penguins = "duckdb://md:penguins"
+#penguins = "duckdb://md:penguins"
 
 # actual prod dat
-ibis_github_pypi_metrics = "duckdb://md:ibis_analytics"
+ibis_adoption_metrics = "duckdb://md:ibis_analytics"
 

@@ -70,6 +70,10 @@ class Attachments:
         """Get an attachment from the collection."""
         return self.attachments[id]
 
+    def __setitem__(self, id: str, attachment: Attachment):
+        """Set an attachment in the collection."""
+        self.attachments[id] = attachment
+
     def __len__(self):
         """Get the length of the collection."""
         return len(self.attachments.values())

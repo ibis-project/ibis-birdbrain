@@ -1,37 +1,35 @@
 # imports
 from ibis_birdbrain.messages import Messages, Message, Email
-from ibis_birdbrain.attachments import (
-    DatabaseAttachment,
-    TableAttachment,
-    ChartAttachment,
-    TextAttachment,
-    WebpageAttachment,
-)
-from ibis_birdbrain.ml.functions import generate_database_description
 
 
 # tasks
-def summarize_doc():
-    """Not implemented."""
-    ...
+def summarize(m: Message) -> Messages:
+    """Summarizes messages and attachments (including data).
 
-
-def summarize_web():
-    """Not implemented."""
-    ...
-
-
-def summarize_database(db: DatabaseAttachment) -> TextAttachment:
-    """Summarize a database."""
-    tables = db.open().list_tables(database=db.data_base)
-
-    a = TextAttachment(
-        "\n".join(tables),
-        name=f"{db.name} summary",
+    Choose this task to get a summary of items in the context."""
+    system_messages = Messages()
+    system_messages.append(
+        Email(
+            subject="Summarizing messages and attachments",
+            body="Ibis Birdbrain is summarizing messages and attachments.",
+        )
     )
-    a.description = generate_database_description(a)
+    return system_messages
 
-    return a
+
+def summarize_doc(m: Message) -> Message:
+    """Not implemented."""
+    ...
+
+
+def summarize_web(m: Message) -> Message:
+    """Not implemented."""
+    ...
+
+
+def summarize_database(m: Message) -> Message:
+    """Not implemented."""
+    ...
 
 
 def summarize_table(m: Message) -> Message:

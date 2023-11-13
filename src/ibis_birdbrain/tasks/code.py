@@ -1,12 +1,17 @@
 # imports
 from ibis_birdbrain.messages import Messages, Message, Email
-from ibis_birdbrain.attachments import (
-    CodeAttachment,
-)
-from ibis_birdbrain.ml.functions import generate_code
 
 
 # tasks
-def write_code(m: Message) -> Message:
-    """Not implemented"""
-    ...
+def code(m: Message) -> Messages:
+    """Writes code for a user.
+
+    Choose this task to write code (SQL or Python/Ibis) for a user."""
+    system_messages = Messages()
+    system_messages.append(
+        Email(
+            subject="Writing code",
+            body="Ibis Birdbrain is writing code.",
+        )
+    )
+    return system_messages

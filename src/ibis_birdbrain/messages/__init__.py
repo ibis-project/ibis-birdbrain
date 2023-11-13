@@ -59,25 +59,34 @@ class Message:
     def attachment(self, text: str):
         """Get an attachment from the message."""
         attachment_options = list(self.attachments)
-        attachment_classifier = to_ml_classifier(attachment_options, docstring=f"Choose an attachment from context {self} based on the request of {text}")
+        attachment_classifier = to_ml_classifier(
+            attachment_options,
+            instructions=f"Choose an attachment from context {self} based on the request of {text}",
+        )
         attachment = attachment_classifier(text).value
         return self.attachments[attachment]
-    
+
     def a(self, text: str):
         """Alias for attachment."""
         return self.attachment(text)
+
 
 class Messages:
     """A collection of messages."""
 
     messages: list[Message]
+    attachments: Attachments
 
-    def __init__(self, messages: list[Message] = []) -> None:
+    def __init__(self, messages: list[Message] = [], attachments: list[Attachment] = []) -> None:
         """Initialize the messages."""
         self.messages = messages
+        self.attachments = Attachments(attachments=attachments)
 
     def add_message(self, message: Message):
         """Add a message to the collection."""
+        for a in message.attachments:
+            if a not in self.attachments:
+                self.attachments[a] = message.attachments[a]
         self.messages.append(message)
 
     def append(self, message: Message):
@@ -101,7 +110,7 @@ class Messages:
 
     def __repr__(self):
         return str(self)
-
+    
     def all_attachment_guids(self) -> list[str]:
         """Get all attachments."""
         return list(set([a for m in self.messages for a in list(m.attachments)]))
@@ -109,6 +118,7 @@ class Messages:
     def all_message_guids(self) -> list[str]:
         """Get all messages."""
         return list(set([m.id for m in self.messages]))
+
 
 # exports
 from ibis_birdbrain.messages.email import Email

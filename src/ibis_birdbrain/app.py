@@ -11,7 +11,7 @@ import plotly.express as px
 
 from dotenv import load_dotenv
 
-from ibis_birdbrain.bot import Bot, BotData
+from ibis_birdbrain.bot import Bot
 from ibis_birdbrain.messages import Email
 from ibis_birdbrain.attachments import (
     TextAttachment,
@@ -34,7 +34,8 @@ config = toml.load("config.toml")
 data = config["data"]
 
 # ml bot
-bot = Bot(BotData(data=data))
+bot = Bot(data)
+
 
 # functions
 def process_message(message: Email):

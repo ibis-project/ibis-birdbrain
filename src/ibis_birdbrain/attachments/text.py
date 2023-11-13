@@ -94,5 +94,6 @@ class CodeAttachment(TextAttachment):
         return (
             super().__str__()
             + f"""
+    **language**: {self.language}
     **code**:\n{self.content}"""
         )

@@ -14,7 +14,7 @@ from ibis_birdbrain.systems import (
     DEFAULT_SYSTEM_SYSTEM,
 )
 
-from ibis_birdbrain.messages import Message, Email
+from ibis_birdbrain.messages import Messages, Message, Email
 from ibis_birdbrain.attachments import (
     DatabaseAttachment,
 )  # TODO: this feels hacky to have here, but fairly core to the experience so maybe it's fine?
@@ -27,7 +27,6 @@ from ibis_birdbrain.ml.classifiers import to_ml_classifier
 from ibis_birdbrain.ml.functions import (
     generate_response,
     filter_attachments,
-    choose_task,
 )
 
 
@@ -58,37 +57,28 @@ class Lui:
 
     def preprocess(
         self,
+        messages: Messages,
         text: str,
         stuff: list[Any],
         data: dict[str, BaseBackend],
-        first_message: bool = False,
     ) -> Message:
-        """Preprocess input.""" ""
+        """Preprocess input."""
         m = to_message(text, stuff)
-        if first_message:
+        if len(messages) == 0:
             for data_con_name, data_con in data.items():
                 m.append(DatabaseAttachment(name=data_con_name, content=data_con))
         return m
 
-    def system(self, m: Message) -> Any:
+    def system(self, m: Messages) -> Messages:
         """System process."""
-        body = m.body
-        task_picker = to_ml_classifier(list(tasks.tasks.keys()), docstring=f"Chooses relevant tasks based on a message from tasks: {tasks}")
-        task = task_picker(str(m)).value
+        task = tasks.select(m, m[-1].body)
         attachments = filter_attachments(m)
         attachments = [m.attachments[i] for i in attachments]
-        task_message = generate_response(
-            body,
-            instructions=self.input_system,
-        )
-        task_message = Email(
-            body=task_message,
-            to_address=self.name,
-            from_address=self.name,
-            attachments=attachments,
-        )
-        task_result = tasks.tasks[task](task_message)
-        return task_result
+        for a in attachments:
+            m.attachments[a.id] = a
+
+        system_messages = task(m)
+        return system_messages
 
     def postprocess(self, m: Message) -> Message:
         """Postprocess output."""

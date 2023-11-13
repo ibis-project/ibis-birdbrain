@@ -15,4 +15,3 @@ def to_message(text: str, stuff: list[Any] = []) -> Message:
             attachments.append(attachment)
 
     return Email(body=text, attachments=attachments)
-

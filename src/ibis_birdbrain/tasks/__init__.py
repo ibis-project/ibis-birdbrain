@@ -1,6 +1,9 @@
 # imports
 from typing import Callable
 
+from ibis_birdbrain.messages import Messages
+from ibis_birdbrain.ml.classifiers import to_ml_classifier
+
 
 # classes
 class Tasks:
@@ -19,38 +22,38 @@ class Tasks:
     def __repr__(self):
         return str(self)
 
+    def __getitem__(self, key):
+        return self.tasks[key]
+
+    def __setitem__(self, key, value):
+        self.tasks[key] = value
+
+    def __delitem__(self, key):
+        del self.tasks[key]
+
+    def select(self, m: Messages, text: str):
+        """Get a task from the message."""
+        selection_options = list(self.tasks.keys())
+        selection_classifier = to_ml_classifier(
+            selection_options,
+            instructions=f"Choose a task from {self} with context {m} based on the request of {text}",
+        )
+        selection = selection_classifier(text).value
+        return self.tasks[selection]
+
 
 # exports
-from ibis_birdbrain.tasks.eda import (
-    exploratory_data_analysis,
-    transform_data,
-    visualize_data,
-)
-from ibis_birdbrain.tasks.code import write_code
+from ibis_birdbrain.tasks.eda import eda
+from ibis_birdbrain.tasks.code import code
 from ibis_birdbrain.tasks.learn import learn
-from ibis_birdbrain.tasks.information import information
-from ibis_birdbrain.tasks.attachments import open_attachment
-from ibis_birdbrain.tasks.summarize import (
-    summarize_doc,
-    summarize_web,
-    summarize_database,
-    summarize_table,
-)
-
+from ibis_birdbrain.tasks.summarize import summarize
 
 tasks = {
-    "exploratory_data_analysis": exploratory_data_analysis,
-    "transform_data": transform_data,
-    "write_code": write_code,
-    "visualize_data": visualize_data,
-    "learn": learn,
-    "information": information,
-    "open_attachment": open_attachment,
-    "summarize_doc": summarize_doc,
-    "summarize_web": summarize_web,
-    "summarize_database": summarize_database,
-    "summarize_table": summarize_table,
+    "explore, transform, visualize, analyze data": eda,
+    "write code": code,
+    "learn data best practices": learn,
+    "summarize messages and attachments": summarize,
 }
 tasks = Tasks(tasks)
 
-__all__ = ["tasks"]
+__all__ = ["Tasks", "tasks"]

@@ -22,7 +22,9 @@ class DatabaseAttachment(Attachment):
     def __init__(self, *args, **kwargs):
         if "name" not in kwargs:
             try:
-                kwargs["name"] = self.content.current_database + "." + self.content.current_schema
+                kwargs["name"] = (
+                    self.content.current_database + "." + self.content.current_schema
+                )
             except:
                 kwargs["name"] = "unknown"
         super().__init__(*args, **kwargs)

@@ -12,34 +12,15 @@ from datetime import datetime
 from ibis.backends.base import BaseBackend
 
 from ibis_birdbrain.lui import Lui
+from ibis_birdbrain.tasks import Tasks, tasks
+from ibis_birdbrain.systems import (
+    DEFAULT_NAME,
+    DEFAULT_USER_NAME,
+    DEFAULT_DESCRIPTION,
+    DEFAULT_VERSION,
+)
 from ibis_birdbrain.messages import Messages, Message
-
-from ibis_birdbrain.systems import DEFAULT_NAME, DEFAULT_USER_NAME
-
 from ibis_birdbrain.utils.strings import shorten_str
-
-
-# classes
-class BotData:
-    """Ibis Birdbrain bot data."""
-
-    data: dict[str, BaseBackend]
-
-    def __init__(self, data: dict[str, str]) -> None:
-        """Initialize the bot data."""
-        self.data = {k: ibis.connect(v) for k, v in data.items()}
-
-    def __getitem__(self, key: str) -> BaseBackend:
-        """Get a data connection."""
-        return self.data[key]
-
-    def __setitem__(self, key: str, value: BaseBackend) -> None:
-        """Set a data connection."""
-        self.data[key] = value
-
-    def __repr__(self):
-        """Represent the bot data."""
-        return f"<BotData data={self.data}>"
 
 
 class Bot:
@@ -48,67 +29,67 @@ class Bot:
     id: str
     created_at: datetime
 
+    data: dict[str, BaseBackend]
     lui: Lui
+    tasks: Tasks
     messages: Messages
     name: str
     user_name: str
     description: str
-    system: str
     version: str
-    data: BotData
 
     def __init__(
         self,
-        data,
+        data: dict[str, str] = {"system": "duckdb://birdbrain.ddb"},
+        tasks=tasks,
         lui=Lui(),
         messages=Messages(),
         name=DEFAULT_NAME,
         user_name=DEFAULT_USER_NAME,
-        description="the portable Python ML-powered data bot",
-        system="",
-        version="infinity",
+        description=DEFAULT_DESCRIPTION,
+        version=DEFAULT_VERSION,
     ) -> None:
         """Initialize the bot."""
         self.id = uuid4()
         self.created_at = datetime.now()
 
-        self.data = data
+        self.data = {k: ibis.connect(v) for k, v in data.items()}
         self.lui = lui
+        self.tasks = tasks
         self.messages = messages
         self.name = name
         self.user_name = user_name
         self.description = description
-        self.system = system
         self.version = version
 
     def __call__(
         self,
         text: str,
         stuff: list[Any] = [],
-    ) -> Any:
+    ) -> Message:
         """Call upon the bot."""
 
         # process input
         input_message = self.lui.preprocess(
+            self.messages,
             text,
             stuff,
-            self.data.data,
-            first_message=(len(self.messages) == 0),
+            self.data,
         )
         input_message.to_address = self.name
         input_message.from_address = self.user_name
         input_message.subject = shorten_str(text)
         self.messages.append(input_message)
 
-        return
-
         # process system
-        # system_message = self.lui.system(input_message)
-        # return system_message
-        # system_message.to_address = self.name
-        # system_message.from_address = self.name
-        # system_message.subject = f"[internal] re: {input_message.subject}"
-        # self.messages.append(system_message)
+        system_messages = self.lui.system(self.messages)
+        for m in system_messages:
+            m.to_address = self.name
+            m.from_address = self.name
+            m.subject = f"[internal] {m.subject}"
+            self.messages.append(m)
+
+        return self.messages[-1]
 
         ## process output
         # output_message = self.lui.postprocess(system_message)
@@ -119,4 +100,4 @@ class Bot:
 
     def __repr__(self):
         """Represent the bot."""
-        return f"<Bot name={self.name} description={self.description} version={self.version} id={self.id}>"
+        return f"<Bot name={self.name} id={self.id} description={self.description} version={self.version} data={list(self.data.keys())}>"

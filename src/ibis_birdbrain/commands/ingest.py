@@ -8,7 +8,6 @@ def ingest_docs_run(clear: bool = False, docs_path: str = "data/docs") -> None:
 
     from ibis.backends.base import BaseBackend
 
-    from ibis_birdbrain.bot import BotData
     from ibis_birdbrain.utils.strings import shorten_str
 
     import toml
@@ -70,9 +69,8 @@ def ingest_docs_run(clear: bool = False, docs_path: str = "data/docs") -> None:
 
     config = toml.load("config.toml")
     data = config["data"]
-    data = BotData(data=data)
 
-    docs_con = data["docs"]
+    docs_con = ibis.connect(data["documentation"])
 
     if clear:
         for table in docs_con.list_tables():
