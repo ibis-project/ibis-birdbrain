@@ -1,3 +1,10 @@
+"""
+Messages in Ibis Birdbrain are how humans and computers communicate with each other
+effectively and efficiently. Messages are metadata + text + attachments, where
+attachments are arbitrary Python objects allowing for interaction with data,
+code, visualization, and other useful objects.
+"""
+
 # imports
 from uuid import uuid4
 from datetime import datetime
@@ -24,7 +31,7 @@ class Message:
         from_address="",
         subject="",
         body="",
-        attachments: list[Attachment] = [],
+        attachments: Attachments | list[Attachment] = [],
     ) -> None:
         """Initialize the message."""
         self.id = str(uuid4())
@@ -34,7 +41,12 @@ class Message:
         self.from_address = from_address
         self.subject = subject
         self.body = body
-        self.attachments = Attachments(attachments=attachments)
+
+        # TODO: feels a little hacky
+        if isinstance(attachments, Attachments):
+            self.attachments = attachments
+        else:
+            self.attachments = Attachments(attachments=attachments)
 
     def encode(self):
         ...
@@ -77,7 +89,9 @@ class Messages:
     messages: list[Message]
     attachments: Attachments
 
-    def __init__(self, messages: list[Message] = [], attachments: list[Attachment] = []) -> None:
+    def __init__(
+        self, messages: list[Message] = [], attachments: list[Attachment] = []
+    ) -> None:
         """Initialize the messages."""
         self.messages = messages
         self.attachments = Attachments(attachments=attachments)
@@ -110,7 +124,8 @@ class Messages:
 
     def __repr__(self):
         return str(self)
-    
+
+    # TODO: are these actually needed, especially the last one
     def all_attachment_guids(self) -> list[str]:
         """Get all attachments."""
         return list(set([a for m in self.messages for a in list(m.attachments)]))
@@ -118,6 +133,26 @@ class Messages:
     def all_message_guids(self) -> list[str]:
         """Get all messages."""
         return list(set([m.id for m in self.messages]))
+
+    def all_attachments(self) -> list[Attachment]:
+        """Get all attachments."""
+        attachments = Attachments()
+        for a in self.all_attachment_guids():
+            attachments[a] = self.attachments[a]
+
+    def attachment(self, text: str):
+        """Get an attachment from the message."""
+        attachment_options = list(self.attachments)
+        attachment_classifier = to_ml_classifier(
+            attachment_options,
+            instructions=f"Choose an attachment from context {self} based on the request of {text}",
+        )
+        attachment = attachment_classifier(text).value
+        return self.attachments[attachment]
+
+    def a(self, text: str):
+        """Alias for attachment."""
+        return self.attachment(text)
 
 
 # exports

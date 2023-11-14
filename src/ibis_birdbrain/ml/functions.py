@@ -1,3 +1,8 @@
+"""
+ML functions for Ibis Birdbrain use Marvin AI functions
+as general-purpose functions for LLM-powered functionality.
+"""
+
 # imports
 import marvin
 

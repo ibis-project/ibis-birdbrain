@@ -1,3 +1,8 @@
+"""
+ML models for Ibis Birdbrain use Marvin AI models to
+extract structured Python objects from (unstructured) text.
+"""
+
 # imports
 import marvin
 

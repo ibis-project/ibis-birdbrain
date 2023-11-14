@@ -1,3 +1,9 @@
+"""
+Emails in Ibis Birdbrain are currently the only
+implementation of a Message, providing an email-like
+string representation for simplicity.
+"""
+
 # imports
 from ibis_birdbrain.messages import Message
 
@@ -9,10 +15,10 @@ class Email(Message):
     def __str__(self):
         return f"""
 To: {self.to_address}
-Id: {self.id}
 From: {self.from_address}
-Sent at: {self.created_at}
 Subject: {self.subject}
+Sent at: {self.created_at}
+Message: {self.id}
 
 {self.body}
 

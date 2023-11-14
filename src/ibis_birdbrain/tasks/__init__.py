@@ -1,3 +1,7 @@
+"""
+Tasks in Ibis Birdbrain are tasks the bot can perform on behalf of the user.
+"""
+
 # imports
 from typing import Callable
 

@@ -1,3 +1,12 @@
+"""
+Attachments in Ibis Birdbrain represent arbitrary Python objects
+that both a user and a computer can interact with.
+
+They generally consist of metadata + content + optional attributes
+based on the type of attachment. They implement an `.open()` method
+that does what it should.
+"""
+
 # imports
 from uuid import uuid4
 from typing import Any

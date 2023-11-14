@@ -1,3 +1,13 @@
+"""
+ML classifiers for Ibis Birdbrain use Marvin AI classifiers
+to classify a single category from a list of options.
+
+Currently, this is implemented as a function that wraps the
+marvin logic and returns an Enum. See elsewhere for usage.
+
+Generally used for decision tree logic.
+"""
+
 # imports
 import marvin
 

@@ -5,10 +5,9 @@ system = "duckdb://md:birdbrain"
 documentation = "duckdb://md:birdbrain_docs"
 
 # demos
-#tpch = "duckdb://md:tpch"
+tpch = "duckdb://md:tpch"
 imdb = "duckdb://md:imdb"
-#penguins = "duckdb://md:penguins"
+penguins = "duckdb://md:penguins"
 
-# actual prod dat
-ibis_adoption_metrics = "duckdb://md:ibis_analytics"
-
+# actual prod data
+#ibis_adoption_metrics = "duckdb://md:ibis_analytics"
