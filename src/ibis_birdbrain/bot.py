@@ -155,9 +155,7 @@ class Bot:
             instructions=f"Choose an attachment from context {self.attachments if (len(self.messages) == 0) else self.messages} based on the request",
         )
         attachment = attachment_classifier(text).value
-        return self.m.attachments[
-            attachment
-        ].open()  # TODO: this is inconsistent elsewhere
+        return self.m.attachments[attachment]
 
     def a(self, text: str):
         """Alias for attachment."""
