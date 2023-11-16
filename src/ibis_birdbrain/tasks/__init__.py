@@ -1,5 +1,10 @@
 """
 Tasks in Ibis Birdbrain are tasks the bot can perform on behalf of the user.
+
+All tasks are message -> message functions.
+
+High-level tasks additionally return a list of system messages.
+This is sorta a hack.
 """
 
 # imports
@@ -36,7 +41,7 @@ class Tasks:
         del self.tasks[key]
 
     def select(self, m: Messages, text: str):
-        """Get a task from the message."""
+        """Get a task from the messages."""
         selection_options = list(self.tasks.keys())
         selection_classifier = to_ml_classifier(
             selection_options,

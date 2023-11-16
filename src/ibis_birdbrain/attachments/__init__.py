@@ -103,7 +103,7 @@ class Attachments:
 
 # exports
 from ibis_birdbrain.attachments.viz import ChartAttachment
-from ibis_birdbrain.attachments.data import DatabaseAttachment, TableAttachment
+from ibis_birdbrain.attachments.data import DataAttachment, TableAttachment
 from ibis_birdbrain.attachments.text import (
     TextAttachment,
     CodeAttachment,
@@ -113,7 +113,7 @@ from ibis_birdbrain.attachments.text import (
 __all__ = [
     "Attachment",
     "Attachments",
-    "DatabaseAttachment",
+    "DataAttachment",
     "TableAttachment",
     "ChartAttachment",
     "TextAttachment",

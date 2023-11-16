@@ -154,6 +154,10 @@ class Messages:
         """Alias for attachment."""
         return self.attachment(text)
 
+    def clear(self):
+        """Clear the messages."""
+        self.messages = []
+
 
 # exports
 from ibis_birdbrain.messages.email import Email

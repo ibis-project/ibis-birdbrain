@@ -14,7 +14,7 @@ ibis.options.repr.interactive.max_length = 20
 
 
 # classes
-class DatabaseAttachment(Attachment):
+class DataAttachment(Attachment):
     """A database attachment."""
 
     content: BaseBackend

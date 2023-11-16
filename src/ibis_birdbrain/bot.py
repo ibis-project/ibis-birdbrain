@@ -7,7 +7,6 @@ This file represents the main logic, user experience, and user interface.
 # imports
 import ibis
 
-# TODO: rip out duplicates from de-Lui-fication
 from uuid import uuid4
 from typing import Any
 from datetime import datetime
@@ -16,13 +15,14 @@ from ibis.backends.base import BaseBackend
 
 from ibis_birdbrain.messages import Messages, Message, Email
 from ibis_birdbrain.attachments import (
-    DatabaseAttachment,
-)  # TODO: this feels hacky to have here, but fairly core to the experience so maybe it's fine?
+    Attachments,
+    DataAttachment,
+)  # everything starts with data
 
 from ibis_birdbrain.ml.classifiers import to_ml_classifier
 from ibis_birdbrain.ml.functions import (
-    generate_response,
     filter_attachments,
+    generate_response,
 )
 
 from ibis_birdbrain.tasks import Tasks, tasks
@@ -33,8 +33,8 @@ from ibis_birdbrain.systems import (
     DEFAULT_DESCRIPTION,
     DEFAULT_VERSION,
     DEFAULT_INPUT_SYSTEM,
-    DEFAULT_OUTPUT_SYSTEM,
     DEFAULT_SYSTEM_SYSTEM,
+    DEFAULT_OUTPUT_SYSTEM,
 )
 
 from ibis_birdbrain.utils.strings import shorten_str
@@ -51,6 +51,7 @@ class Bot:
     data: dict[str, BaseBackend]
     tasks: Tasks
     messages: Messages
+    sys_messages = list[Messages]
     name: str
     user_name: str
     description: str
@@ -64,6 +65,7 @@ class Bot:
         },
         tasks=tasks,
         messages=Messages(),
+        sys_messages=[],
         name=DEFAULT_NAME,
         user_name=DEFAULT_USER_NAME,
         description=DEFAULT_DESCRIPTION,
@@ -76,6 +78,7 @@ class Bot:
         self.data = {k: ibis.connect(v) for k, v in data.items()}
         self.tasks = tasks
         self.messages = messages
+        self.sys_messages = sys_messages
         self.m = messages  # alias
         self.name = name
         self.user_name = user_name
@@ -84,7 +87,7 @@ class Bot:
 
         for data_con_name, data_con in self.data.items():
             self.m.attachments.append(
-                DatabaseAttachment(name=data_con_name, content=data_con)
+                DataAttachment(name=data_con_name, content=data_con)
             )
 
         self.attachments = self.m.attachments  # alias
@@ -99,7 +102,7 @@ class Bot:
         # process input
         self.preprocess(
             text,
-            stuff,
+            stuff=stuff,
         )
 
         # process system
@@ -113,38 +116,71 @@ class Bot:
     def preprocess(
         self,
         text: str,
-        stuff: list[Any],
+        stuff: list[Any] = [],
     ) -> None:
         """Preprocess input."""
+
+        # convert user input to message
         m = to_message(text, stuff)
+
+        # add relevant attachments
         if len(self.messages) == 0:
-            for a in self.m.attachments:
-                m.attachments.append(a)
+            m.attachments = Attachments([self.attachments[a] for a in self.attachments])
+        else:
+            attachments = filter_attachments(self.messages[-11]) # TODO: picked a random number here
+            attachments = Attachments([self.messages.attachments[i] for i in attachments])
+            m.attachments = attachments
+        
+        # set message metadata
         m.to_address = self.name
         m.from_address = self.user_name
         m.subject = shorten_str(text)
 
+        # add message to messages
         self.messages.append(m)
 
     def system(self) -> None:
         """System process."""
+
+        # select a task
         task = tasks.select(self.messages, self.messages[-1].body)
+
+        # filter relevant attachments
         attachments = filter_attachments(self.messages[-1])
-        attachments = [self.messages.attachments[i] for i in attachments]
+        attachments = Attachments([self.messages.attachments[i] for i in attachments])
+
+        # construct message
         m = Email(body=f"task: {task}", attachments=attachments)
 
+        # append message to messages
         self.messages.append(m)
+
+        # run task and get resulting message
+        m, sys_messages = task(m)
+
+        # add message to messages
+        self.messages.append(m)
+
+        # add sys messages to sys messages
+        self.sys_messages.append(sys_messages)
+
 
     def postprocess(self) -> None:
         """Postprocess output."""
+
+        # generate response
         r = "Done."
-        # r = generate_response(body, instructions=self.output_system)
+        #r = generate_response(self.messages, instructions=self.output_system)
         r += f"\n\nSee attached.\n\n-{self.name}"
 
+        # construct message
         m = Email(body=r, attachments=self.messages[-1].attachments)
+
+        # set message metadata
         m.to_address = self.user_name
         m.from_address = self.name
 
+        # add message to messages
         self.messages.append(m)
 
     def attachment(self, text: str):
@@ -160,6 +196,10 @@ class Bot:
     def a(self, text: str):
         """Alias for attachment."""
         return self.attachment(text)
+
+    def clear(self):
+        """Clear the messages."""
+        self.messages.clear()
 
     def __repr__(self):
         """Represent the bot."""
