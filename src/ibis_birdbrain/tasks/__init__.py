@@ -58,10 +58,10 @@ from ibis_birdbrain.tasks.learn import learn
 from ibis_birdbrain.tasks.summarize import summarize
 
 tasks = {
-    "explore, transform, visualize, analyze data": eda,
-    "write code": code,
-    "learn data best practices": learn,
-    "summarize messages and attachments": summarize,
+    eda.__doc__: eda,
+    code.__doc__: code,
+    learn.__doc__: learn,
+    summarize.__doc__: summarize,
 }
 tasks = Tasks(tasks)
 
