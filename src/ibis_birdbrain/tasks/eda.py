@@ -14,7 +14,7 @@ from ibis_birdbrain.tasks import Tasks
 # tasks
 def eda(
     m: Message,
-    sys_messages: Messages = Messages(),
+    sys_messages: Messages = [],
     cur_depth: int = 1,
     max_depth: int = 3,
 ) -> (Message, Messages):
@@ -59,7 +59,7 @@ def eda(
         )
 
     # return
-    return o, sys_messages
+    return o, Messages(sys_messages)
 
 
 def transform_data(m: Message) -> Message:
@@ -79,13 +79,14 @@ def summarize_data(m: Message) -> Message:
 
 def data_to_tables(m: Message) -> Message:
     """Converts data attachments to table attachments."""
+    # TODO: duplicates can be created here
     data_attachments = []
+    table_attachments = []
     for a in m.attachments:
         if isinstance(m.attachments[a], DataAttachment):
             data_attachments.append(m.attachments[a])
         elif isinstance(m.attachments[a], TableAttachment):
-            data_attachments.append(m.attachments[a].content)
-    table_attachments = []
+            table_attachments.append(m.attachments[a])
     for d in data_attachments:
         for t in d.con.list_tables():
             table_attachments.append(

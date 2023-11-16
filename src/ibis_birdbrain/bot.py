@@ -127,10 +127,14 @@ class Bot:
         if len(self.messages) == 0:
             m.attachments = Attachments([self.attachments[a] for a in self.attachments])
         else:
-            attachments = filter_attachments(self.messages[-11]) # TODO: picked a random number here
-            attachments = Attachments([self.messages.attachments[i] for i in attachments])
+            attachments = filter_attachments(
+                self.messages[-11]
+            )  # TODO: picked a random number here
+            attachments = Attachments(
+                [self.messages.attachments[i] for i in attachments]
+            )
             m.attachments = attachments
-        
+
         # set message metadata
         m.to_address = self.name
         m.from_address = self.user_name
@@ -164,13 +168,12 @@ class Bot:
         # add sys messages to sys messages
         self.sys_messages.append(sys_messages)
 
-
     def postprocess(self) -> None:
         """Postprocess output."""
 
         # generate response
         r = "Done."
-        #r = generate_response(self.messages, instructions=self.output_system)
+        # r = generate_response(self.messages, instructions=self.output_system)
         r += f"\n\nSee attached.\n\n-{self.name}"
 
         # construct message

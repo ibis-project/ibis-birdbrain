@@ -29,6 +29,7 @@ def generate_response(
 ) -> str:
     """Generates a response from an email."""
 
+
 @marvin.ai_fn
 def filter_attachments(
     m: Messages,
