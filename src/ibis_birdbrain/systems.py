@@ -1,4 +1,7 @@
-# systems (strings)
+# numbers
+DEFAULT_MAX_DEPTH = 3
+
+# strings
 DEFAULT_NAME = "Ibis Birdbrain"
 DEFAULT_VERSION = "infinity"
 DEFAULT_USER_NAME = "dev"
@@ -27,3 +30,5 @@ a Python function with relevant attachments to produce resulting attachments. Th
 internal part of the system.
 
 {DEFAULT_EXTRAS}"""
+
+# TODO: DEFAULT_SUBSYSTEM_SYSTEM = ...
