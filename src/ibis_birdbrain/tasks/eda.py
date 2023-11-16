@@ -30,28 +30,35 @@ def eda(
     Choose this task to perform exploratory data analysis (EDA)
     on data on behalf of the user."""
 
-    # cold start problem
+    # initialize system
     if len(sys_messages) == 0:
         sys_messages.append(m)
 
     # set eda_tasks
     eda_tasks = {
-        "convert a data attachment to table attachments for further processing": data_to_tables,
-        "transform a table attachment to a resulting table attachment": transform_data,
-        "visualize a table attachment": visualize_data,
-        "summarize steps taken and develop a plan": summarize_data,
+        data_to_tables.__doc__: data_to_tables,
+        transform_data.__doc__: transform_data,
+        visualize_data.__doc__: visualize_data,
+        summarize_data.__doc__: summarize_data,
     }
     eda_tasks = Tasks(eda_tasks)
 
+    # select task
     task = eda_tasks.select(sys_messages, text=m.body)
+
+    # run task
     o = task(m)
+
+    # append message to messages
     sys_messages.append(o)
 
+    # recurse
     if cur_depth < max_depth:
         o, sys_messages = eda(
             o, sys_messages, cur_depth=cur_depth + 1, max_depth=max_depth
         )
 
+    # return
     return o, sys_messages
 
 
