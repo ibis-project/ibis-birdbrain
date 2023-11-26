@@ -6,7 +6,9 @@ from ibis_birdbrain.messages import Messages, Message, Email
 
 # classes
 class PythonCode(Task):
-    """Python code."""
+    """Python code.
+
+    Write Python code, returning code attachments with the message."""
 
     def __init__(self, name: str = "write_python_code"):
         super().__init__(name=name)

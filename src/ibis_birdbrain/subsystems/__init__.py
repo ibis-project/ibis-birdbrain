@@ -3,7 +3,7 @@ Subsystems in Ibis Birdbrain...
 """
 
 # imports
-from ibis_birdbrain.tasks import Tasks
+from ibis_birdbrain.tasks import Tasks, Task
 from ibis_birdbrain.messages import Messages
 from ibis_birdbrain.ml.classifiers import to_ml_classifier
 
@@ -23,6 +23,13 @@ class Subsystem:
 
     def __call__(self, ms: Messages, max_depth: int = 2) -> Messages:
         ...
+
+    def choose(self, ms: Messages) -> Task:
+        """Choose the matching subsystem."""
+        task_options = list(self.tasks)
+        task_classifier = to_ml_classifier(task_options, f"Choose a task from {self}")
+        task = task_classifier(str(ms)).value
+        return self.tasks[task]
 
     def __str__(self):
         return f"name: {self.name}\nsystem: {self.system}\n"

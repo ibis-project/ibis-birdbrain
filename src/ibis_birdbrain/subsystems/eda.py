@@ -6,7 +6,13 @@ from ibis_birdbrain.subsystems import Subsystem
 
 # classes
 class EDA(Subsystem):
-    """Exploratory data analysis."""
+    """Exploratory data analysis.
+
+    Choose this subsystem to explore data on behalf of the user like
+    a data engineer or data scientist would. Generally, writes SQL
+    code and executes it with Ibis, returning messages with code, data,
+    visualization, and related attachments.
+    """
 
     def __init__(
         self,

@@ -5,20 +5,24 @@ from ibis_birdbrain.messages import Message, Email
 
 
 # classes
-class SearchDocs(Task):
-    """Search docs."""
+class ReadDocs(Task):
+    """Read docs.
 
-    def __init__(self, name: str = "search_docs"):
+    Choose this task to search and read relevant documentation in a database, returning a message with relevant documentation attachments."""
+
+    def __init__(self, name: str = "read_docs"):
         super().__init__(name=name)
 
     def __call__(self, m: Message) -> Message:
-        """Run the search docs."""
-        m = Email(body="Search docs running.")
+        """Run the read docs."""
+        m = Email(body="Read docs running.")
         return m
 
 
 class SummarizeDocs(Task):
-    """Summarize docs."""
+    """Summarize docs.
+
+    Choose this task to summarize documentation in a database, returning a message with text summary attachments."""
 
     def __init__(self, name: str = "summarize_docs"):
         super().__init__(name=name)
@@ -30,7 +34,10 @@ class SummarizeDocs(Task):
 
 
 class WriteDocs(Task):
-    """Write docs."""
+    """Write docs.
+
+    Choose this task to write documentation in the style of other documents attached to the messages,
+    returning a message with new documentation attachments."""
 
     def __init__(self, name: str = "write_docs"):
         super().__init__(name=name)

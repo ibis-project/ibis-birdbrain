@@ -73,7 +73,7 @@ class Tasks:
 
 # exports
 from ibis_birdbrain.tasks.sql import SqlCode
-from ibis_birdbrain.tasks.docs import SearchDocs, SummarizeDocs, WriteDocs
+from ibis_birdbrain.tasks.docs import ReadDocs, SummarizeDocs, WriteDocs
 from ibis_birdbrain.tasks.data import TransformTables
 from ibis_birdbrain.tasks.python import PythonCode
 
@@ -81,7 +81,7 @@ __all__ = [
     "Task",
     "Tasks",
     "SqlCode",
-    "SearchDocs",
+    "ReadDocs",
     "SummarizeDocs",
     "WriteDocs",
     "TransformTables",

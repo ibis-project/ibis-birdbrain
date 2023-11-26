@@ -6,7 +6,9 @@ from ibis_birdbrain.subsystems import Subsystem
 
 # classes
 class Code(Subsystem):
-    """Code."""
+    """Write code, returning code attachments with the message.
+
+    Choose this subsystem to write code and evaluate."""
 
     def __init__(
         self,
