@@ -1,3 +1,3 @@
-from ibis_birdbrain.app import app
+from ibis_birdbrain.cli import app
 
 app(prog_name="birdbrain")

@@ -1,55 +1,87 @@
+"""
+Streamlit app to demo Ibis Birdbrain.
+"""
+
 # imports
-import os
 import toml
-import typer
-import marvin
+import ibis
 
-from typing_extensions import Annotated
+import streamlit as st
+import plotly.express as px
 
-from ibis_birdbrain.commands.ipy import ipy_run
-from ibis_birdbrain.commands.testing import testing_run
+from dotenv import load_dotenv
 
-# typer config
-app = typer.Typer(no_args_is_help=True)
+from ibis_birdbrain.bot import Bot
+from ibis_birdbrain.subsystems import (
+    Subsystems,
+    EDA,
+    Code,
+    Learn,
+)
+from ibis_birdbrain.messages import Email
+from ibis_birdbrain.attachments import (
+    TextAttachment,
+    WebpageAttachment,
+    TableAttachment,
+    DataAttachment,
+    ChartAttachment,
+)
+
+# config
+## load .env
+load_dotenv()
+
+## streamlit config
+st.set_page_config(layout="wide")
+
+## config.toml
+config = toml.load("config.toml")
+
+# data platforms
+data = config["data"]
+
+# subsystems
+subsystems = Subsystems([EDA(), Code(), Learn()])
+
+# ml-powered data bot
+bot = Bot(data, subsystems)
 
 
-# global options
-def version(value: bool):
-    if value:
-        version = toml.load("pyproject.toml")["project"]["version"]
-        typer.echo(f"{version}")
-        raise typer.Exit()
-
-
-# subcommands
-@app.command()
-def test():
+# functions
+def process_message(message: Email):
     """
-    test
+    Process message and attachments into appropriate streamlit component.
     """
-    testing_run()
+    results = []
+    results.append(st.markdown(message.body))
+    for attachment in message.attachments:
+        a = message.attachments[attachment]  # TODO: hack
+        if isinstance(a, TextAttachment):
+            results.append(st.markdown(a.open()))
+        elif isinstance(a, WebpageAttachment):
+            results.append(st.markdown(a.open()))  # TODO: better?
+        elif isinstance(a, DataAttachment):
+            results.append(st.markdown(a.open()))
+        elif isinstance(a, TableAttachment):
+            results.append(st.dataframe(a.open(), use_container_width=True))
+        elif isinstance(a, ChartAttachment):
+            results.append(st.plotly_chart(a.open(), use_container_width=True))
+        else:
+            results.append(st.markdown("Unknown attachment type"))
+
+    return results
 
 
-@app.command()
-def ipy(tpch: bool = typer.Option(False, "-t", "--tpch", help="Run tpch test.")):
-    """
-    ipy
-    """
-    ipy_run(tpch=tpch)
+# header
+f"""
+# Ibis Birdbrain
+"""
 
+# take input
+if prompt := st.chat_input("birdbrain..."):
+    bot(prompt)
 
-# main
-@app.callback()
-def cli(
-    version: bool = typer.Option(
-        None, "--version", help="Show version.", callback=version, is_eager=True
-    ),
-):
-    version = version
-    # Do other global stuff, handle other global options here
-    return
-
-
-## main
-if __name__ == "__main__":
-    typer.run(cli)
+# display history
+for message in bot.messages:
+    with st.chat_message(bot.messages[message].from_address):
+        process_message(bot.messages[message])

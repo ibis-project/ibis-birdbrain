@@ -1,7 +1,13 @@
-[system]
-backend_uri="duckdb://birdbrain.ddb"
+[data]
+# birdbrain
+memory = "duckdb://md:"
+system = "duckdb://md:birdbrain"
+documentation = "duckdb://md:birdbrain_docs"
 
-[eda]
-#backend_uri="duckdb://tpch.ddb"
-#backend_uri="duckdb://"
-backend_uri="duckdb://md:tpch"
+# demos
+tpch = "duckdb://md:tpch"
+imdb = "duckdb://md:imdb"
+penguins = "duckdb://md:penguins"
+
+# actual prod data
+#ibis_adoption_metrics = "duckdb://md:ibis_analytics"
