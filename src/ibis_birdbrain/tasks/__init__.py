@@ -19,7 +19,7 @@ class Task:
         ...
 
     def __str__(self):
-        return f"name: {self.name}\ndescription: {self.__doc__}\n"
+        return f"\tname: {self.name}\n\tdescription: {self.__doc__}"
 
     def __repr__(self):
         return str(self)
@@ -65,7 +65,7 @@ class Tasks:
         return iter(self.tasks.keys())
 
     def __str__(self):
-        return "\n".join([str(t) for t in self.tasks.values()])
+        return "\n\t---\n".join([str(t) for t in self.tasks.values()])
 
     def __repr__(self):
         return str(self)

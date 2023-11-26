@@ -16,10 +16,10 @@ class Subsystem:
     tasks: Tasks
     system: str
 
-    def __init__(self, name: str, tasks: Tasks, system: str) -> None:
+    def __init__(self, name: str, tasks: Tasks) -> None:
         self.name = name
         self.tasks = tasks
-        self.system = system
+        self.system = f"{self.__doc__}\ntasks:\n{tasks}"
 
     def __call__(self, ms: Messages, max_depth: int = 2) -> Messages:
         ...

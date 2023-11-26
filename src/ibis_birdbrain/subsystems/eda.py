@@ -6,17 +6,14 @@ from ibis_birdbrain.subsystems import Subsystem
 
 # classes
 class EDA(Subsystem):
-    """
-    Exploratory data analysis.
-    """
+    """Exploratory data analysis."""
 
     def __init__(
         self,
         name: str = "eda",
-        tasks: Tasks = Tasks([SqlCode, TransformTables]),
-        system: str = "eda",
+        tasks: Tasks = Tasks([SqlCode(), TransformTables()]),
     ):
-        super().__init__(name=name, tasks=tasks, system=system)
+        super().__init__(name=name, tasks=tasks)
 
     def __call__(self, ms: Messages) -> Messages:
         """Run the EDA subsystem."""

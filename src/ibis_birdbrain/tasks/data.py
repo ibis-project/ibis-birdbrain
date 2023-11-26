@@ -6,9 +6,7 @@ from ibis_birdbrain.messages import Message, Email
 
 # classes
 class TransformTables(Task):
-    """
-    Transform tables.
-    """
+    """Transform tables."""
 
     def __init__(self, name: str = "transform_tables"):
         super().__init__(name=name)

@@ -39,12 +39,3 @@ You will evaluate the messages and determine whether you have fulfilled the user
 
 If the user is asking for basic information about you or that you can answer without running subsystems, return 'True'.
 """
-
-## subsystems
-EDA_SUBSYSTEM = f"""Exploratory Data Analysis (EDA) subsystem: choose this subsystem to explore the data. Tasks include:\n\n"""
-
-CODE_SUBSYSTEM = (
-    f"""Code subsystem: choose this subsystem to run code. Tasks include:\n\n"""
-)
-
-LEARN_SUBSYSTEM = f"""Learn subsystem: choose this subsystem to learn from documentation in the docs databases and the internet. Tasks include:\n\n"""

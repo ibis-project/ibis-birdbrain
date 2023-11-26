@@ -6,9 +6,7 @@ from ibis_birdbrain.messages import Message, Email
 
 # classes
 class SearchDocs(Task):
-    """
-    Search docs.
-    """
+    """Search docs."""
 
     def __init__(self, name: str = "search_docs"):
         super().__init__(name=name)
@@ -20,9 +18,7 @@ class SearchDocs(Task):
 
 
 class SummarizeDocs(Task):
-    """
-    Summarize docs.
-    """
+    """Summarize docs."""
 
     def __init__(self, name: str = "summarize_docs"):
         super().__init__(name=name)
@@ -34,9 +30,7 @@ class SummarizeDocs(Task):
 
 
 class WriteDocs(Task):
-    """
-    Write docs.
-    """
+    """Write docs."""
 
     def __init__(self, name: str = "write_docs"):
         super().__init__(name=name)
