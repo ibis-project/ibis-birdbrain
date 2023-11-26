@@ -1,5 +1,5 @@
 """
-Messages in Ibis Birdbrain are how humans and computers communicate with each other
+Messages in Ibis Birdbrain are how people and computers communicate with each other
 effectively and efficiently. Messages are metadata + text + attachments, where
 attachments are arbitrary Python objects allowing for interaction with data,
 code, visualization, and other useful objects.
@@ -9,8 +9,16 @@ code, visualization, and other useful objects.
 from uuid import uuid4
 from datetime import datetime
 
+from ibis.expr.types.relations import Table
+
+from ibis_birdbrain.strings import (
+    DEFAULT_MESSAGE_EVALUATION_SYSTEM,
+    DEFAULT_RESPONSE_SYSTEM,
+)
 from ibis_birdbrain.attachments import Attachment, Attachments
-from ibis_birdbrain.ml.classifiers import to_ml_classifier
+
+from ibis_birdbrain.ml.functions import write_response
+from ibis_birdbrain.ml.classifiers import true_or_false
 
 
 # classes
@@ -48,10 +56,10 @@ class Message:
         else:
             self.attachments = Attachments(attachments=attachments)
 
-    def encode(self):
+    def encode(self) -> Table:
         ...
 
-    def decode(self):
+    def decode(self, t: Table) -> str:
         ...
 
     def add_attachment(self, attachment: Attachment):
@@ -68,95 +76,71 @@ class Message:
     def __repr__(self):
         return str(self)
 
-    def attachment(self, text: str):
-        """Get an attachment from the message."""
-        attachment_options = list(self.attachments)
-        attachment_classifier = to_ml_classifier(
-            attachment_options,
-            instructions=f"Choose an attachment from context {self} based on the request of {text}",
-        )
-        attachment = attachment_classifier(text).value
-        return self.attachments[attachment]
-
-    def a(self, text: str):
-        """Alias for attachment."""
-        return self.attachment(text)
-
 
 class Messages:
     """A collection of messages."""
 
-    messages: list[Message]
-    attachments: Attachments
+    messages: dict[str, Message]
 
     def __init__(
-        self, messages: list[Message] = [], attachments: list[Attachment] = []
+        self,
+        messages: list[Message] = [],
     ) -> None:
         """Initialize the messages."""
-        self.messages = messages
-        self.attachments = Attachments(attachments=attachments)
+        self.messages = {m.id: m for m in messages}
 
     def add_message(self, message: Message):
         """Add a message to the collection."""
-        for a in message.attachments:
-            if a not in self.attachments:
-                self.attachments[a] = message.attachments[a]
-        self.messages.append(message)
+        self.messages[message.id] = message
 
     def append(self, message: Message):
         """Alias for add_message."""
         self.add_message(message)
 
-    def __getitem__(self, index: int):
+    def __getitem__(self, id: str | int):
         """Get a message from the collection."""
-        return self.messages[index]
+        if isinstance(id, int):
+            return list(self.messages.values())[id]
+        return self.messages[id]
 
-    def __len__(self):
+    def __setitem__(self, id: str, message: Message):
+        """Set a message in the collection."""
+        self.messages[id] = message
+
+    def __len__(self) -> int:
         """Get the length of the collection."""
         return len(self.messages)
 
     def __iter__(self):
         """Iterate over the collection."""
-        return iter(self.messages)
+        return iter(self.messages.keys())
 
     def __str__(self):
-        return f"\n\n".join([str(m) for m in self.messages])
+        return f"---\n".join([str(m) for m in self.messages.values()])
 
     def __repr__(self):
         return str(self)
 
-    # TODO: are these actually needed, especially the last one
-    def all_attachment_guids(self) -> list[str]:
-        """Get all attachments."""
-        return list(set([a for m in self.messages for a in list(m.attachments)]))
+    def attachments(self) -> list[str]:
+        """Get the list of attachment GUIDs from the messages."""
+        return list(set([a for m in self.messages.values() for a in m.attachments]))
 
-    def all_message_guids(self) -> list[str]:
-        """Get all messages."""
-        return list(set([m.id for m in self.messages]))
+    def get(self, text: str) -> Message:
+        """Get a message by text."""
+        # TODO: implement w/ ML
+        ...
 
-    def all_attachments(self) -> list[Attachment]:
-        """Get all attachments."""
-        attachments = Attachments()
-        for a in self.all_attachment_guids():
-            attachments[a] = self.attachments[a]
+    def evaluate(self, instructions: str = DEFAULT_MESSAGE_EVALUATION_SYSTEM) -> bool:
+        """Evaluate the messages."""
+        TrueFalse = true_or_false(instructions=instructions)
+        return TrueFalse(str(self)).value
 
-    def attachment(self, text: str):
-        """Get an attachment from the message."""
-        attachment_options = list(self.attachments)
-        attachment_classifier = to_ml_classifier(
-            attachment_options,
-            instructions=f"Choose an attachment from context {self} based on the request of {text}",
-        )
-        attachment = attachment_classifier(text).value
-        return self.attachments[attachment]
+    def respond(self, instructions: str = DEFAULT_RESPONSE_SYSTEM) -> Message:
+        """Respond to the messages."""
+        r = write_response(str(self), instructions=instructions)
+        m = Email(body=r)
 
-    def a(self, text: str):
-        """Alias for attachment."""
-        return self.attachment(text)
-
-    def clear(self):
-        """Clear the messages."""
-        self.messages = []
+        return m
 
 
 # exports

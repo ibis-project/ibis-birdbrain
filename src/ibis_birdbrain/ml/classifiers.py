@@ -30,3 +30,12 @@ def to_ml_classifier(
     EnumType = marvin.ai_classifier(EnumType)
     EnumType.__doc__ = instructions
     return EnumType
+
+
+def true_or_false(instructions: str = "Classifies text as True or False") -> Enum:
+    """Based on the input, returns True or False."""
+    enum_dict = {"true": True, "false": False}
+    EnumType = Enum("EnumType", enum_dict)
+    EnumType = marvin.ai_classifier(EnumType)
+    EnumType.__doc__ = instructions
+    return EnumType

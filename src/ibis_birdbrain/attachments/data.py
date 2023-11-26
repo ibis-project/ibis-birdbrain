@@ -20,15 +20,16 @@ class DataAttachment(Attachment):
     content: BaseBackend
 
     def __init__(self, *args, **kwargs):
-        if "name" not in kwargs:
+        super().__init__(*args, **kwargs)
+        self.con = self.content  # alias
+        if self.name is None:
             try:
-                kwargs["name"] = (
+                self.name = (
                     self.content.current_database + "." + self.content.current_schema
                 )
             except:
-                kwargs["name"] = "unknown"
-        super().__init__(*args, **kwargs)
-        self.con = self.content  # alias
+                self.name = "unknown"
+
         try:
             self.sql_dialect = self.content.name
         except:
@@ -39,6 +40,13 @@ class DataAttachment(Attachment):
             )
         except:
             self.description = "empty database\n"
+
+    def __str__(self):
+        return (
+            super().__str__()
+            + f"""
+    **dialect**: {self.sql_dialect}"""
+        )
 
 
 class TableAttachment(Attachment):

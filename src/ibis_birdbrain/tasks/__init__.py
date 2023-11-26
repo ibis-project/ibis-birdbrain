@@ -1,68 +1,77 @@
 """
-Tasks in Ibis Birdbrain are tasks the bot can perform on behalf of the user.
-
-All tasks are message -> message functions.
-
-High-level tasks additionally return a list of system messages.
-This is sorta a hack.
+Tasks in Ibis Birdbrain...
 """
 
 # imports
-from typing import Callable
-
-from ibis_birdbrain.messages import Messages
-from ibis_birdbrain.ml.classifiers import to_ml_classifier
+from ibis_birdbrain.messages import Message
 
 
 # classes
-class Tasks:
-    tasks: dict[str, Callable]
+class Task:
+    """Ibis Birdbrain task."""
 
-    def __init__(self, tasks):
-        self.tasks = tasks
+    name: str
+    function: str
+
+    def __init__(self, name: str, function: str) -> None:
+        self.name = name
+        self.function = function
+
+    def __call__(self, m: Message) -> Message:
+        ...
 
     def __str__(self):
-        s = ""
-        for task_name, task_func in self.tasks.items():
-            s += f"**name**: {task_name}\n**description**: {task_func.__doc__}\n---\n"
-
-        return s
+        return f"name: {self.name}\nfunction: {self.function}\n"
 
     def __repr__(self):
         return str(self)
 
-    def __getitem__(self, key):
-        return self.tasks[key]
 
-    def __setitem__(self, key, value):
-        self.tasks[key] = value
+class Tasks:
+    """A collection of tasks."""
 
-    def __delitem__(self, key):
-        del self.tasks[key]
+    tasks: dict[str, Task]
 
-    def select(self, m: Messages, text: str):
-        """Get a task from the messages."""
-        selection_options = list(self.tasks.keys())
-        selection_classifier = to_ml_classifier(
-            selection_options,
-            instructions=f"Choose a task from {self} with context {m} based on the request of {text}",
-        )
-        selection = selection_classifier(text).value
-        return self.tasks[selection]
+    def __init__(self, tasks: list[Task] = []) -> None:
+        """Initialize the tasks."""
+        self.tasks = {t.name: t for t in tasks}
+
+    def __call__(self, m: Message) -> Message:
+        """Run the tasks."""
+        ...
+
+    def add_task(self, task: Task):
+        """Add a task to the collection."""
+        self.tasks[task.name] = task
+
+    def append(self, task: Task):
+        """Add a task to the collection."""
+        self.add_task(task)
+
+    def __getitem__(self, id: str | int) -> Task:
+        """Get a task from the collection."""
+        if isinstance(id, int):
+            return list(self.tasks.values())[id]
+        return self.tasks[id]
+
+    def __setitem__(self, name: str, task: Task) -> None:
+        """Set a task in the collection."""
+        self.tasks[name] = task
+
+    def __len__(self) -> int:
+        """Get the length of the collection."""
+        return len(self.tasks)
+
+    def __iter__(self):
+        """Iterate over the collection."""
+        return iter(self.tasks.keys())
+
+    def __str__(self):
+        return "\n".join([str(t) for t in self.tasks.values()])
+
+    def __repr__(self):
+        return str(self)
 
 
 # exports
-from ibis_birdbrain.tasks.eda import eda
-from ibis_birdbrain.tasks.code import code
-from ibis_birdbrain.tasks.learn import learn
-from ibis_birdbrain.tasks.summarize import summarize
-
-tasks = {
-    eda.__doc__: eda,
-    code.__doc__: code,
-    learn.__doc__: learn,
-    summarize.__doc__: summarize,
-}
-tasks = Tasks(tasks)
-
-__all__ = ["Tasks", "tasks"]
+__all__ = ["Task", "Tasks"]

@@ -8,7 +8,7 @@ def estimate_tokens(s: str) -> int:
     return len(s) // 4
 
 
-def shorten_str(s: str, max_len: int = 20) -> str:
+def shorten_str(s: str, max_len: int = 27) -> str:
     """Converts a string to a display string."""
 
     if len(s) > max_len:

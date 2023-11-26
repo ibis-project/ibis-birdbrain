@@ -65,7 +65,7 @@ class Attachments:
 
     def __init__(self, attachments: list[Attachment] = []) -> None:
         """Initialize the attachments."""
-        self.attachments = dict({a.id: a for a in attachments})
+        self.attachments = {a.id: a for a in attachments}
 
     def add_attachment(self, attachment: Attachment):
         """Add an attachment to the collection."""
@@ -75,17 +75,19 @@ class Attachments:
         """Alias for add_attachment."""
         self.add_attachment(attachment)
 
-    def __getitem__(self, id: str):
+    def __getitem__(self, id: str | int):
         """Get an attachment from the collection."""
+        if isinstance(id, int):
+            return list(self.attachments.values())[id]
         return self.attachments[id]
 
     def __setitem__(self, id: str, attachment: Attachment):
         """Set an attachment in the collection."""
         self.attachments[id] = attachment
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Get the length of the collection."""
-        return len(self.attachments.values())
+        return len(self.attachments)
 
     def __iter__(self):
         """Iterate over the collection."""
@@ -96,9 +98,6 @@ class Attachments:
 
     def __repr__(self):
         return str(self)
-
-    def __index__(self, id: str):
-        return self.attachments[id]
 
 
 # exports
