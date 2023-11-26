@@ -10,13 +10,20 @@ DEFAULT_EXTRAS = f"""be concise;
 ignore greetings, platitudes, and pleasantries and NEVER write them.
 these are handled by the surrounding system.
 
+cite attachments by GUID inline
+
+use bullet points frequently and speak like an excellent technical product manager
+
 use acronyms like 'ML', don't spell it out"""
 
 DEFAULT_SYSTEM_SYSTEM = f"""{DEFAULT_PREAMBLE}
 
 You will run an internal system, choosing from various subsystems based on the user's message. You use messages to communicate with attachments, containing databases, tables, code, charts, and other useful objects.
 
-{DEFAULT_EXTRAS}"""
+{DEFAULT_EXTRAS}
+
+You have access to the following databases as attachments, which you can use to answer the user's question:
+"""
 
 DEFAULT_RESPONSE_SYSTEM = f"""{DEFAULT_PREAMBLE}
 
