@@ -11,17 +11,15 @@ class Task:
     """Ibis Birdbrain task."""
 
     name: str
-    function: str
 
-    def __init__(self, name: str, function: str) -> None:
+    def __init__(self, name: str) -> None:
         self.name = name
-        self.function = function
 
-    def __call__(self, m: Message) -> Message:
+    def __call__(self, ms: Message) -> Message:
         ...
 
     def __str__(self):
-        return f"name: {self.name}\nfunction: {self.function}\n"
+        return f"name: {self.name}\ndescription: {self.__doc__}\n"
 
     def __repr__(self):
         return str(self)
@@ -74,4 +72,18 @@ class Tasks:
 
 
 # exports
-__all__ = ["Task", "Tasks"]
+from ibis_birdbrain.tasks.sql import SqlCode
+from ibis_birdbrain.tasks.docs import SearchDocs, SummarizeDocs, WriteDocs
+from ibis_birdbrain.tasks.data import TransformTables
+from ibis_birdbrain.tasks.python import PythonCode
+
+__all__ = [
+    "Task",
+    "Tasks",
+    "SqlCode",
+    "SearchDocs",
+    "SummarizeDocs",
+    "WriteDocs",
+    "TransformTables",
+    "PythonCode",
+]
