@@ -16,8 +16,3 @@ class Code(Subsystem):
         tasks: Tasks = Tasks([SqlCode(), PythonCode()]),
     ):
         super().__init__(name=name, tasks=tasks)
-
-    def __call__(self, ms: Messages) -> Messages:
-        """Run the Code subsystem."""
-        m = Email(body="Code subsystem running.")
-        return Messages([m])

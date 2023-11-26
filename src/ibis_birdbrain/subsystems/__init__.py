@@ -4,7 +4,7 @@ Subsystems in Ibis Birdbrain...
 
 # imports
 from ibis_birdbrain.tasks import Tasks, Task
-from ibis_birdbrain.messages import Messages
+from ibis_birdbrain.messages import Messages, Email
 from ibis_birdbrain.ml.classifiers import to_ml_classifier
 
 
@@ -21,8 +21,27 @@ class Subsystem:
         self.tasks = tasks
         self.system = f"{self.__doc__}\ntasks:\n{tasks}"
 
-    def __call__(self, ms: Messages, max_depth: int = 2) -> Messages:
-        ...
+    def __call__(
+        self, ms: Messages, r: Messages = Messages(), max_depth: int = 1
+    ) -> Messages:
+        """Run the subsystem."""
+
+        for _ in range(max_depth):
+            # check if done
+            if ms.evaluate():
+                return r
+
+            # run the tasks
+            task = self.choose(ms)
+
+            # construct a message w/ attachments for the task
+            m = Email(body="run the task")
+            r.append(m)
+
+            res = task(m)
+            r.append(res)
+
+        return r
 
     def choose(self, ms: Messages) -> Task:
         """Choose the matching subsystem."""
@@ -49,7 +68,7 @@ class Subsystems:
 
     def __call__(self, ms: Messages) -> Messages:
         """Run the subsystems."""
-        ...
+        return self.choose(ms)(ms)
 
     def choose(self, ms: Messages) -> Subsystem:
         """Choose the matching subsystem."""

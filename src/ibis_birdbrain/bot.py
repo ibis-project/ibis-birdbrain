@@ -141,13 +141,17 @@ class Bot:
         log.info(f"adding message to messages: {m}")
         self.messages.append(m)
 
-    def system(self, depth: int = 13) -> None:
+    def system(self, depth: int = 3) -> None:
         """System process."""
 
         # check if done
         log.info(f"running system...")
-        if self.messages.evaluate() or depth == 0:
-            log.info(f"returning from system...")
+        log.info(f"depth: {depth}")
+        if self.messages.evaluate():
+            log.info(f"evaluated as complete...")
+            return
+        if depth == 0:
+            log.info(f"max depth reached...")
             return
 
         # if not, run a subsystem
@@ -156,8 +160,8 @@ class Bot:
         log.info(f"running subsystem: {subsystem.name}")
         ms = subsystem(self.messages)
         for m in ms:
-            # extract message
-            m = ms[m]  # TODO: jank?
+            # extract message # TODO: jank?
+            m = ms[m]
 
             # set message metadata
             m.to_address = self.name

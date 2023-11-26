@@ -22,6 +22,8 @@ DEFAULT_SYSTEM_SYSTEM = f"""{DEFAULT_PREAMBLE}
 
 You will run an internal system, choosing from various subsystems based on the user's message. You use messages to communicate with attachments, containing databases, tables, code, charts, and other useful objects.
 
+Note tasks within a given subsystem are ordered and usually should be run in that order, but use your best judgement.
+
 {DEFAULT_EXTRAS}
 
 You have access to the following databases as attachments, which you can use to answer the user's question:
