@@ -5,9 +5,7 @@ Subsystems in Ibis Birdbrain...
 # imports
 from ibis_birdbrain.tasks import Tasks, Task
 from ibis_birdbrain.messages import Messages, Email
-from ibis_birdbrain.attachments import Attachments
 
-from ibis_birdbrain.ml.functions import filter_attachments
 from ibis_birdbrain.ml.classifiers import to_ml_classifier
 
 
@@ -35,7 +33,7 @@ class Subsystem:
                 return r
 
             # run the tasks
-            task = self.choose(ms)
+            task = self.tasks.choose(ms)
 
             # construct task message
             m = Email(body=f"run {task.name} with attachments:")
@@ -52,13 +50,6 @@ class Subsystem:
             r.append(res)
 
         return r
-
-    def choose(self, ms: Messages) -> Task:
-        """Choose the matching subsystem."""
-        task_options = list(self.tasks)
-        task_classifier = to_ml_classifier(task_options, f"Choose a task from {self}")
-        task = task_classifier(str(ms)).value
-        return self.tasks[task]
 
     def __str__(self):
         return f"name: {self.name}\nsystem: {self.system}\n"

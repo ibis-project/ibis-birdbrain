@@ -3,7 +3,9 @@ Tasks in Ibis Birdbrain...
 """
 
 # imports
-from ibis_birdbrain.messages import Message
+from ibis_birdbrain.messages import Message, Messages
+
+from ibis_birdbrain.ml.classifiers import to_ml_classifier
 
 
 # classes
@@ -69,6 +71,13 @@ class Tasks:
 
     def __repr__(self):
         return str(self)
+
+    def choose(self, ms: Messages) -> Task:
+        """Choose the matching subsystem."""
+        task_options = list(self)
+        task_classifier = to_ml_classifier(task_options, f"Choose a task from {self}")
+        task = task_classifier(str(ms)).value
+        return self[task]
 
 
 # exports
