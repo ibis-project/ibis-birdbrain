@@ -3,7 +3,7 @@ Subsystems in Ibis Birdbrain...
 """
 
 # imports
-from ibis_birdbrain.tasks import Tasks, Task
+from ibis_birdbrain.tasks import Tasks
 from ibis_birdbrain.messages import Messages, Email
 
 from ibis_birdbrain.ml.classifiers import to_ml_classifier
