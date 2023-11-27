@@ -16,6 +16,7 @@ from datetime import datetime
 from ibis.backends.base import BaseBackend
 
 from ibis_birdbrain.messages import Messages, Message, Email
+from ibis_birdbrain.attachments import Attachments
 from ibis_birdbrain.subsystems import Subsystems
 from ibis_birdbrain.attachments import (
     DataAttachment,
@@ -31,6 +32,8 @@ from ibis_birdbrain.strings import (
 
 from ibis_birdbrain.utils.strings import shorten_str
 from ibis_birdbrain.utils.messages import to_message
+
+from ibis_birdbrain.ml.functions import filter_attachments
 
 # config
 log.basicConfig(level=log.INFO)
@@ -138,7 +141,6 @@ class Bot:
         m.subject = self.current_subject
 
         # add message to messages
-        log.info(f"adding message to messages: {m}")
         self.messages.append(m)
 
     def system(self, depth: int = 3) -> None:
@@ -184,6 +186,9 @@ class Bot:
         m.to_address = self.user_name
         m.from_address = self.name
         m.subject = f"re: {self.current_subject}"
+
+        # filter relevant attachments
+        m.attachments = self.messages.relevant_attachments(m)
 
         # add message to messages
         self.messages.append(m)

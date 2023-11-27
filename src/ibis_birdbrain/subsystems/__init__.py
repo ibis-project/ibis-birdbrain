@@ -5,6 +5,9 @@ Subsystems in Ibis Birdbrain...
 # imports
 from ibis_birdbrain.tasks import Tasks, Task
 from ibis_birdbrain.messages import Messages, Email
+from ibis_birdbrain.attachments import Attachments
+
+from ibis_birdbrain.ml.functions import filter_attachments
 from ibis_birdbrain.ml.classifiers import to_ml_classifier
 
 
@@ -26,18 +29,25 @@ class Subsystem:
     ) -> Messages:
         """Run the subsystem."""
 
-        for _ in range(max_depth):
+        for i in range(max_depth):
             # check if done
-            if ms.evaluate():
+            if i != 0 and ms.evaluate():
                 return r
 
             # run the tasks
             task = self.choose(ms)
 
-            # construct a message w/ attachments for the task
-            m = Email(body="run the task")
+            # construct task message
+            m = Email(body=f"run {task.name} with attachments:")
+
+            # filter relevant attachments
+            a = ms.relevant_attachments(m)
+            m.attachments = a
+
+            # add message to messages
             r.append(m)
 
+            # run the task
             res = task(m)
             r.append(res)
 

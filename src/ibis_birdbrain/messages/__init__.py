@@ -17,7 +17,11 @@ from ibis_birdbrain.strings import (
 )
 from ibis_birdbrain.attachments import Attachment, Attachments
 
-from ibis_birdbrain.ml.functions import write_response
+from ibis_birdbrain.ml.functions import (
+    write_response,
+    filter_messages,
+    filter_attachments,
+)
 from ibis_birdbrain.ml.classifiers import true_or_false
 
 
@@ -141,6 +145,25 @@ class Messages:
         m = Email(body=r)
 
         return m
+
+    def relevant_attachments(self, m: Message) -> Attachments:
+        a = Attachments()
+        attachment_guids = filter_attachments(
+            self,
+            options=self.attachments(),
+            instructions=f"filter relevant attachments for responding with {m}",
+        )
+        for guid in attachment_guids:
+            for m in self:
+                m = self[m]
+                if guid in m.attachments:
+                    a.append(m.attachments[guid])
+
+        return a
+
+    def filter(self, options: list[str]) -> list[str]:
+        """Filter the messages."""
+        return filter_messages(str(self), options=options)
 
 
 # exports

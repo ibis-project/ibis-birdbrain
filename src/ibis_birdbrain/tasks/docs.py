@@ -2,6 +2,7 @@
 from ibis_birdbrain.tasks import Task
 
 from ibis_birdbrain.messages import Message, Email
+from ibis_birdbrain.attachments import TextAttachment, TableAttachment
 
 
 # classes

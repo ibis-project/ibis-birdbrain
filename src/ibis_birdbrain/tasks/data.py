@@ -2,6 +2,9 @@
 from ibis_birdbrain.tasks import Task
 
 from ibis_birdbrain.messages import Message, Email
+from ibis_birdbrain.attachments import Attachments, DataAttachment, TableAttachment
+
+from ibis_birdbrain.ml.functions import filter_tables
 
 
 # classes
@@ -16,7 +19,16 @@ class GetTables(Task):
 
     def __call__(self, m: Message) -> Message:
         """Run the get tables."""
-        m = Email(body="Get tables running.")
+        table_attachments = Attachments()
+        for a in m.attachments:
+            a = m.attachments[a]
+            if isinstance(a, DataAttachment):
+                tables = a.open().list_tables()
+                relevant_tables = filter_tables(str(m), options=tables)
+                for t in relevant_tables:
+                    table_attachments.append(TableAttachment(a.open().table(t)))
+
+        m = Email(body="here are the relevant tables:", attachments=table_attachments)
         return m
 
 
