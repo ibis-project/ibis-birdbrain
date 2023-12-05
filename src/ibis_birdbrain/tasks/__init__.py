@@ -3,7 +3,9 @@ Tasks in Ibis Birdbrain...
 """
 
 # imports
-from ibis_birdbrain.messages import Message
+from ibis_birdbrain.messages import Message, Messages
+
+from ibis_birdbrain.ml.classifiers import to_ml_classifier
 
 
 # classes
@@ -11,17 +13,15 @@ class Task:
     """Ibis Birdbrain task."""
 
     name: str
-    function: str
 
-    def __init__(self, name: str, function: str) -> None:
+    def __init__(self, name: str) -> None:
         self.name = name
-        self.function = function
 
-    def __call__(self, m: Message) -> Message:
+    def __call__(self, ms: Message) -> Message:
         ...
 
     def __str__(self):
-        return f"name: {self.name}\nfunction: {self.function}\n"
+        return f"\tname: {self.name}\n\tdescription: {self.__doc__}"
 
     def __repr__(self):
         return str(self)
@@ -67,11 +67,33 @@ class Tasks:
         return iter(self.tasks.keys())
 
     def __str__(self):
-        return "\n".join([str(t) for t in self.tasks.values()])
+        return "\n\t---\n".join([str(t) for t in self.tasks.values()])
 
     def __repr__(self):
         return str(self)
 
+    def choose(self, ms: Messages) -> Task:
+        """Choose the matching subsystem."""
+        task_options = list(self)
+        task_classifier = to_ml_classifier(task_options, f"Choose a task from {self}")
+        task = task_classifier(str(ms)).value
+        return self[task]
+
 
 # exports
-__all__ = ["Task", "Tasks"]
+from ibis_birdbrain.tasks.sql import SqlCode
+from ibis_birdbrain.tasks.docs import ReadDocs, SummarizeDocs, WriteDocs
+from ibis_birdbrain.tasks.data import GetTables, TransformTables
+from ibis_birdbrain.tasks.python import PythonCode
+
+__all__ = [
+    "Task",
+    "Tasks",
+    "SqlCode",
+    "ReadDocs",
+    "SummarizeDocs",
+    "WriteDocs",
+    "GetTables",
+    "TransformTables",
+    "PythonCode",
+]

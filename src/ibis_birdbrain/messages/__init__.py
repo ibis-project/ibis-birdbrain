@@ -11,13 +11,13 @@ from datetime import datetime
 
 from ibis.expr.types.relations import Table
 
-from ibis_birdbrain.strings import (
-    DEFAULT_MESSAGE_EVALUATION_SYSTEM,
-    DEFAULT_RESPONSE_SYSTEM,
-)
 from ibis_birdbrain.attachments import Attachment, Attachments
 
-from ibis_birdbrain.ml.functions import write_response
+from ibis_birdbrain.ml.functions import (
+    write_response,
+    filter_messages,
+    filter_attachments,
+)
 from ibis_birdbrain.ml.classifiers import true_or_false
 
 
@@ -130,17 +130,36 @@ class Messages:
         # TODO: implement w/ ML
         ...
 
-    def evaluate(self, instructions: str = DEFAULT_MESSAGE_EVALUATION_SYSTEM) -> bool:
+    def evaluate(self, instructions: str) -> bool:
         """Evaluate the messages."""
         TrueFalse = true_or_false(instructions=instructions)
         return TrueFalse(str(self)).value
 
-    def respond(self, instructions: str = DEFAULT_RESPONSE_SYSTEM) -> Message:
+    def respond(self, instructions: str) -> Message:
         """Respond to the messages."""
         r = write_response(str(self), instructions=instructions)
         m = Email(body=r)
 
         return m
+
+    def relevant_attachments(self, m: Message) -> Attachments:
+        a = Attachments()
+        attachment_guids = filter_attachments(
+            self,
+            options=self.attachments(),
+            instructions=f"filter relevant attachments for responding with {m}",
+        )
+        for guid in attachment_guids:
+            for m in self:
+                m = self[m]
+                if guid in m.attachments:
+                    a.append(m.attachments[guid])
+
+        return a
+
+    def filter(self, options: list[str]) -> list[str]:
+        """Filter the messages."""
+        return filter_messages(str(self), options=options)
 
 
 # exports

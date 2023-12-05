@@ -16,7 +16,7 @@ from ibis_birdbrain.subsystems import (
     Subsystems,
     EDA,
     Code,
-    Learn,
+    Docs,
 )
 from ibis_birdbrain.messages import Email
 from ibis_birdbrain.attachments import (
@@ -41,7 +41,9 @@ config = toml.load("config.toml")
 data = config["data"]
 
 # subsystems
-subsystems = Subsystems([EDA(), Code(), Learn()])
+# TODO: re-add other subystems
+subsystems = [EDA(), Code(), Docs()]
+subsystems = Subsystems(subsystems)
 
 # ml-powered data bot
 bot = Bot(data, subsystems)
