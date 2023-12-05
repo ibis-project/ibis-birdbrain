@@ -5,8 +5,8 @@ system = "duckdb://md:birdbrain"
 documentation = "duckdb://md:birdbrain_docs"
 
 # demos
-tpch = "duckdb://md:tpch"
-imdb = "duckdb://md:imdb"
+#tpch = "duckdb://md:tpch"
+#imdb = "duckdb://md:imdb"
 penguins = "duckdb://md:penguins"
 
 # actual prod data

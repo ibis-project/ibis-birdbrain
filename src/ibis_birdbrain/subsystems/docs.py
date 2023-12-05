@@ -5,7 +5,7 @@ from ibis_birdbrain.subsystems import Subsystem
 
 
 # classes
-class Learn(Subsystem):
+class Docs(Subsystem):
     """Learn from documentation (in a database) and external sources.
 
     Note you must get the documentation tables before reading in docs.
@@ -14,7 +14,7 @@ class Learn(Subsystem):
 
     def __init__(
         self,
-        name: str = "learn",
+        name: str = "docs",
         tasks: Tasks = Tasks([GetTables(), ReadDocs(), SummarizeDocs(), WriteDocs()]),
     ):
         super().__init__(name=name, tasks=tasks)

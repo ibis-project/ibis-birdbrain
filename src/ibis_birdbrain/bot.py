@@ -2,12 +2,13 @@
 Ibis Birdbrain.
 
 This file represents the main logic, user experience, and user interface.
+
+Calling the bot will preprocess the message, strategize on the action to take,
+run the system, and postprocess the response.
 """
 
 # imports
 import ibis
-
-import logging as log
 
 from uuid import uuid4
 from typing import Any
@@ -15,8 +16,8 @@ from datetime import datetime
 
 from ibis.backends.base import BaseBackend
 
+from ibis_birdbrain.logging import log
 from ibis_birdbrain.messages import Messages, Message, Email
-from ibis_birdbrain.attachments import Attachments
 from ibis_birdbrain.subsystems import Subsystems
 from ibis_birdbrain.attachments import (
     DataAttachment,
@@ -24,19 +25,17 @@ from ibis_birdbrain.attachments import (
 
 from ibis_birdbrain.strings import (
     DEFAULT_NAME,
+    DEFAULT_VERSION,
     DEFAULT_USER_NAME,
     DEFAULT_DESCRIPTION,
-    DEFAULT_VERSION,
     DEFAULT_SYSTEM_SYSTEM,
+    DEFAULT_STRATEGY_SYSTEM,
+    DEFAULT_RESPONSE_SYSTEM,
+    DEFAULT_MESSAGE_EVALUATION_SYSTEM,
 )
 
 from ibis_birdbrain.utils.strings import shorten_str
 from ibis_birdbrain.utils.messages import to_message
-
-from ibis_birdbrain.ml.functions import filter_attachments
-
-# config
-log.basicConfig(level=log.INFO)
 
 
 # classes
@@ -84,9 +83,12 @@ class Bot:
 
         self.current_subject = ""
 
+        # get source code
+        source_code = open(__file__, "r").read()
+
         # initialize system
         init_message = Email(
-            body=f"{DEFAULT_SYSTEM_SYSTEM}",
+            body=f"{DEFAULT_SYSTEM_SYSTEM}\nYour source code is:\n{source_code}",
             subject="system init",
             to_address=self.name,
             from_address=self.name,
@@ -112,6 +114,9 @@ class Bot:
             stuff=stuff,
         )
 
+        # strategize
+        self.strategize()
+
         # process system
         self.system()
 
@@ -127,7 +132,7 @@ class Bot:
     ) -> None:
         """Preprocess input."""
 
-        log.info(f"preprocessing input: {text}")
+        log.info(f"preprocessing input...")
         # TODO: update subject dynamically
         if self.current_subject == "":
             self.current_subject = shorten_str(text)
@@ -143,13 +148,30 @@ class Bot:
         # add message to messages
         self.messages.append(m)
 
+    def strategize(self) -> None:
+        """Strategize on the subsystems and tasks to run prior to executing the system."""
+
+        log.info(f"strategizing...")
+        m = self.messages.respond(
+            instructions=f"""{DEFAULT_STRATEGY_SYSTEM}\nYou have access to: {self.subsystems}"""
+        )
+        breakpoint()
+
+        # set message metadata
+        m.to_address = self.name
+        m.from_address = self.name
+        m.subject = f"[system strategy] re: {self.current_subject}"
+
+        # add message to messages
+        self.messages.append(m)
+
     def system(self, depth: int = 3) -> None:
         """System process."""
 
         # check if done
         log.info(f"running system...")
         log.info(f"depth: {depth}")
-        if self.messages.evaluate():
+        if self.messages.evaluate(instructions=DEFAULT_MESSAGE_EVALUATION_SYSTEM):
             log.info(f"evaluated as complete...")
             return
         if depth == 0:
@@ -180,7 +202,7 @@ class Bot:
         """Postprocess output."""
 
         # generate response
-        m = self.messages.respond()
+        m = self.messages.respond(instructions=DEFAULT_RESPONSE_SYSTEM)
 
         # set message metadata
         m.to_address = self.user_name
@@ -195,7 +217,7 @@ class Bot:
 
     def __str__(self):
         """String the bot."""
-        return f"<Bot name={self.name} id={self.id} description={self.description} version={self.version} data={list(self.data.keys())}>"
+        return f"<Bot name={self.name} id={self.id} description={self.description} version={self.version} subsystems={list(self.subsystems)} data={list(self.data.keys())}>"
 
     def __repr__(self):
         """Represent the bot."""

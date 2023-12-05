@@ -3,6 +3,8 @@ from ibis_birdbrain.tasks import Task
 
 from ibis_birdbrain.messages import Messages, Message, Email
 
+from ibis_birdbrain.ml.functions import write_sql_query
+
 
 # classes
 class SqlCode(Task):

@@ -4,14 +4,16 @@ from ibis_birdbrain.tasks import Task
 from ibis_birdbrain.messages import Message, Email
 from ibis_birdbrain.attachments import Attachments, DataAttachment, TableAttachment
 
-from ibis_birdbrain.ml.functions import filter_tables
+from ibis_birdbrain.ml.functions import filter_tables, write_sql_query
 
 
 # classes
 class GetTables(Task):
     """Get tables.
 
-    Choose this task to get tables from a database, returning a message with table attachments. These contain the schema and other useful metadata for transformation queries
+    Choose this task to get tables from a database, returning a message with table attachments. These contain the schema and other useful metadata for transformation queries.
+
+    This task MUST be run before any other task in a given subsystem that requires tables.
     """
 
     def __init__(self, name: str = "get_tables"):

@@ -31,3 +31,20 @@ class DocSummary(BaseModel):
     code_snippets: list[str] = Field(
         ..., description="The code snippets of the document."
     )
+
+
+# TODO: probably remove, does not work well
+@marvin.ai_model
+class RelevantMessageExtractor(BaseModel):
+    """Extracts relevant messages and attachments for constructing a message to a specific Task."""
+
+    relevant_messages: list[str] = Field(
+        ..., description="The relevant messages (list of GUIDs)"
+    )
+    relevant_attachments: list[str] = Field(
+        ..., description="The relevant attachments (list of GUIDs)"
+    )
+    task_message_body: str = Field(
+        ...,
+        description="The task message body (str), including all instructions for successfully performing the task.",
+    )

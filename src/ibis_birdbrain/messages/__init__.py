@@ -11,10 +11,6 @@ from datetime import datetime
 
 from ibis.expr.types.relations import Table
 
-from ibis_birdbrain.strings import (
-    DEFAULT_MESSAGE_EVALUATION_SYSTEM,
-    DEFAULT_RESPONSE_SYSTEM,
-)
 from ibis_birdbrain.attachments import Attachment, Attachments
 
 from ibis_birdbrain.ml.functions import (
@@ -134,12 +130,12 @@ class Messages:
         # TODO: implement w/ ML
         ...
 
-    def evaluate(self, instructions: str = DEFAULT_MESSAGE_EVALUATION_SYSTEM) -> bool:
+    def evaluate(self, instructions: str) -> bool:
         """Evaluate the messages."""
         TrueFalse = true_or_false(instructions=instructions)
         return TrueFalse(str(self)).value
 
-    def respond(self, instructions: str = DEFAULT_RESPONSE_SYSTEM) -> Message:
+    def respond(self, instructions: str) -> Message:
         """Respond to the messages."""
         r = write_response(str(self), instructions=instructions)
         m = Email(body=r)

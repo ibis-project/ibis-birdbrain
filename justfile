@@ -17,6 +17,7 @@ ipy *args:
 # setup
 setup:
     @pip install -r dev-requirements.txt
+    just install
 
 # build
 build:
@@ -55,7 +56,7 @@ format:
 
 # smoke-test
 smoke-test:
-    black --check .
+    ruff format --check .
 
 # clean
 clean:

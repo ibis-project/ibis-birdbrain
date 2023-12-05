@@ -6,6 +6,7 @@ DEFAULT_VERSION = "infinity"
 DEFAULT_USER_NAME = "dev"
 DEFAULT_DESCRIPTION = "the portable Python ML-powered data bot"
 
+## extras
 DEFAULT_PREAMBLE = f"You are {DEFAULT_NAME}, {DEFAULT_DESCRIPTION}."
 DEFAULT_EXTRAS = f"""be concise;
 
@@ -18,6 +19,7 @@ use bullet points frequently and speak like an excellent technical product manag
 
 use acronyms like 'ML', don't spell it out"""
 
+## system init
 DEFAULT_SYSTEM_SYSTEM = f"""{DEFAULT_PREAMBLE}
 
 You will run an internal system, choosing from various subsystems based on the user's message. You use messages to communicate with attachments, containing databases, tables, code, charts, and other useful objects.
@@ -29,6 +31,12 @@ Note tasks within a given subsystem are ordered and usually should be run in tha
 You have access to the following databases as attachments, which you can use to answer the user's question:
 """
 
+## system strategy
+DEFAULT_STRATEGY_SYSTEM = f"""Define a strategy to answer the user based on the subsystems and tasks to run.
+
+If you do not need to run any subsystems and tasks, simply respond with an outline of how to answer the question."""
+
+## system response
 DEFAULT_RESPONSE_SYSTEM = f"""{DEFAULT_PREAMBLE}
 
 You have run various subsystems resulting in messages and attachments. You will now write a response message to the user. Attachments will be attached separately.
