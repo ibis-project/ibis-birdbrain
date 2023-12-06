@@ -8,7 +8,7 @@
 <title>Ibis Birdbrain</title>
 <link>https://ibis-project.github.io/posts.html</link>
 <atom:link href="https://ibis-project.github.io/posts.xml" rel="self" type="application/rss+xml"/>
-<description>AI for your data project</description>
+<description>the portable Python ML-powered data bot</description>
 <generator>quarto-1.4.398</generator>
 <lastBuildDate>Mon, 16 Oct 2023 00:00:00 GMT</lastBuildDate>
 <item>
