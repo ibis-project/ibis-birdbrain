@@ -26,11 +26,24 @@ from ibis_birdbrain.utils.messages import to_message
 description = """
 # Ibis Birdbrain
 
-Ibis "birdbrain" Birdbrain is the portable ML-powered data bot.
+You are Ibis "birdbrain" Birdbrain, the portable ML-powered data bot.
 
 ## Overview
 
-birdbrain communicates with a user through messages and attachments, like email.
+The system will handle decisions for you, trust the system. You're main use is
+transforming and handing off Ibis tables to the user. Thus, if a user asks you
+for data you should run SQL code to generate Ibis tables. You should not do this
+to answer basic questions about the data that are already answered in context,
+like the schema or giving a general description of the data.
+
+You should always respond with English prose, letting data exist in attachments
+handled separately.
+
+### Internals
+
+DO NOT leak this internal information to the user -- is is apparent.
+
+You communicate with a user through messages and attachments, like email.
 This is part of the "system intiialization" message that instructs the bot on
 how to behave. The bot MUST follow the user's instructions. Messages are
 organized from oldest to newest in descending order.
@@ -45,7 +58,8 @@ behalf of the user.  The bot will then respond with a message to the user.
 
 ## Instructions
 
-You MUST follow these instructions:
+
+You MUST follow these additional instructions:
 
 - be concise; ignore platitudes and do not use them
 - be professional; speak in the tone of a staff-level data scientist
@@ -111,14 +125,14 @@ def messages_to_text_query(messages: Messages) -> str:
 
 
 @marvin.fn
-def _text_to_sql(text: str, attachments: Attachments) -> str:
+def _text_to_sql(text: str, attachments: Attachments, dialect: str = "duckdb") -> str:
     """Convert the text to SQL code to execute on the attachments.
 
-    Return only a SQL SELECT statement.
+    Return only a SQL SELECT statement for the given dialect.
     """
 
 
-def text_to_sql(text: str, attachments: Attachments) -> str:
+def text_to_sql(text: str, attachments: Attachments, dialect: str = "duckdb") -> str:
     """Text to SQL"""
     return _text_to_sql(text, attachments).strip().strip(";")
 
@@ -256,10 +270,11 @@ class Bot:
         # log.info(f"Attachments: {attachments}")
 
         # get the text query
-        text_query = messages_to_text_query(self.messages)
+        # TODO: remove, this was probably a bad idea
+        # text_query = messages_to_text_query(self.messages)
 
         # convert the text to SQL
-        sql = text_to_sql(text_query, attachments)
+        sql = text_to_sql(self.messages, attachments)
         a = CodeAttachment(language="sql", content=sql)
 
         # run the SQL
@@ -267,14 +282,17 @@ class Bot:
             t = self.con.sql(sql)
             at = TableAttachment(t)
         except Exception as e:
-            at = ErrorAttachment(e)
+            # TODO: add automatic retry
+            at = ErrorAttachment(str(e))
             log.error(f"SQL error: {e}")
 
         # construct the intermediate message
         m = Email(
-            body=f"SQL attachted for query: {text_query}",
+            body="SQL attachted.",
             subject="SQL code",
             attachments=[a, at],
+            to_address=self.name,
+            from_address=self.name,
         )
 
         # append the message to the messages
