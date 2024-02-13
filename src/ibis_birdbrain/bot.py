@@ -226,7 +226,6 @@ class Bot:
         )
         self.messages.append(m)
 
-        
     def __call__(
         self,
         text: str = "Who are you and what can you do?",
