@@ -101,7 +101,10 @@ def respond(messages: Messages) -> str:
 
 @marvin.fn
 def messages_to_text_query(messages: Messages) -> str:
-    """Convert the messages to a text query."""
+    """Convert the messages to an English text query.
+    
+    Returns the English prose that concisely describes the desired query.
+    """
 
 
 @marvin.fn
