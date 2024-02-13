@@ -98,6 +98,7 @@ class CodeAttachment(TextAttachment):
     **code**:\n{self.content}"""
         )
 
+
 class ErrorAttachment(TextAttachment):
     """An error attachment."""
 
