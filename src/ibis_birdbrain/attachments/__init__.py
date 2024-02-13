@@ -99,6 +99,7 @@ from ibis_birdbrain.attachments.data import DataAttachment, TableAttachment
 from ibis_birdbrain.attachments.text import (
     TextAttachment,
     CodeAttachment,
+    ErrorAttachment,
     WebpageAttachment,
 )
 
@@ -110,5 +111,6 @@ __all__ = [
     "ChartAttachment",
     "TextAttachment",
     "CodeAttachment",
+    "ErrorAttachment",
     "WebpageAttachment",
 ]

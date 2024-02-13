@@ -97,3 +97,24 @@ class CodeAttachment(TextAttachment):
     **language**: {self.language}
     **code**:\n{self.content}"""
         )
+
+class ErrorAttachment(TextAttachment):
+    """An error attachment."""
+
+    content: str
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def encode(self):
+        ...
+
+    def decode(self):
+        ...
+
+    def __str__(self):
+        return (
+            super().__str__()
+            + f"""
+    **error**:\n{self.content}"""
+        )
