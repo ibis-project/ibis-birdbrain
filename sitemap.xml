@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ibis-project.github.io/concepts/user-interfaces.html</loc>
-    <lastmod>2024-02-13T02:15:24.696Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/concepts/llms.html</loc>
-    <lastmod>2024-02-13T02:15:24.696Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/why.html</loc>
-    <lastmod>2024-02-13T02:15:24.712Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/release_notes.html</loc>
-    <lastmod>2024-02-13T02:15:24.712Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/posts.html</loc>
-    <lastmod>2024-02-13T02:15:24.708Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/posts/llms-and-data-pt0/index.html</loc>
-    <lastmod>2024-02-13T02:15:24.708Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/posts/llms-and-data-pt1/index.html</loc>
-    <lastmod>2024-02-13T02:15:24.708Z</lastmod>
-  </url>
-  <url>
     <loc>https://ibis-project.github.io/install.html</loc>
-    <lastmod>2024-02-13T02:15:24.708Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/contribute/contributing.html</loc>
-    <lastmod>2024-02-13T02:15:24.696Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/tutorials/cli.html</loc>
-    <lastmod>2024-02-13T02:15:24.712Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/tutorials/python.html</loc>
-    <lastmod>2024-02-13T02:15:24.712Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/index.html</loc>
-    <lastmod>2024-02-13T02:15:24.708Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibis-project.github.io/posts/llms-and-data-pt3/index.html</loc>
-    <lastmod>2024-02-13T02:15:24.708Z</lastmod>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
   </url>
   <url>
     <loc>https://ibis-project.github.io/posts/llms-and-data-pt4/index.html</loc>
-    <lastmod>2024-02-13T02:15:24.712Z</lastmod>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/posts/llms-and-data-pt2/index.html</loc>
-    <lastmod>2024-02-13T02:15:24.708Z</lastmod>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt1/index.html</loc>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt3/index.html</loc>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
   </url>
   <url>
     <loc>https://ibis-project.github.io/demo.html</loc>
-    <lastmod>2024-02-13T02:15:24.696Z</lastmod>
+    <lastmod>2024-02-13T14:33:54.970Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/how-to/input-output/basics.html</loc>
-    <lastmod>2024-02-13T02:15:24.696Z</lastmod>
+    <loc>https://ibis-project.github.io/contribute/contributing.html</loc>
+    <lastmod>2024-02-13T14:33:54.970Z</lastmod>
   </url>
   <url>
-    <loc>https://ibis-project.github.io/concepts/ops.html</loc>
-    <lastmod>2024-02-13T02:15:24.696Z</lastmod>
+    <loc>https://ibis-project.github.io/tutorials/python.html</loc>
+    <lastmod>2024-02-13T14:33:54.986Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/concepts/user-interfaces.html</loc>
+    <lastmod>2024-02-13T14:33:54.970Z</lastmod>
   </url>
   <url>
     <loc>https://ibis-project.github.io/concepts/platforms.html</loc>
-    <lastmod>2024-02-13T02:15:24.696Z</lastmod>
+    <lastmod>2024-02-13T14:33:54.970Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/why.html</loc>
+    <lastmod>2024-02-13T14:33:54.986Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/concepts/ops.html</loc>
+    <lastmod>2024-02-13T14:33:54.970Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/concepts/llms.html</loc>
+    <lastmod>2024-02-13T14:33:54.970Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/index.html</loc>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/tutorials/cli.html</loc>
+    <lastmod>2024-02-13T14:33:54.986Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/how-to/input-output/basics.html</loc>
+    <lastmod>2024-02-13T14:33:54.970Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/posts.html</loc>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt2/index.html</loc>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/posts/llms-and-data-pt0/index.html</loc>
+    <lastmod>2024-02-13T14:33:54.982Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibis-project.github.io/release_notes.html</loc>
+    <lastmod>2024-02-13T14:33:54.986Z</lastmod>
   </url>
 </urlset>
