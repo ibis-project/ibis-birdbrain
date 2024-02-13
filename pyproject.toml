@@ -30,7 +30,7 @@ dependencies = [
   'html2text',
   'duckduckgo-search',
   'marvin>2,<3',
-  'ibis-framework[duckdb] @ git+https://github.com/ibis-project/ibis',
+  'ibis-framework[duckdb]', #@ git+https://github.com/ibis-project/ibis',
   'plotly',
   'streamlit',
 ]
