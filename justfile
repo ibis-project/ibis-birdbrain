@@ -5,6 +5,7 @@ set dotenv-load
 
 # aliases
 alias fmt := format
+alias marvin-docs := docs-marvin
 
 # list justfile recipes
 default:
@@ -14,18 +15,19 @@ default:
 ipy *args:
     birdbrain ipy {{ args }}
 
+# install
+install:
+    @pip install -e '.'
+
 # setup
 setup:
     @pip install -r dev-requirements.txt
+    just install
 
 # build
 build:
     just clean
     @python -m build
-
-# install
-install:
-    @pip install -e '.'
 
 # uninstall
 uninstall:
@@ -63,3 +65,9 @@ clean:
     @rm -rf *.ddb* || True
     @rm -rf data/*.parquet || True
 
+# open docs
+docs:
+    @open https://ibis-project.github.io/ibis-birdbrain/
+
+docs-marvin:
+    @open https://www.askmarvin.ai/welcome/what_is_marvin/
