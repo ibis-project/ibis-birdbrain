@@ -1,5 +1,226 @@
 [
   {
+    "objectID": "concepts/user-interfaces.html",
+    "href": "concepts/user-interfaces.html",
+    "title": "User interfaces",
+    "section": "",
+    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis LUI paradigm is highly experimental and should be put in production (automated) with caution.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "concepts/user-interfaces.html#command-line-interface",
+    "href": "concepts/user-interfaces.html#command-line-interface",
+    "title": "User interfaces",
+    "section": "",
+    "text": "A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "concepts/user-interfaces.html#python",
+    "href": "concepts/user-interfaces.html#python",
+    "title": "User interfaces",
+    "section": "",
+    "text": "Python can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "concepts/user-interfaces.html#language-user-interface",
+    "href": "concepts/user-interfaces.html#language-user-interface",
+    "title": "User interfaces",
+    "section": "",
+    "text": "Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis LUI paradigm is highly experimental and should be put in production (automated) with caution.",
+    "crumbs": [
+      "User interfaces"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html",
+    "href": "concepts/llms.html",
+    "title": "Large language models",
+    "section": "",
+    "text": "Large language models (LLMs) represent decades of research and development of neural networks. While relatively impressive LLMs have been around for years, recent innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user.\nWe are primarily concerned with applying LLMs to data, but we’ll take a brief look at how they work and why we should use them.\n\n\nAn artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.\n\n\n\nA large language model is a neural network trained on vast amounts of text data.\n\n\n\nA LLM takes text as input and produces text as output.\n\n\n\nText in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.\n\n\n\nSome limitations include:\n\ncost\nlatency\naccuracy\n…",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-is-an-artificial-neural-network",
+    "href": "concepts/llms.html#what-is-an-artificial-neural-network",
+    "title": "Large language models",
+    "section": "",
+    "text": "An artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-is-a-large-language-model",
+    "href": "concepts/llms.html#what-is-a-large-language-model",
+    "title": "Large language models",
+    "section": "",
+    "text": "A large language model is a neural network trained on vast amounts of text data.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-are-the-inputs-and-outputs",
+    "href": "concepts/llms.html#what-are-the-inputs-and-outputs",
+    "title": "Large language models",
+    "section": "",
+    "text": "A LLM takes text as input and produces text as output.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-do-llms-work-well-for",
+    "href": "concepts/llms.html#what-do-llms-work-well-for",
+    "title": "Large language models",
+    "section": "",
+    "text": "Text in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "concepts/llms.html#what-are-the-limitations-and-considerations",
+    "href": "concepts/llms.html#what-are-the-limitations-and-considerations",
+    "title": "Large language models",
+    "section": "",
+    "text": "Some limitations include:\n\ncost\nlatency\naccuracy\n…",
+    "crumbs": [
+      "Large language models"
+    ]
+  },
+  {
+    "objectID": "why.html",
+    "href": "why.html",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "Ibis is the portable Python dataframe library.\nIbis Birdbrain is the portable Python AI-powered data bot, built on Ibis with support for all data platforms Ibis’s 18+ backends support. Ibis Birdbrain is also built on Marvin with support for all AI platforms Marvin supports.\n\n\n\n\nWhen things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex\n\n\n\n\nComposable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
+    "crumbs": [
+      "Why Ibis Birdbrain?"
+    ]
+  },
+  {
+    "objectID": "why.html#standards",
+    "href": "why.html#standards",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "When things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex",
+    "crumbs": [
+      "Why Ibis Birdbrain?"
+    ]
+  },
+  {
+    "objectID": "why.html#composable-data-systems-are-mice",
+    "href": "why.html#composable-data-systems-are-mice",
+    "title": "Why Ibis Birdbrain?",
+    "section": "",
+    "text": "Composable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
+    "crumbs": [
+      "Why Ibis Birdbrain?"
+    ]
+  },
+  {
+    "objectID": "release_notes.html",
+    "href": "release_notes.html",
+    "title": "Release notes",
+    "section": "",
+    "text": "Release notes\nTBD\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Posts",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nAuxiliary tools\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 16, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nComposable data + AI systems\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 15, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nComputations and control flow: it’s just programming\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 14, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 13, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to Marvin and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 12, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html",
+    "href": "posts/llms-and-data-pt0/index.html",
+    "title": "An introduction to Marvin and Ibis",
+    "section": "",
+    "text": "In this “LLMs and data” series, we’ll explore how to apply large-language models (LLMs) to data analytics. We’ll walk through the steps to build Ibis Birdbrain.\nThroughout the series, we’ll be using Marvin and Ibis. A brief introduction to each is provided below."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#introduction",
+    "href": "posts/llms-and-data-pt0/index.html#introduction",
+    "title": "An introduction to Marvin and Ibis",
+    "section": "",
+    "text": "In this “LLMs and data” series, we’ll explore how to apply large-language models (LLMs) to data analytics. We’ll walk through the steps to build Ibis Birdbrain.\nThroughout the series, we’ll be using Marvin and Ibis. A brief introduction to each is provided below."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#marvin",
+    "href": "posts/llms-and-data-pt0/index.html#marvin",
+    "title": "An introduction to Marvin and Ibis",
+    "section": "Marvin",
+    "text": "Marvin\nMarvin is an AI engineering framework that makes it easy to build up to an interactive conversational application.\nMarvin makes calls to an AI platform. You typically use an API key set as an environment variable – in this case, we’ll load a .env file that contians secrets for the AI platform that Marvin will use. We also set the large language model model.\n\n1import marvin\n\nfrom rich import print\nfrom time import sleep\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n# increase accuracy\n3marvin.settings.llm_model = \"openai/gpt-4\"\n# decrease cost\n# marvin.settings.llm_model = \"openai/gpt-3.5-turbo\"\n\n4test_str = \"working with data and LLMs on 18+ data platforms is easy!\"\ntest_str\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nConfigure the LLM model to use.\n\n4\n\nSome text to test on\n\n\n\n\n'working with data and LLMs on 18+ data platforms is easy!'\n\n\n\nFunctions\nAI functions are one of the building blocks in Marvin and allow yout to specify a typed python function with no code – only a docstring – to achieve a wide variety of tasks.\nWe’ll demonstrate this with an AI function that trnaslates text:\n\n@marvin.ai_fn\ndef translate(text: str, from_: str = \"English\", to: str = \"Spanish\") -&gt; str:\n    \"\"\"translates the text\"\"\"\n\ntranslate(test_str)\n\n'trabajar con datos y LLMs en más de 18 plataformas de datos es fácil!'\n\n\n\n\nCode\n1sleep(1)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\ntranslate(translate(test_str), from_=\"Spanish\", to=\"English\")\n\n'Working with data and LLMs on more than 18 data platforms is easy!'\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\n\nModels\nAI models are another building block for generating python classes from input text. It’s a great way to build structured data from unstructured data that can be customized for your needs.\nWe’ll demosntrate this with an AI model that translates text:\n\nfrom pydantic import BaseModel, Field\n\n# decrease cost\nmarvin.settings.llm_model = \"openai/gpt-3.5-turbo\"\n\n@marvin.ai_model\nclass ExtractParts(BaseModel):\n    \"\"\"Extracts parts of a sentence\"\"\"\n    subject: str = Field(..., description=\"The subject of the sentence.\")\n    objects: list[str] = Field(..., description=\"The objects of the sentence.\")\n    predicate: str = Field(..., description=\"The predicate of the sentence.\")\n    modifiers: list[str] = Field(..., description=\"The modifiers of the sentence.\")\n\nExtractParts(test_str)\n\nExtractParts(subject='working', objects=['data', 'LLMs'], predicate='is', modifiers=['on 18+ data platforms', 'easy'])\n\n\n\n\nCode\n1sleep(1)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\n\nClassifiers\nAI classifiers are another building block for generating python classes from input text. It’s the most efficient (time and cost) method for applying LLMs as it only results in a single output token, selecting an output in a specified Enum.\nWe’ll demonstrate this by classifying the language of some text:\n\nfrom enum import Enum\n\n# increase accuracy\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n@marvin.ai_classifier\nclass IdentifyLanguage(Enum):\n    \"\"\"Identifies the language of the text\"\"\"\n\n    english = \"English\"\n    spanish = \"Spanish\"\n\n\nIdentifyLanguage(test_str).value\n\n'English'\n\n\n\n\nCode\n1sleep(1)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nIdentifyLanguage(translate(test_str)).value\n\n'Spanish'\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#ibis",
+    "href": "posts/llms-and-data-pt0/index.html#ibis",
+    "title": "An introduction to Marvin and Ibis",
+    "section": "Ibis",
+    "text": "Ibis\nIbis is the portable Python dataframe library that enables Ibis Birdbrain to work on many data platforms at native scale.\nIbis makes calls to a data platform, providing an API but pushing the compute to (local or remote) query engines and storage. DuckDB is the default and we’ll typically use it for demo puroses. You can work with an in-memory instance, but we’ll often create a database file from example data:\n\n1import ibis\n\n2con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n1\n\nImport the libraries we need.\n\n2\n\nSetup the demo datain an Ibis backend.\n\n\n\n\nYou will typically connect to an existing data platform via your corresponding Ibis backend and have access to a number of tables:\n\n1import ibis\n\n2ibis.options.interactive = True\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis.\n\n2\n\nConfigure Ibis (interactive).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n\n\n\nBackend\nA backend provides the connection and basic management of the data platform. Above, we created the con variable that is an instance of a DuckDB backend:\n\ncon\n\n&lt;ibis.backends.duckdb.Backend at 0x16a17af10&gt;\n\n\nIt usually contains some tables:\n\ncon.list_tables()\n\n['penguins']\n\n\nWe can access some internals of Ibis to see what backends are available:\n\n\n\n\n\n\nTip\n\n\n\nDon’t rely on accessing internals of Ibis in production.\n\n\n\nbackends = [entrypoint.name for entrypoint in ibis.util.backend_entry_points()]\nbackends\n\n['bigquery',\n 'clickhouse',\n 'dask',\n 'datafusion',\n 'druid',\n 'duckdb',\n 'flink',\n 'impala',\n 'mssql',\n 'mysql',\n 'oracle',\n 'pandas',\n 'polars',\n 'postgres',\n 'pyspark',\n 'snowflake',\n 'sqlite',\n 'trino']\n\n\n\n\nTable\nYou typically work with a table, conventionally named t for demo or exploratory purposes:\n\nt\n\n┏━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┓\n┃ species ┃ island    ┃ bill_length_mm ┃ bill_depth_mm ┃ flipper_length_mm ┃ body_mass_g ┃ sex    ┃ year  ┃\n┡━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━┩\n│ string  │ string    │ float64        │ float64       │ int64             │ int64       │ string │ int64 │\n├─────────┼───────────┼────────────────┼───────────────┼───────────────────┼─────────────┼────────┼───────┤\n│ Adelie  │ Torgersen │           39.1 │          18.7 │               181 │        3750 │ male   │  2007 │\n│ Adelie  │ Torgersen │           39.5 │          17.4 │               186 │        3800 │ female │  2007 │\n│ Adelie  │ Torgersen │           40.3 │          18.0 │               195 │        3250 │ female │  2007 │\n│ Adelie  │ Torgersen │            nan │           nan │              NULL │        NULL │ NULL   │  2007 │\n│ Adelie  │ Torgersen │           36.7 │          19.3 │               193 │        3450 │ female │  2007 │\n│ Adelie  │ Torgersen │           39.3 │          20.6 │               190 │        3650 │ male   │  2007 │\n│ Adelie  │ Torgersen │           38.9 │          17.8 │               181 │        3625 │ female │  2007 │\n│ Adelie  │ Torgersen │           39.2 │          19.6 │               195 │        4675 │ male   │  2007 │\n│ Adelie  │ Torgersen │           34.1 │          18.1 │               193 │        3475 │ NULL   │  2007 │\n│ Adelie  │ Torgersen │           42.0 │          20.2 │               190 │        4250 │ NULL   │  2007 │\n│ …       │ …         │              … │             … │                 … │           … │ …      │     … │\n└─────────┴───────────┴────────────────┴───────────────┴───────────────────┴─────────────┴────────┴───────┘\n\n\n\nWhen working with many tables, you should name them descriptively.\n\n\nSchema\nA table has a schema that Ibis maps to the data platform’s data types:\n\nt.schema()\n\nibis.Schema {\n  species            string\n  island             string\n  bill_length_mm     float64\n  bill_depth_mm      float64\n  flipper_length_mm  int64\n  body_mass_g        int64\n  sex                string\n  year               int64\n}"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#llms-and-data-marvin-and-ibis",
+    "href": "posts/llms-and-data-pt0/index.html#llms-and-data-marvin-and-ibis",
+    "title": "An introduction to Marvin and Ibis",
+    "section": "LLMs and data: Marvin and Ibis",
+    "text": "LLMs and data: Marvin and Ibis\nYou can use Marvin and Ibis together to easily apply LLMs to data.\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n@marvin.ai_fn\ndef sql_select(\n    text: str, table_name: str = t.get_name(), schema: Schema = t.schema()\n) -&gt; str:\n    \"\"\"writes the SQL SELECT statement to query the table according to the text\"\"\"\n\n\nquery = \"the unique combination of species and islands\"\nsql = sql_select(query).strip(\";\")\nsql\n\n'SELECT DISTINCT species, island FROM penguins'\n\n\n\nt.sql(sql)\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┓\n┃ species   ┃ island    ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━┩\n│ string    │ string    │\n├───────────┼───────────┤\n│ Adelie    │ Torgersen │\n│ Adelie    │ Biscoe    │\n│ Adelie    │ Dream     │\n│ Gentoo    │ Biscoe    │\n│ Chinstrap │ Dream     │\n└───────────┴───────────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt.sql(sql_select(query + \" and include their counts in from highest to lowest\").strip(\";\"))\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩\n│ string    │ string    │ int64 │\n├───────────┼───────────┼───────┤\n│ Gentoo    │ Biscoe    │   124 │\n│ Chinstrap │ Dream     │    68 │\n│ Adelie    │ Dream     │    56 │\n│ Adelie    │ Torgersen │    52 │\n│ Adelie    │ Biscoe    │    44 │\n└───────────┴───────────┴───────┘"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt0/index.html#next-steps",
+    "href": "posts/llms-and-data-pt0/index.html#next-steps",
+    "title": "An introduction to Marvin and Ibis",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html",
+    "href": "posts/llms-and-data-pt1/index.html",
+    "title": "Three approaches",
+    "section": "",
+    "text": "The thought of using natural language to transform and analyze data is appealing. This post assumes familiarity with Marvin and Ibis – read the previous post in the series for a quick overview."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#introduction",
+    "href": "posts/llms-and-data-pt1/index.html#introduction",
+    "title": "Three approaches",
+    "section": "",
+    "text": "The thought of using natural language to transform and analyze data is appealing. This post assumes familiarity with Marvin and Ibis – read the previous post in the series for a quick overview."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#approaches",
+    "href": "posts/llms-and-data-pt1/index.html#approaches",
+    "title": "Three approaches",
+    "section": "Approaches",
+    "text": "Approaches\nWhen discussed at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:\n\nLLM writes an analytic code\nLLM writes an analytic subroutine\nUse LLM in an analytic subroutine\n\nWhile these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and Marvin in a few lines of code. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends.\nBut first, let’s demonstrate the three approaches.\n\nApproach 1: LLM writes analytic code\nState of the art (SoTA) LLMs are decent at generating SQL out of the box. We can be clever to handle errors, retries, and more, but in its simplest form:\n\n\nCode\n1import ibis\nimport marvin\n\nfrom rich import print\nfrom time import sleep\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis and Marvin\n\n\n\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\n\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┓\n┃ species   ┃ island    ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━┩\n│ string    │ string    │\n├───────────┼───────────┤\n│ Adelie    │ Torgersen │\n│ Adelie    │ Biscoe    │\n│ Adelie    │ Dream     │\n│ Gentoo    │ Biscoe    │\n│ Chinstrap │ Dream     │\n└───────────┴───────────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩\n│ string    │ string    │ int64 │\n├───────────┼───────────┼───────┤\n│ Gentoo    │ Biscoe    │   124 │\n│ Chinstrap │ Dream     │    68 │\n│ Adelie    │ Dream     │    56 │\n│ Adelie    │ Torgersen │    52 │\n│ Adelie    │ Biscoe    │    44 │\n└───────────┴───────────┴───────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\nThis works well-enough for simple cases and can be expanded to handle complex ones. In many scenarios, it may be easier to express a query in English or another language than to write it in SQL, especially if working across multiple SQL dialects.\nSQL isn’t standard, with many dialects across data platforms. Ibis works around this by providing a standard Python API for analytic code but must make compromises to support many data platforms, often via SQL in their native dialect. Substrait is a newer project that aims to solve this problem by providing a standard, portable, and extensible intermediary representation (IR) for data transformation code that Ibis and data platforms could all standardize on. Substrait is still in the early stages of development, but it’s worth keeping an eye on and will be adopted in Ibis once supported across many data platforms.\nFor now, we’ll focus on generating SQL and Python analytical code with LLMs.\n\n\nApproach 2: LLM writes an analytical subroutine\nIf more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages that are used in analytical subroutines. Many data platforms support user-defined functions (UDFs) in Python or some other language. We’ll stick to scalar Python UDFs via DuckDB to demonstrate the concept:\n\n1@marvin.ai_fn\ndef _generate_python_function(text: str) -&gt; str:\n    \"\"\"Generate a simple, typed, correct Python function from text.\"\"\"\n\n\n2def create_udf_from_text(text: str) -&gt; str:\n    \"\"\"Create a UDF from text.\"\"\"\n    return f\"\"\"\nimport ibis\n\n@ibis.udf.scalar.python\n{_generate_python_function(text)}\n\"\"\".strip()\n\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\n\n\n\nudf = create_udf_from_text(\n    \"a function named count_vowels that given an input string, returns an int w/ the number of vowels (y_included as a boolean option defaulted to False)\"\n)\nprint(udf)\nexec(udf)\n\nimport ibis\n\n@ibis.udf.scalar.python\ndef count_vowels(input_string: str, y_included: bool = False) -&gt; int:\n    \"\"\"Given an input string, it returns the number of vowels. y can be included as a vowel.\"\"\"\n    vowels = 'aeiou'\n    if y_included:\n        vowels += 'y'\n    return sum(1 for char in input_string if char in vowels)\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt4 = t3.mutate(\n    species_vowel_count=count_vowels(t3.species),\n    island_vowel_count=count_vowels(t3.island),\n)\nt4\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃ species_vowel_count ┃ island_vowel_count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━┩\n│ string    │ string    │ int64 │ int64               │ int64              │\n├───────────┼───────────┼───────┼─────────────────────┼────────────────────┤\n│ Gentoo    │ Biscoe    │   124 │                   3 │                  3 │\n│ Chinstrap │ Dream     │    68 │                   2 │                  2 │\n│ Adelie    │ Dream     │    56 │                   3 │                  2 │\n│ Adelie    │ Torgersen │    52 │                   3 │                  3 │\n│ Adelie    │ Biscoe    │    44 │                   3 │                  3 │\n└───────────┴───────────┴───────┴─────────────────────┴────────────────────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\nIn this case, there’s no reason not to have a human in the loop reviewing the output code and committing it for production use. This could be useful for quick prototyping or, given a box of tools in the form of UDFs, working through a natural language interface.\n\n\nApproach 3: Use LLM in an analytical subroutine\nWe can also call the LLM once-per-row in the table via a subroutine. For variety, we’ll use an AI model instead of an AI function:\n\n1from pydantic import BaseModel, Field\n\n# decrease cost\n2marvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n\n3@marvin.ai_model\nclass VowelCounter(BaseModel):\n    \"\"\"Count vowels in a string.\"\"\"\n\n    include_y: bool = Field(False, description=\"Include 'y' as a vowel.\")\n    # num_a: int = Field(..., description=\"The number of 'a' vowels.\")\n    # num_e: int = Field(..., description=\"The number of 'e' vowels.\")\n    # num_i: int = Field(..., description=\"The number of 'i' vowels.\")\n    # num_o: int = Field(..., description=\"The number of 'o' vowels.\")\n    # num_u: int = Field(..., description=\"The number of 'u' vowels.\")\n    # num_y: int = Field(..., description=\"The number of 'y' vowels.\")\n    num_total: int = Field(..., description=\"The total number of vowels.\")\n\n\n4VowelCounter(\"hello world\")\n\n\n1\n\nAdditional imports for Pydantic.\n\n2\n\nConfigure Marvin to use a cheaper model.\n\n3\n\nA non-deterministic, LLM-powered AI model.\n\n4\n\nCall the AI model on some text.\n\n\n\n\nVowelCounter(include_y=False, num_total=3)\n\n\nThen we’ll have the LLM write the UDF that calls the LLM, just to be fancy:\n\nudf = create_udf_from_text(\n    \"a function named count_vowels_ai that given an input string, calls VowelCounter on it and returns the num_total attribute of that result\"\n)\nprint(udf)\nexec(udf)\n\nimport ibis\n\n@ibis.udf.scalar.python\ndef count_vowels_ai(input_string: str) -&gt; int:\n    result = VowelCounter(input_string)\n    return result.num_total\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt5 = t3.mutate(\n    species_vowel_count=count_vowels_ai(t3.species),\n    island_vowel_count=count_vowels_ai(t3.island),\n)\nt5\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃ species_vowel_count ┃ island_vowel_count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━┩\n│ string    │ string    │ int64 │ int64               │ int64              │\n├───────────┼───────────┼───────┼─────────────────────┼────────────────────┤\n│ Gentoo    │ Biscoe    │   124 │                   3 │                  3 │\n│ Chinstrap │ Dream     │    68 │                   2 │                  1 │\n│ Adelie    │ Dream     │    56 │                   3 │                  2 │\n│ Adelie    │ Torgersen │    52 │                   3 │                  3 │\n│ Adelie    │ Biscoe    │    44 │                   3 │                  3 │\n└───────────┴───────────┴───────┴─────────────────────┴────────────────────┘\n\n\n\nNotice that in this UDF, unlike in the previous example, a LLM is being called (possibly several times) for each row in the table. This is a very expensive operation and we’ll need to be careful about how we use it in practice.\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#summary",
+    "href": "posts/llms-and-data-pt1/index.html#summary",
+    "title": "Three approaches",
+    "section": "Summary",
+    "text": "Summary\nTo summarize this post:\n\nfrom rich import print\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n# increease accuracy\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))\n\nSummary(\n    summary_line=\"The blog post titled 'Three approaches' by Cody Peterson, dated 2023-10-13, discusses three \ndistinct approaches to applying Language Learning Models (LLMs) to data analytics using open-source tools Ibis and \nMarvin.\",\n    summary_paragraph='The author explains three approaches to applying LLMs to data analytics. The first approach \nis letting the LLM write an analytic code, specifically generating SQL. The second approach involves letting LLM \nwrite an analytic subroutine, demonstrated by writing Python code for user-defined functions. The third approach \nuses LLM in an analytic subroutine, illustrated by calling the LLM once-per-row in a table via a subroutine. Each \nmethod has potential applications and limitations, and the choice of approach will depend on the specific \nrequirements of the data analytics task.',\n    conclusion='LLMs can be used to transform and analyze data in various ways. By using these approaches in \ncombination with open-source tools like Ibis and Marvin, it is possible to build a natural language interface for \ndata analytics that supports multiple backends. The author concludes by introducing an open-source data & AI \nproject for building next-generation natural language interfaces to data, Ibis Birdbrain.',\n    key_points=[\n        'The LLM can write an analytic code, particularly generating SQL.',\n        'The LLM can also write an analytic subroutine, exemplified by writing Python code for user-defined \nfunctions.',\n        'The LLM can be used in an analytic subroutine, shown by calling the LLM once-per-row in a table via a \nsubroutine.',\n        'The author suggests that each approach has its potential applications and limitations.',\n        'The choice of approach will depend on the specific requirements of the data analytics task.'\n    ],\n    critiques=[\n        'The author could have provided more concrete examples or case studies to illustrate the application of \nthese approaches.',\n        'A comparison of the advantages and disadvantages of each approach would have been helpful.'\n    ],\n    suggested_improvements=[\n        'The author could include real-world applications or examples of each approach.',\n        'A detailed comparison of the pros and cons of each approach would provide better guidance for readers.'\n    ],\n    sentiment=0.25,\n    sentiment_label='Neutral',\n    author_bias='The author shows a positive bias towards the use of open-source tools, Ibis and Marvin, for data \nanalytics.'\n)"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt1/index.html#next-steps",
+    "href": "posts/llms-and-data-pt1/index.html#next-steps",
+    "title": "Three approaches",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series."
+  },
+  {
     "objectID": "install.html",
     "href": "install.html",
     "title": "Installation and setup",
@@ -50,160 +271,6 @@
     ]
   },
   {
-    "objectID": "posts/llms-and-data-pt4/index.html",
-    "href": "posts/llms-and-data-pt4/index.html",
-    "title": "Auxiliary tools",
-    "section": "",
-    "text": "As a product manager, I don’t spend most of my time managing products. I suspect most data developers (analysts, engineers, scientists, etc.) don’t spend most of their time writing data code. There are many auxiliary tasks that are required in doing many technical jobs. These include:\n\nsearching the Internet for information\nreading, summarizing, and synthesizing information\nperforming boring computer tasks\ntranslating between different languages (e.g. SQL and Python; English and Spanish)\ncopying and modifying existing code\nquerying some basic informatin from data platforms\n\nWhat if we could, through natural language, have a bot perform many of these tasks (in addition to basic data analysis) on our behalf?"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#introduction",
-    "href": "posts/llms-and-data-pt4/index.html#introduction",
-    "title": "Auxiliary tools",
-    "section": "",
-    "text": "As a product manager, I don’t spend most of my time managing products. I suspect most data developers (analysts, engineers, scientists, etc.) don’t spend most of their time writing data code. There are many auxiliary tasks that are required in doing many technical jobs. These include:\n\nsearching the Internet for information\nreading, summarizing, and synthesizing information\nperforming boring computer tasks\ntranslating between different languages (e.g. SQL and Python; English and Spanish)\ncopying and modifying existing code\nquerying some basic informatin from data platforms\n\nWhat if we could, through natural language, have a bot perform many of these tasks (in addition to basic data analysis) on our behalf?"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#were-using-python-lets-use-python",
-    "href": "posts/llms-and-data-pt4/index.html#were-using-python-lets-use-python",
-    "title": "Auxiliary tools",
-    "section": "We’re using Python, let’s use Python",
-    "text": "We’re using Python, let’s use Python\nWe’re already using Python for Ibis and Marvin. Let’s use it for auxillary tools. We’ll setup our data and AI platform connections and some simple example data to work with.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#filesystem-tools",
-    "href": "posts/llms-and-data-pt4/index.html#filesystem-tools",
-    "title": "Auxiliary tools",
-    "section": "Filesystem tools",
-    "text": "Filesystem tools"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#internet-tools",
-    "href": "posts/llms-and-data-pt4/index.html#internet-tools",
-    "title": "Auxiliary tools",
-    "section": "Internet tools",
-    "text": "Internet tools"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#ai-powered-tools",
-    "href": "posts/llms-and-data-pt4/index.html#ai-powered-tools",
-    "title": "Auxiliary tools",
-    "section": "AI-powered tools",
-    "text": "AI-powered tools"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#introducing-ibis-birdbrain",
-    "href": "posts/llms-and-data-pt4/index.html#introducing-ibis-birdbrain",
-    "title": "Auxiliary tools",
-    "section": "Introducing Ibis Birdbrain",
-    "text": "Introducing Ibis Birdbrain\nIntroduce the bot. Need to overview the tools here I think, but should probably skip most details."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#a-comparison-with-mlops",
-    "href": "posts/llms-and-data-pt4/index.html#a-comparison-with-mlops",
-    "title": "Auxiliary tools",
-    "section": "A comparison with MLOps",
-    "text": "A comparison with MLOps\nTODO: point on how most of the work is not ML\nBefore “MLOps” was a standard term, the Sculley et al paper from 2015 described the key issues with building real-world ML systems.\n\n\n\nFigure 1: Only a small fraction of real-world ML systems is composed of the ML code, as shown by the small black box in the middle. The required surround infrastructure is vast and complex.\n\n\nYou can substitute “LLM” for “ML” in the above figure.\n\nThe “toy problem” problem\nML and LLMs are cool! They’re fun to play with and it’s easy to get distracted with fun applications. Often, ML is learned through solving toy problems, and …\n\n\nThe application landscape is vast\n…and thus requires modular, interoperable, customizable, and extensible tools. TODO: more comparison to MLOps."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt4/index.html#next-steps",
-    "href": "posts/llms-and-data-pt4/index.html#next-steps",
-    "title": "Auxiliary tools",
-    "section": "Next steps",
-    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt1/index.html",
-    "href": "posts/llms-and-data-pt1/index.html",
-    "title": "Three approaches",
-    "section": "",
-    "text": "The thought of using natural language to transform and analyze data is appealing. This post assumes familiarity with Marvin and Ibis – read the previous post in the series for a quick overview."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt1/index.html#introduction",
-    "href": "posts/llms-and-data-pt1/index.html#introduction",
-    "title": "Three approaches",
-    "section": "",
-    "text": "The thought of using natural language to transform and analyze data is appealing. This post assumes familiarity with Marvin and Ibis – read the previous post in the series for a quick overview."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt1/index.html#approaches",
-    "href": "posts/llms-and-data-pt1/index.html#approaches",
-    "title": "Three approaches",
-    "section": "Approaches",
-    "text": "Approaches\nWhen discussed at Voltron Data, we identified three distinct approaches to applying LLMs to data analytics that can be implemented today:\n\nLLM writes an analytic code\nLLM writes an analytic subroutine\nUse LLM in an analytic subroutine\n\nWhile these three approaches are not an exhaustive list of how LLMs can be applied to data, they can be easily understood and implemented with Ibis and Marvin in a few lines of code. Together with these two open-source tools, we can build a natural language interface for data analytics that supports 18+ backends.\nBut first, let’s demonstrate the three approaches.\n\nApproach 1: LLM writes analytic code\nState of the art (SoTA) LLMs are decent at generating SQL out of the box. We can be clever to handle errors, retries, and more, but in its simplest form:\n\n\nCode\n1import ibis\nimport marvin\n\nfrom rich import print\nfrom time import sleep\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis and Marvin\n\n\n\n\n\n1@marvin.ai_fn\ndef _generate_sql_select(\n    text: str, table_name: str, table_schema: Schema\n) -&gt; str:\n    \"\"\"Generate SQL SELECT from text.\"\"\"\n\n\n2def sql_from_text(text: str, t: Table) -&gt; Table:\n    \"\"\"Run SQL from text.\"\"\"\n    return t.sql(_generate_sql_select(text, t.get_name(), t.schema()).strip(\";\"))\n\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\n\n\n\nt2 = sql_from_text(\"the unique combination of species and islands\", t)\nt2\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┓\n┃ species   ┃ island    ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━┩\n│ string    │ string    │\n├───────────┼───────────┤\n│ Adelie    │ Torgersen │\n│ Adelie    │ Biscoe    │\n│ Adelie    │ Dream     │\n│ Gentoo    │ Biscoe    │\n│ Chinstrap │ Dream     │\n└───────────┴───────────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt3 = sql_from_text(\n    \"the unique combination of species and islands, with their counts, ordered from highest to lowest, and name that column just 'count'\",\n    t,\n)\nt3\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩\n│ string    │ string    │ int64 │\n├───────────┼───────────┼───────┤\n│ Gentoo    │ Biscoe    │   124 │\n│ Chinstrap │ Dream     │    68 │\n│ Adelie    │ Dream     │    56 │\n│ Adelie    │ Torgersen │    52 │\n│ Adelie    │ Biscoe    │    44 │\n└───────────┴───────────┴───────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\nThis works well-enough for simple cases and can be expanded to handle complex ones. In many scenarios, it may be easier to express a query in English or another language than to write it in SQL, especially if working across multiple SQL dialects.\nSQL isn’t standard, with many dialects across data platforms. Ibis works around this by providing a standard Python API for analytic code but must make compromises to support many data platforms, often via SQL in their native dialect. Substrait is a newer project that aims to solve this problem by providing a standard, portable, and extensible intermediary representation (IR) for data transformation code that Ibis and data platforms could all standardize on. Substrait is still in the early stages of development, but it’s worth keeping an eye on and will be adopted in Ibis once supported across many data platforms.\nFor now, we’ll focus on generating SQL and Python analytical code with LLMs.\n\n\nApproach 2: LLM writes an analytical subroutine\nIf more complex logic needs to be expressed, SoTA LLMs are also decent at writing Python and a number of other programming languages that are used in analytical subroutines. Many data platforms support user-defined functions (UDFs) in Python or some other language. We’ll stick to scalar Python UDFs via DuckDB to demonstrate the concept:\n\n1@marvin.ai_fn\ndef _generate_python_function(text: str) -&gt; str:\n    \"\"\"Generate a simple, typed, correct Python function from text.\"\"\"\n\n\n2def create_udf_from_text(text: str) -&gt; str:\n    \"\"\"Create a UDF from text.\"\"\"\n    return f\"\"\"\nimport ibis\n\n@ibis.udf.scalar.python\n{_generate_python_function(text)}\n\"\"\".strip()\n\n\n1\n\nA non-deterministic, LLM-powered AI function.\n\n2\n\nA deterministic, human-authored function that calls the AI function.\n\n\n\n\n\nudf = create_udf_from_text(\n    \"a function named count_vowels that given an input string, returns an int w/ the number of vowels (y_included as a boolean option defaulted to False)\"\n)\nprint(udf)\nexec(udf)\n\nimport ibis\n\n@ibis.udf.scalar.python\ndef count_vowels(input_string: str, y_included: bool = False) -&gt; int:\n    \"\"\"Given an input string, it returns the number of vowels. y can be included as a vowel.\"\"\"\n    vowels = 'aeiou'\n    if y_included:\n        vowels += 'y'\n    return sum(1 for char in input_string if char in vowels)\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt4 = t3.mutate(\n    species_vowel_count=count_vowels(t3.species),\n    island_vowel_count=count_vowels(t3.island),\n)\nt4\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃ species_vowel_count ┃ island_vowel_count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━┩\n│ string    │ string    │ int64 │ int64               │ int64              │\n├───────────┼───────────┼───────┼─────────────────────┼────────────────────┤\n│ Gentoo    │ Biscoe    │   124 │                   3 │                  3 │\n│ Chinstrap │ Dream     │    68 │                   2 │                  2 │\n│ Adelie    │ Dream     │    56 │                   3 │                  2 │\n│ Adelie    │ Torgersen │    52 │                   3 │                  3 │\n│ Adelie    │ Biscoe    │    44 │                   3 │                  3 │\n└───────────┴───────────┴───────┴─────────────────────┴────────────────────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\nIn this case, there’s no reason not to have a human in the loop reviewing the output code and committing it for production use. This could be useful for quick prototyping or, given a box of tools in the form of UDFs, working through a natural language interface.\n\n\nApproach 3: Use LLM in an analytical subroutine\nWe can also call the LLM once-per-row in the table via a subroutine. For variety, we’ll use an AI model instead of an AI function:\n\n1from pydantic import BaseModel, Field\n\n# decrease cost\n2marvin.settings.llm_model = \"openai/gpt-3.5-turbo-16k\"\n\n\n3@marvin.ai_model\nclass VowelCounter(BaseModel):\n    \"\"\"Count vowels in a string.\"\"\"\n\n    include_y: bool = Field(False, description=\"Include 'y' as a vowel.\")\n    # num_a: int = Field(..., description=\"The number of 'a' vowels.\")\n    # num_e: int = Field(..., description=\"The number of 'e' vowels.\")\n    # num_i: int = Field(..., description=\"The number of 'i' vowels.\")\n    # num_o: int = Field(..., description=\"The number of 'o' vowels.\")\n    # num_u: int = Field(..., description=\"The number of 'u' vowels.\")\n    # num_y: int = Field(..., description=\"The number of 'y' vowels.\")\n    num_total: int = Field(..., description=\"The total number of vowels.\")\n\n\n4VowelCounter(\"hello world\")\n\n\n1\n\nAdditional imports for Pydantic.\n\n2\n\nConfigure Marvin to use a cheaper model.\n\n3\n\nA non-deterministic, LLM-powered AI model.\n\n4\n\nCall the AI model on some text.\n\n\n\n\nVowelCounter(include_y=False, num_total=3)\n\n\nThen we’ll have the LLM write the UDF that calls the LLM, just to be fancy:\n\nudf = create_udf_from_text(\n    \"a function named count_vowels_ai that given an input string, calls VowelCounter on it and returns the num_total attribute of that result\"\n)\nprint(udf)\nexec(udf)\n\nimport ibis\n\n@ibis.udf.scalar.python\ndef count_vowels_ai(input_string: str) -&gt; int:\n    result = VowelCounter(input_string)\n    return result.num_total\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt5 = t3.mutate(\n    species_vowel_count=count_vowels_ai(t3.species),\n    island_vowel_count=count_vowels_ai(t3.island),\n)\nt5\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃ species_vowel_count ┃ island_vowel_count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━┩\n│ string    │ string    │ int64 │ int64               │ int64              │\n├───────────┼───────────┼───────┼─────────────────────┼────────────────────┤\n│ Gentoo    │ Biscoe    │   124 │                   3 │                  3 │\n│ Chinstrap │ Dream     │    68 │                   2 │                  1 │\n│ Adelie    │ Dream     │    56 │                   3 │                  2 │\n│ Adelie    │ Torgersen │    52 │                   3 │                  3 │\n│ Adelie    │ Biscoe    │    44 │                   3 │                  3 │\n└───────────┴───────────┴───────┴─────────────────────┴────────────────────┘\n\n\n\nNotice that in this UDF, unlike in the previous example, a LLM is being called (possibly several times) for each row in the table. This is a very expensive operation and we’ll need to be careful about how we use it in practice.\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt1/index.html#summary",
-    "href": "posts/llms-and-data-pt1/index.html#summary",
-    "title": "Three approaches",
-    "section": "Summary",
-    "text": "Summary\nTo summarize this post:\n\nfrom rich import print\n\nwith open(\"index.qmd\", \"r\") as f:\n    self_text = f.read()\n\n# increease accuracy\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n@marvin.ai_model\nclass Summary(BaseModel):\n    \"\"\"Summary of text.\"\"\"\n\n    summary_line: str = Field(..., description=\"The one-line summary of the text.\")\n    summary_paragraph: str = Field(\n        ..., description=\"The one-paragraph summary of the text.\"\n    )\n    conclusion: str = Field(\n        ..., description=\"The conclusion the reader should draw from the text.\"\n    )\n    key_points: list[str] = Field(..., description=\"The key points of the text.\")\n    critiques: list[str] = Field(\n        ..., description=\"Professional, fair critiques of the text.\"\n    )\n    suggested_improvements: list[str] = Field(\n        ..., description=\"Suggested improvements for the text.\"\n    )\n    sentiment: float = Field(..., description=\"The sentiment of the text.\")\n    sentiment_label: str = Field(..., description=\"The sentiment label of the text.\")\n    author_bias: str = Field(..., description=\"The author bias of the text.\")\n\n\nprint(Summary(self_text))\n\nSummary(\n    summary_line=\"The blog post titled 'Three approaches' by Cody Peterson, dated 2023-10-13, discusses three \ndistinct approaches to applying Language Learning Models (LLMs) to data analytics using open-source tools Ibis and \nMarvin.\",\n    summary_paragraph='The author explains three approaches to applying LLMs to data analytics. The first approach \nis letting the LLM write an analytic code, specifically generating SQL. The second approach involves letting LLM \nwrite an analytic subroutine, demonstrated by writing Python code for user-defined functions. The third approach \nuses LLM in an analytic subroutine, illustrated by calling the LLM once-per-row in a table via a subroutine. Each \nmethod has potential applications and limitations, and the choice of approach will depend on the specific \nrequirements of the data analytics task.',\n    conclusion='LLMs can be used to transform and analyze data in various ways. By using these approaches in \ncombination with open-source tools like Ibis and Marvin, it is possible to build a natural language interface for \ndata analytics that supports multiple backends. The author concludes by introducing an open-source data & AI \nproject for building next-generation natural language interfaces to data, Ibis Birdbrain.',\n    key_points=[\n        'The LLM can write an analytic code, particularly generating SQL.',\n        'The LLM can also write an analytic subroutine, exemplified by writing Python code for user-defined \nfunctions.',\n        'The LLM can be used in an analytic subroutine, shown by calling the LLM once-per-row in a table via a \nsubroutine.',\n        'The author suggests that each approach has its potential applications and limitations.',\n        'The choice of approach will depend on the specific requirements of the data analytics task.'\n    ],\n    critiques=[\n        'The author could have provided more concrete examples or case studies to illustrate the application of \nthese approaches.',\n        'A comparison of the advantages and disadvantages of each approach would have been helpful.'\n    ],\n    suggested_improvements=[\n        'The author could include real-world applications or examples of each approach.',\n        'A detailed comparison of the pros and cons of each approach would provide better guidance for readers.'\n    ],\n    sentiment=0.25,\n    sentiment_label='Neutral',\n    author_bias='The author shows a positive bias towards the use of open-source tools, Ibis and Marvin, for data \nanalytics.'\n)"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt1/index.html#next-steps",
-    "href": "posts/llms-and-data-pt1/index.html#next-steps",
-    "title": "Three approaches",
-    "section": "Next steps",
-    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt3/index.html",
-    "href": "posts/llms-and-data-pt3/index.html",
-    "title": "Composable data + AI systems",
-    "section": "",
-    "text": "When writing (data and AI) code, it’s important to use the right abstraction for your job to be done. A modular and composable data and AI system is easier than ever with the new generation of LLM-powered tools, but lacks a standard, modular, interoperable, customizable, and extensible framework. Can Ibis Birdbrain be that standard?"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt3/index.html#introduction",
-    "href": "posts/llms-and-data-pt3/index.html#introduction",
-    "title": "Composable data + AI systems",
-    "section": "",
-    "text": "When writing (data and AI) code, it’s important to use the right abstraction for your job to be done. A modular and composable data and AI system is easier than ever with the new generation of LLM-powered tools, but lacks a standard, modular, interoperable, customizable, and extensible framework. Can Ibis Birdbrain be that standard?"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt3/index.html#standards",
-    "href": "posts/llms-and-data-pt3/index.html#standards",
-    "title": "Composable data + AI systems",
-    "section": "Standards",
-    "text": "Standards\n\n\nWhen things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex\n\nThe standard that has emerged from the recent LLM applications is the power of a conversation in interacting with a computer. If we can give that interaction tht ability to interact with data platforms, we can achieve a lot through natural language."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt3/index.html#composable-data-and-ai-systems-are-mice",
-    "href": "posts/llms-and-data-pt3/index.html#composable-data-and-ai-systems-are-mice",
-    "title": "Composable data + AI systems",
-    "section": "Composable data (and AI) systems are MICE",
-    "text": "Composable data (and AI) systems are MICE\nComposable data systems are MICE: modular, interoperable, customizable, and extensible.\nWith any new tech, there’s a lot of duplication of effort and reinvention of wheels. Ibis Birdbrain aims to be an open-source standard for building data and AI systems in Python that adheres to MICE best practices and works with any data and AI platform. It achieves this by building on top of Ibis and Marvin, handling calls to the data and AI platforms respectively. Ibis and Marvin are themselves built on many other open-source projects, but provide the right level of abstraction for building composable data and AI systems, independently. Ibis Birdbrain glues them together enables a natural language interface that’s interoperable between 18+ data platforms and any AI platform Marvin supports.\nglue that enables working via natural language with any data platform Ibis supports and any AI platform Marvin supports.\n\n\n\n\n\n\nImportant\n\n\n\nIbis Birdbrain is very early in development and looking for community input and contributors. We believe it’s important for there to be a standard, and I can see Ibis Birdbrain going in several directions:\n\nA useful template for building a language user interface with data tools\nA standard for building data and AI systems with MICE components\n\nIf you’re interested in either of these directions, please get involved with the project!\nIbis Birdbrain is under Ibis project governance."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt3/index.html#looking-ahead",
-    "href": "posts/llms-and-data-pt3/index.html#looking-ahead",
-    "title": "Composable data + AI systems",
-    "section": "Looking ahead",
-    "text": "Looking ahead\nI am not a software engineer, I just saw a cool application of Ibis and Marvin. The objective of releasing Ibis Birdbrain as an open-source project under Ibis governance is to enable the community to build a standard for composable data and AI systems. My hope is for the Ibis, Marvin, and broader data/AI Python communities to build the standard in the open, and properietary applications on top of those standards. This is important for a composable data ecosystem that can be modular, interoperable, customizable, and extensible."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt3/index.html#how-is-ibis-birdbrain-mice-now-whats-next",
-    "href": "posts/llms-and-data-pt3/index.html#how-is-ibis-birdbrain-mice-now-whats-next",
-    "title": "Composable data + AI systems",
-    "section": "How is Ibis Birdbrain MICE now? What’s next?",
-    "text": "How is Ibis Birdbrain MICE now? What’s next?"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt3/index.html#next-steps",
-    "href": "posts/llms-and-data-pt3/index.html#next-steps",
-    "title": "Composable data + AI systems",
-    "section": "Next steps",
-    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series, building Ibis Birdbrain."
-  },
-  {
-    "objectID": "demo.html",
-    "href": "demo.html",
-    "title": "demo",
-    "section": "",
-    "text": "Back to top"
-  },
-  {
     "objectID": "contribute/contributing.html",
     "href": "contribute/contributing.html",
     "title": "Contributing",
@@ -223,6 +290,56 @@
     "crumbs": [
       "Contribute",
       "Contributing"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html",
+    "href": "tutorials/cli.html",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "Install Ibis Birdbrain\n\n\n\n\nWith Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯\n\n\n\nYou can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:\n\n\n\nLearn how to work with Ibis Birdbrain in Python.",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#prerequisites",
+    "href": "tutorials/cli.html#prerequisites",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "Install Ibis Birdbrain",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#overview",
+    "href": "tutorials/cli.html#overview",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "With Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#starting-an-interactive-python-session",
+    "href": "tutorials/cli.html#starting-an-interactive-python-session",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "You can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:",
+    "crumbs": [
+      "Tutorial: CLI"
+    ]
+  },
+  {
+    "objectID": "tutorials/cli.html#next-steps",
+    "href": "tutorials/cli.html#next-steps",
+    "title": "Tutorial: CLI",
+    "section": "",
+    "text": "Learn how to work with Ibis Birdbrain in Python.",
+    "crumbs": [
+      "Tutorial: CLI"
     ]
   },
   {
@@ -306,156 +423,6 @@
     ]
   },
   {
-    "objectID": "concepts/user-interfaces.html",
-    "href": "concepts/user-interfaces.html",
-    "title": "User interfaces",
-    "section": "",
-    "text": "A user interface (UI) in our context is the mechanism by which a human interacts with software.\n\n\nA command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.\n\n\n\nPython can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.\n\n\n\nIbis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis LUI paradigm is highly experimental and should be put in production (automated) with caution.",
-    "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/user-interfaces.html#command-line-interface",
-    "href": "concepts/user-interfaces.html#command-line-interface",
-    "title": "User interfaces",
-    "section": "",
-    "text": "A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).\nCLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.",
-    "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/user-interfaces.html#python",
-    "href": "concepts/user-interfaces.html#python",
-    "title": "User interfaces",
-    "section": "",
-    "text": "Python can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.",
-    "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/user-interfaces.html#language-user-interface",
-    "href": "concepts/user-interfaces.html#language-user-interface",
-    "title": "User interfaces",
-    "section": "",
-    "text": "Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.\n\n\n\n\n\n\nWarning\n\n\n\nThis LUI paradigm is highly experimental and should be put in production (automated) with caution.",
-    "crumbs": [
-      "User interfaces"
-    ]
-  },
-  {
-    "objectID": "concepts/platforms.html",
-    "href": "concepts/platforms.html",
-    "title": "Data and AI platforms",
-    "section": "",
-    "text": "Data and AI platforms are…",
-    "crumbs": [
-      "Data and AI platforms"
-    ]
-  },
-  {
-    "objectID": "why.html",
-    "href": "why.html",
-    "title": "Why Ibis Birdbrain?",
-    "section": "",
-    "text": "Ibis is the portable Python dataframe library.\nIbis Birdbrain is the portable Python AI-powered data bot, built on Ibis with support for all data platforms Ibis’s 18+ backends support. Ibis Birdbrain is also built on Marvin with support for all AI platforms Marvin supports.\n\n\n\n\nWhen things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex\n\n\n\n\nComposable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
-    "crumbs": [
-      "Why Ibis Birdbrain?"
-    ]
-  },
-  {
-    "objectID": "why.html#standards",
-    "href": "why.html#standards",
-    "title": "Why Ibis Birdbrain?",
-    "section": "",
-    "text": "When things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex",
-    "crumbs": [
-      "Why Ibis Birdbrain?"
-    ]
-  },
-  {
-    "objectID": "why.html#composable-data-systems-are-mice",
-    "href": "why.html#composable-data-systems-are-mice",
-    "title": "Why Ibis Birdbrain?",
-    "section": "",
-    "text": "Composable data systems are MICE: modular, interoperable, customizable, and extensible.\nIbis Birdbrain aims to bring these values to a data + AI framework that makes working with LLMs delightful and easy, for individual hobbiests or the more advanced technology organizations.",
-    "crumbs": [
-      "Why Ibis Birdbrain?"
-    ]
-  },
-  {
-    "objectID": "concepts/ops.html",
-    "href": "concepts/ops.html",
-    "title": "LLMOps, MLOps, DevOps",
-    "section": "",
-    "text": "The ML landscape is plagued by “the toy problem” – building something cool is easy, putting something in production is hard.",
-    "crumbs": [
-      "LLMOps, MLOps, DevOps"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html",
-    "href": "concepts/llms.html",
-    "title": "Large language models",
-    "section": "",
-    "text": "Large language models (LLMs) represent decades of research and development of neural networks. While relatively impressive LLMs have been around for years, recent innovations have made it possible to create instruction-following, conversational bots that can perform tasks on behalf of the user.\nWe are primarily concerned with applying LLMs to data, but we’ll take a brief look at how they work and why we should use them.\n\n\nAn artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.\n\n\n\nA large language model is a neural network trained on vast amounts of text data.\n\n\n\nA LLM takes text as input and produces text as output.\n\n\n\nText in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.\n\n\n\nSome limitations include:\n\ncost\nlatency\naccuracy\n…",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-is-an-artificial-neural-network",
-    "href": "concepts/llms.html#what-is-an-artificial-neural-network",
-    "title": "Large language models",
-    "section": "",
-    "text": "An artificial neural network (ANN or often just NN) is a computational model that is loosely inspired by the biological neural networks in the brain. It is a collection of connected nodes, called neurons, that are organized into layers. Each neuron is connected to other neurons in the network, and each connection has a weight associated with it. The weights are adjusted during training to improve the model’s performance.\nAn instance of a neural network (and many other ML architectures) is called a model. A model has usually been trained on data to learn to represent a system. While they are amny machine learning model architectures and training algorithms, the fundamental innovation of (large/deep) neural networks is the ability to represent an arbitrary system.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-is-a-large-language-model",
-    "href": "concepts/llms.html#what-is-a-large-language-model",
-    "title": "Large language models",
-    "section": "",
-    "text": "A large language model is a neural network trained on vast amounts of text data.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-are-the-inputs-and-outputs",
-    "href": "concepts/llms.html#what-are-the-inputs-and-outputs",
-    "title": "Large language models",
-    "section": "",
-    "text": "A LLM takes text as input and produces text as output.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-do-llms-work-well-for",
-    "href": "concepts/llms.html#what-do-llms-work-well-for",
-    "title": "Large language models",
-    "section": "",
-    "text": "Text in, text out. Neural networks and LLMs by design are non-determinstic. Though there are many tricks and workarounds, relying on LLMs for determinstic behavior is a bad idea. Instead, LLMs are great for:\n\ntext-based ML tasks (like classification, clustering)\ntext-based entity extraction (named entity regognition)\ntext-based generation (like summarization, translation, and question answering)\nother text-based tasks\n\nLLMs today are decent, but flawed, at generating programming code (as text). We can again use clever tricks and program around the non-determinstic behavior (such as running code, checking for any errors, and making one or more attempts via LLM to the errors). Fundamentally, keep in mind that an input to LLM is always text and an output is always text.",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
-    "objectID": "concepts/llms.html#what-are-the-limitations-and-considerations",
-    "href": "concepts/llms.html#what-are-the-limitations-and-considerations",
-    "title": "Large language models",
-    "section": "",
-    "text": "Some limitations include:\n\ncost\nlatency\naccuracy\n…",
-    "crumbs": [
-      "Large language models"
-    ]
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Ibis Birdbrain",
@@ -463,72 +430,116 @@
     "text": "Why Ibis Birdbrain?\n  \n  \n    \n     Installation\n  \n  \n    \n     Tutorial: getting started\n  \n  \n    \n     GitHub\n  \n  \n    \n     Chat\n  \n  \n    \n     RSS\n  \n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nIbis Birdbrain is highly experimental and currently under construction by slow humans. Please check back soon!\n\n\n\n\n\n\n Back to top"
   },
   {
-    "objectID": "tutorials/cli.html",
-    "href": "tutorials/cli.html",
-    "title": "Tutorial: CLI",
+    "objectID": "posts/llms-and-data-pt3/index.html",
+    "href": "posts/llms-and-data-pt3/index.html",
+    "title": "Composable data + AI systems",
     "section": "",
-    "text": "Install Ibis Birdbrain\n\n\n\n\nWith Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯\n\n\n\nYou can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:\n\n\n\nLearn how to work with Ibis Birdbrain in Python.",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
+    "text": "When writing (data and AI) code, it’s important to use the right abstraction for your job to be done. A modular and composable data and AI system is easier than ever with the new generation of LLM-powered tools, but lacks a standard, modular, interoperable, customizable, and extensible framework. Can Ibis Birdbrain be that standard?"
   },
   {
-    "objectID": "tutorials/cli.html#prerequisites",
-    "href": "tutorials/cli.html#prerequisites",
-    "title": "Tutorial: CLI",
+    "objectID": "posts/llms-and-data-pt3/index.html#introduction",
+    "href": "posts/llms-and-data-pt3/index.html#introduction",
+    "title": "Composable data + AI systems",
     "section": "",
-    "text": "Install Ibis Birdbrain",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
+    "text": "When writing (data and AI) code, it’s important to use the right abstraction for your job to be done. A modular and composable data and AI system is easier than ever with the new generation of LLM-powered tools, but lacks a standard, modular, interoperable, customizable, and extensible framework. Can Ibis Birdbrain be that standard?"
   },
   {
-    "objectID": "tutorials/cli.html#overview",
-    "href": "tutorials/cli.html#overview",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "With Ibis Birdbrain installed, you can use the birdbrain command-line interface (CLI):\n$ birdbrain\n Usage: birdbrain [OPTIONS] COMMAND [ARGS]...\n\n╭─ Options ──────────────────────────────────────────────────────────────────────╮\n│ --version                     Show version.                                    │\n│ --install-completion          Install completion for the current shell.        │\n│ --show-completion             Show completion for the current shell, to copy   │\n│                               it or customize the installation.                │\n│ --help                        Show this message and exit.                      │\n╰────────────────────────────────────────────────────────────────────────────────╯\n╭─ Commands ─────────────────────────────────────────────────────────────────────╮\n│ ipy                                     ipy                                     │\n│ test                                    test                                   │\n╰────────────────────────────────────────────────────────────────────────────────╯",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
+    "objectID": "posts/llms-and-data-pt3/index.html#standards",
+    "href": "posts/llms-and-data-pt3/index.html#standards",
+    "title": "Composable data + AI systems",
+    "section": "Standards",
+    "text": "Standards\n\n\nWhen things don’t work as they should, it often means that standards are absent.\n- The International Organization for Standardization (ISO)\n\n- The Composable Codex\n\nThe standard that has emerged from the recent LLM applications is the power of a conversation in interacting with a computer. If we can give that interaction tht ability to interact with data platforms, we can achieve a lot through natural language."
   },
   {
-    "objectID": "tutorials/cli.html#starting-an-interactive-python-session",
-    "href": "tutorials/cli.html#starting-an-interactive-python-session",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "You can use the ipy subcommand to start an interactive Python session with Ibis Birdbrain ready to use:\n$ birdbrain ipy\naccess to: birdbrain\nmodel: azure_openai/gpt-4-32k\nPython 3.11.5 (main, Sep 14 2023, 13:17:51) [Clang 14.0.3 (clang-1403.0.22.14.1)]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.16.0 -- An enhanced Interactive Python. Type '?' for help.\n\n[ins] In [1]: birdbrain\nOut[1]: &lt;Bot: birdbrain&gt;\n\n[ins] In [2]:",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
+    "objectID": "posts/llms-and-data-pt3/index.html#composable-data-and-ai-systems-are-mice",
+    "href": "posts/llms-and-data-pt3/index.html#composable-data-and-ai-systems-are-mice",
+    "title": "Composable data + AI systems",
+    "section": "Composable data (and AI) systems are MICE",
+    "text": "Composable data (and AI) systems are MICE\nComposable data systems are MICE: modular, interoperable, customizable, and extensible.\nWith any new tech, there’s a lot of duplication of effort and reinvention of wheels. Ibis Birdbrain aims to be an open-source standard for building data and AI systems in Python that adheres to MICE best practices and works with any data and AI platform. It achieves this by building on top of Ibis and Marvin, handling calls to the data and AI platforms respectively. Ibis and Marvin are themselves built on many other open-source projects, but provide the right level of abstraction for building composable data and AI systems, independently. Ibis Birdbrain glues them together enables a natural language interface that’s interoperable between 18+ data platforms and any AI platform Marvin supports.\nglue that enables working via natural language with any data platform Ibis supports and any AI platform Marvin supports.\n\n\n\n\n\n\nImportant\n\n\n\nIbis Birdbrain is very early in development and looking for community input and contributors. We believe it’s important for there to be a standard, and I can see Ibis Birdbrain going in several directions:\n\nA useful template for building a language user interface with data tools\nA standard for building data and AI systems with MICE components\n\nIf you’re interested in either of these directions, please get involved with the project!\nIbis Birdbrain is under Ibis project governance."
   },
   {
-    "objectID": "tutorials/cli.html#next-steps",
-    "href": "tutorials/cli.html#next-steps",
-    "title": "Tutorial: CLI",
-    "section": "",
-    "text": "Learn how to work with Ibis Birdbrain in Python.",
-    "crumbs": [
-      "Tutorial: CLI"
-    ]
+    "objectID": "posts/llms-and-data-pt3/index.html#looking-ahead",
+    "href": "posts/llms-and-data-pt3/index.html#looking-ahead",
+    "title": "Composable data + AI systems",
+    "section": "Looking ahead",
+    "text": "Looking ahead\nI am not a software engineer, I just saw a cool application of Ibis and Marvin. The objective of releasing Ibis Birdbrain as an open-source project under Ibis governance is to enable the community to build a standard for composable data and AI systems. My hope is for the Ibis, Marvin, and broader data/AI Python communities to build the standard in the open, and properietary applications on top of those standards. This is important for a composable data ecosystem that can be modular, interoperable, customizable, and extensible."
   },
   {
-    "objectID": "how-to/input-output/basics.html",
-    "href": "how-to/input-output/basics.html",
-    "title": "Basic input/output",
-    "section": "",
-    "text": "You can…",
-    "crumbs": [
-      "Input Output",
-      "Basic input/output"
-    ]
+    "objectID": "posts/llms-and-data-pt3/index.html#how-is-ibis-birdbrain-mice-now-whats-next",
+    "href": "posts/llms-and-data-pt3/index.html#how-is-ibis-birdbrain-mice-now-whats-next",
+    "title": "Composable data + AI systems",
+    "section": "How is Ibis Birdbrain MICE now? What’s next?",
+    "text": "How is Ibis Birdbrain MICE now? What’s next?"
   },
   {
-    "objectID": "posts.html",
-    "href": "posts.html",
-    "title": "Posts",
+    "objectID": "posts/llms-and-data-pt3/index.html#next-steps",
+    "href": "posts/llms-and-data-pt3/index.html#next-steps",
+    "title": "Composable data + AI systems",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series, building Ibis Birdbrain."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html",
+    "href": "posts/llms-and-data-pt4/index.html",
+    "title": "Auxiliary tools",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nAuxiliary tools\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 16, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nComposable data + AI systems\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 15, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nComputations and control flow: it’s just programming\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 14, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nThree approaches\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 13, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAn introduction to Marvin and Ibis\n\n\n\nLLMs and data\n\n\n\n\n\n\n\nCody Peterson\n\n\nOct 12, 2023\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "As a product manager, I don’t spend most of my time managing products. I suspect most data developers (analysts, engineers, scientists, etc.) don’t spend most of their time writing data code. There are many auxiliary tasks that are required in doing many technical jobs. These include:\n\nsearching the Internet for information\nreading, summarizing, and synthesizing information\nperforming boring computer tasks\ntranslating between different languages (e.g. SQL and Python; English and Spanish)\ncopying and modifying existing code\nquerying some basic informatin from data platforms\n\nWhat if we could, through natural language, have a bot perform many of these tasks (in addition to basic data analysis) on our behalf?"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#introduction",
+    "href": "posts/llms-and-data-pt4/index.html#introduction",
+    "title": "Auxiliary tools",
+    "section": "",
+    "text": "As a product manager, I don’t spend most of my time managing products. I suspect most data developers (analysts, engineers, scientists, etc.) don’t spend most of their time writing data code. There are many auxiliary tasks that are required in doing many technical jobs. These include:\n\nsearching the Internet for information\nreading, summarizing, and synthesizing information\nperforming boring computer tasks\ntranslating between different languages (e.g. SQL and Python; English and Spanish)\ncopying and modifying existing code\nquerying some basic informatin from data platforms\n\nWhat if we could, through natural language, have a bot perform many of these tasks (in addition to basic data analysis) on our behalf?"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#were-using-python-lets-use-python",
+    "href": "posts/llms-and-data-pt4/index.html#were-using-python-lets-use-python",
+    "title": "Auxiliary tools",
+    "section": "We’re using Python, let’s use Python",
+    "text": "We’re using Python, let’s use Python\nWe’re already using Python for Ibis and Marvin. Let’s use it for auxillary tools. We’ll setup our data and AI platform connections and some simple example data to work with.\n\n\nCode\n1import ibis\nimport marvin\n\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nSetup the demo datain an Ibis backend.\n\n\n\n\n\n1import ibis\nimport marvin\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n2ibis.options.interactive = True\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis and Marvin.\n\n2\n\nConfigure Ibis (interactive) and Marvin (GPT-4).\n\n3\n\nConnect to the data and load a table into a variable."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#filesystem-tools",
+    "href": "posts/llms-and-data-pt4/index.html#filesystem-tools",
+    "title": "Auxiliary tools",
+    "section": "Filesystem tools",
+    "text": "Filesystem tools"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#internet-tools",
+    "href": "posts/llms-and-data-pt4/index.html#internet-tools",
+    "title": "Auxiliary tools",
+    "section": "Internet tools",
+    "text": "Internet tools"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#ai-powered-tools",
+    "href": "posts/llms-and-data-pt4/index.html#ai-powered-tools",
+    "title": "Auxiliary tools",
+    "section": "AI-powered tools",
+    "text": "AI-powered tools"
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#introducing-ibis-birdbrain",
+    "href": "posts/llms-and-data-pt4/index.html#introducing-ibis-birdbrain",
+    "title": "Auxiliary tools",
+    "section": "Introducing Ibis Birdbrain",
+    "text": "Introducing Ibis Birdbrain\nIntroduce the bot. Need to overview the tools here I think, but should probably skip most details."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#a-comparison-with-mlops",
+    "href": "posts/llms-and-data-pt4/index.html#a-comparison-with-mlops",
+    "title": "Auxiliary tools",
+    "section": "A comparison with MLOps",
+    "text": "A comparison with MLOps\nTODO: point on how most of the work is not ML\nBefore “MLOps” was a standard term, the Sculley et al paper from 2015 described the key issues with building real-world ML systems.\n\n\n\nFigure 1: Only a small fraction of real-world ML systems is composed of the ML code, as shown by the small black box in the middle. The required surround infrastructure is vast and complex.\n\n\nYou can substitute “LLM” for “ML” in the above figure.\n\nThe “toy problem” problem\nML and LLMs are cool! They’re fun to play with and it’s easy to get distracted with fun applications. Often, ML is learned through solving toy problems, and …\n\n\nThe application landscape is vast\n…and thus requires modular, interoperable, customizable, and extensible tools. TODO: more comparison to MLOps."
+  },
+  {
+    "objectID": "posts/llms-and-data-pt4/index.html#next-steps",
+    "href": "posts/llms-and-data-pt4/index.html#next-steps",
+    "title": "Auxiliary tools",
+    "section": "Next steps",
+    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data."
   },
   {
     "objectID": "posts/llms-and-data-pt2/index.html",
@@ -587,52 +598,41 @@
     "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series."
   },
   {
-    "objectID": "posts/llms-and-data-pt0/index.html",
-    "href": "posts/llms-and-data-pt0/index.html",
-    "title": "An introduction to Marvin and Ibis",
+    "objectID": "demo.html",
+    "href": "demo.html",
+    "title": "demo",
     "section": "",
-    "text": "In this “LLMs and data” series, we’ll explore how to apply large-language models (LLMs) to data analytics. We’ll walk through the steps to build Ibis Birdbrain.\nThroughout the series, we’ll be using Marvin and Ibis. A brief introduction to each is provided below."
+    "text": "Back to top"
   },
   {
-    "objectID": "posts/llms-and-data-pt0/index.html#introduction",
-    "href": "posts/llms-and-data-pt0/index.html#introduction",
-    "title": "An introduction to Marvin and Ibis",
+    "objectID": "how-to/input-output/basics.html",
+    "href": "how-to/input-output/basics.html",
+    "title": "Basic input/output",
     "section": "",
-    "text": "In this “LLMs and data” series, we’ll explore how to apply large-language models (LLMs) to data analytics. We’ll walk through the steps to build Ibis Birdbrain.\nThroughout the series, we’ll be using Marvin and Ibis. A brief introduction to each is provided below."
+    "text": "You can…",
+    "crumbs": [
+      "Input Output",
+      "Basic input/output"
+    ]
   },
   {
-    "objectID": "posts/llms-and-data-pt0/index.html#marvin",
-    "href": "posts/llms-and-data-pt0/index.html#marvin",
-    "title": "An introduction to Marvin and Ibis",
-    "section": "Marvin",
-    "text": "Marvin\nMarvin is an AI engineering framework that makes it easy to build up to an interactive conversational application.\nMarvin makes calls to an AI platform. You typically use an API key set as an environment variable – in this case, we’ll load a .env file that contians secrets for the AI platform that Marvin will use. We also set the large language model model.\n\n1import marvin\n\nfrom rich import print\nfrom time import sleep\nfrom dotenv import load_dotenv\n\n2load_dotenv()\n\n# increase accuracy\n3marvin.settings.llm_model = \"openai/gpt-4\"\n# decrease cost\n# marvin.settings.llm_model = \"openai/gpt-3.5-turbo\"\n\n4test_str = \"working with data and LLMs on 18+ data platforms is easy!\"\ntest_str\n\n\n1\n\nImport the libraries we need.\n\n2\n\nLoad the environment variable to setup Marvin to call our OpenAI account.\n\n3\n\nConfigure the LLM model to use.\n\n4\n\nSome text to test on\n\n\n\n\n'working with data and LLMs on 18+ data platforms is easy!'\n\n\n\nFunctions\nAI functions are one of the building blocks in Marvin and allow yout to specify a typed python function with no code – only a docstring – to achieve a wide variety of tasks.\nWe’ll demonstrate this with an AI function that trnaslates text:\n\n@marvin.ai_fn\ndef translate(text: str, from_: str = \"English\", to: str = \"Spanish\") -&gt; str:\n    \"\"\"translates the text\"\"\"\n\ntranslate(test_str)\n\n'trabajar con datos y LLMs en más de 18 plataformas de datos es fácil!'\n\n\n\n\nCode\n1sleep(1)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\ntranslate(translate(test_str), from_=\"Spanish\", to=\"English\")\n\n'Working with data and LLMs on more than 18 data platforms is easy!'\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\n\nModels\nAI models are another building block for generating python classes from input text. It’s a great way to build structured data from unstructured data that can be customized for your needs.\nWe’ll demosntrate this with an AI model that translates text:\n\nfrom pydantic import BaseModel, Field\n\n# decrease cost\nmarvin.settings.llm_model = \"openai/gpt-3.5-turbo\"\n\n@marvin.ai_model\nclass ExtractParts(BaseModel):\n    \"\"\"Extracts parts of a sentence\"\"\"\n    subject: str = Field(..., description=\"The subject of the sentence.\")\n    objects: list[str] = Field(..., description=\"The objects of the sentence.\")\n    predicate: str = Field(..., description=\"The predicate of the sentence.\")\n    modifiers: list[str] = Field(..., description=\"The modifiers of the sentence.\")\n\nExtractParts(test_str)\n\nExtractParts(subject='working', objects=['data', 'LLMs'], predicate='is', modifiers=['on 18+ data platforms', 'easy'])\n\n\n\n\nCode\n1sleep(1)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\n\nClassifiers\nAI classifiers are another building block for generating python classes from input text. It’s the most efficient (time and cost) method for applying LLMs as it only results in a single output token, selecting an output in a specified Enum.\nWe’ll demonstrate this by classifying the language of some text:\n\nfrom enum import Enum\n\n# increase accuracy\nmarvin.settings.llm_model = \"openai/gpt-4\"\n\n@marvin.ai_classifier\nclass IdentifyLanguage(Enum):\n    \"\"\"Identifies the language of the text\"\"\"\n\n    english = \"English\"\n    spanish = \"Spanish\"\n\n\nIdentifyLanguage(test_str).value\n\n'English'\n\n\n\n\nCode\n1sleep(1)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nIdentifyLanguage(translate(test_str)).value\n\n'Spanish'\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting."
-  },
-  {
-    "objectID": "posts/llms-and-data-pt0/index.html#ibis",
-    "href": "posts/llms-and-data-pt0/index.html#ibis",
-    "title": "An introduction to Marvin and Ibis",
-    "section": "Ibis",
-    "text": "Ibis\nIbis is the portable Python dataframe library that enables Ibis Birdbrain to work on many data platforms at native scale.\nIbis makes calls to a data platform, providing an API but pushing the compute to (local or remote) query engines and storage. DuckDB is the default and we’ll typically use it for demo puroses. You can work with an in-memory instance, but we’ll often create a database file from example data:\n\n1import ibis\n\n2con = ibis.connect(\"duckdb://penguins.ddb\")\nt = ibis.examples.penguins.fetch()\nt = con.create_table(\"penguins\", t.to_pyarrow(), overwrite=True)\n\n\n1\n\nImport the libraries we need.\n\n2\n\nSetup the demo datain an Ibis backend.\n\n\n\n\nYou will typically connect to an existing data platform via your corresponding Ibis backend and have access to a number of tables:\n\n1import ibis\n\n2ibis.options.interactive = True\n\n3con = ibis.connect(\"duckdb://penguins.ddb\")\nt = con.table(\"penguins\")\n\n\n1\n\nImport Ibis.\n\n2\n\nConfigure Ibis (interactive).\n\n3\n\nConnect to the data and load a table into a variable.\n\n\n\n\n\nBackend\nA backend provides the connection and basic management of the data platform. Above, we created the con variable that is an instance of a DuckDB backend:\n\ncon\n\n&lt;ibis.backends.duckdb.Backend at 0x16a17af10&gt;\n\n\nIt usually contains some tables:\n\ncon.list_tables()\n\n['penguins']\n\n\nWe can access some internals of Ibis to see what backends are available:\n\n\n\n\n\n\nTip\n\n\n\nDon’t rely on accessing internals of Ibis in production.\n\n\n\nbackends = [entrypoint.name for entrypoint in ibis.util.backend_entry_points()]\nbackends\n\n['bigquery',\n 'clickhouse',\n 'dask',\n 'datafusion',\n 'druid',\n 'duckdb',\n 'flink',\n 'impala',\n 'mssql',\n 'mysql',\n 'oracle',\n 'pandas',\n 'polars',\n 'postgres',\n 'pyspark',\n 'snowflake',\n 'sqlite',\n 'trino']\n\n\n\n\nTable\nYou typically work with a table, conventionally named t for demo or exploratory purposes:\n\nt\n\n┏━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┓\n┃ species ┃ island    ┃ bill_length_mm ┃ bill_depth_mm ┃ flipper_length_mm ┃ body_mass_g ┃ sex    ┃ year  ┃\n┡━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━┩\n│ string  │ string    │ float64        │ float64       │ int64             │ int64       │ string │ int64 │\n├─────────┼───────────┼────────────────┼───────────────┼───────────────────┼─────────────┼────────┼───────┤\n│ Adelie  │ Torgersen │           39.1 │          18.7 │               181 │        3750 │ male   │  2007 │\n│ Adelie  │ Torgersen │           39.5 │          17.4 │               186 │        3800 │ female │  2007 │\n│ Adelie  │ Torgersen │           40.3 │          18.0 │               195 │        3250 │ female │  2007 │\n│ Adelie  │ Torgersen │            nan │           nan │              NULL │        NULL │ NULL   │  2007 │\n│ Adelie  │ Torgersen │           36.7 │          19.3 │               193 │        3450 │ female │  2007 │\n│ Adelie  │ Torgersen │           39.3 │          20.6 │               190 │        3650 │ male   │  2007 │\n│ Adelie  │ Torgersen │           38.9 │          17.8 │               181 │        3625 │ female │  2007 │\n│ Adelie  │ Torgersen │           39.2 │          19.6 │               195 │        4675 │ male   │  2007 │\n│ Adelie  │ Torgersen │           34.1 │          18.1 │               193 │        3475 │ NULL   │  2007 │\n│ Adelie  │ Torgersen │           42.0 │          20.2 │               190 │        4250 │ NULL   │  2007 │\n│ …       │ …         │              … │             … │                 … │           … │ …      │     … │\n└─────────┴───────────┴────────────────┴───────────────┴───────────────────┴─────────────┴────────┴───────┘\n\n\n\nWhen working with many tables, you should name them descriptively.\n\n\nSchema\nA table has a schema that Ibis maps to the data platform’s data types:\n\nt.schema()\n\nibis.Schema {\n  species            string\n  island             string\n  bill_length_mm     float64\n  bill_depth_mm      float64\n  flipper_length_mm  int64\n  body_mass_g        int64\n  sex                string\n  year               int64\n}"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt0/index.html#llms-and-data-marvin-and-ibis",
-    "href": "posts/llms-and-data-pt0/index.html#llms-and-data-marvin-and-ibis",
-    "title": "An introduction to Marvin and Ibis",
-    "section": "LLMs and data: Marvin and Ibis",
-    "text": "LLMs and data: Marvin and Ibis\nYou can use Marvin and Ibis together to easily apply LLMs to data.\n\nfrom ibis.expr.schema import Schema\nfrom ibis.expr.types.relations import Table\n\n@marvin.ai_fn\ndef sql_select(\n    text: str, table_name: str = t.get_name(), schema: Schema = t.schema()\n) -&gt; str:\n    \"\"\"writes the SQL SELECT statement to query the table according to the text\"\"\"\n\n\nquery = \"the unique combination of species and islands\"\nsql = sql_select(query).strip(\";\")\nsql\n\n'SELECT DISTINCT species, island FROM penguins'\n\n\n\nt.sql(sql)\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┓\n┃ species   ┃ island    ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━┩\n│ string    │ string    │\n├───────────┼───────────┤\n│ Adelie    │ Torgersen │\n│ Adelie    │ Biscoe    │\n│ Adelie    │ Dream     │\n│ Gentoo    │ Biscoe    │\n│ Chinstrap │ Dream     │\n└───────────┴───────────┘\n\n\n\n\n\nCode\n1sleep(3)\n\n\n\n1\n\nAvoid rate-limiting by waiting.\n\n\n\n\n\nt.sql(sql_select(query + \" and include their counts in from highest to lowest\").strip(\";\"))\n\n┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓\n┃ species   ┃ island    ┃ count ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩\n│ string    │ string    │ int64 │\n├───────────┼───────────┼───────┤\n│ Gentoo    │ Biscoe    │   124 │\n│ Chinstrap │ Dream     │    68 │\n│ Adelie    │ Dream     │    56 │\n│ Adelie    │ Torgersen │    52 │\n│ Adelie    │ Biscoe    │    44 │\n└───────────┴───────────┴───────┘"
-  },
-  {
-    "objectID": "posts/llms-and-data-pt0/index.html#next-steps",
-    "href": "posts/llms-and-data-pt0/index.html#next-steps",
-    "title": "An introduction to Marvin and Ibis",
-    "section": "Next steps",
-    "text": "Next steps\nYou can get involved with Ibis Birdbrain, our open-source data & AI project for building next-generation natural language interfaces to data.\nRead the next post in this series."
-  },
-  {
-    "objectID": "release_notes.html",
-    "href": "release_notes.html",
-    "title": "Release notes",
+    "objectID": "concepts/ops.html",
+    "href": "concepts/ops.html",
+    "title": "LLMOps, MLOps, DevOps",
     "section": "",
-    "text": "Release notes\nTBD\n\n\n\n\n Back to top"
+    "text": "The ML landscape is plagued by “the toy problem” – building something cool is easy, putting something in production is hard.",
+    "crumbs": [
+      "LLMOps, MLOps, DevOps"
+    ]
+  },
+  {
+    "objectID": "concepts/platforms.html",
+    "href": "concepts/platforms.html",
+    "title": "Data and AI platforms",
+    "section": "",
+    "text": "Data and AI platforms are…",
+    "crumbs": [
+      "Data and AI platforms"
+    ]
   }
 ]
