@@ -7,6 +7,7 @@ from ibis.expr.types.relations import Table
 from ibis_birdbrain.attachments import Attachment
 
 # configure Ibis
+# TODO: is this needed here/should it be here
 ibis.options.interactive = True
 ibis.options.repr.interactive.max_rows = 10
 ibis.options.repr.interactive.max_columns = 20
@@ -72,6 +73,7 @@ class TableAttachment(Attachment):
     def __str__(self):
         return (
             super().__str__()
+            # TODO: ugh
             + f"""
-    **table**:\n{self.content}"""
+    **table**:\n{self.content.to_pandas()}"""
         )

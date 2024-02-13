@@ -26,12 +26,12 @@ class TextAttachment(Attachment):
     def decode(self):
         ...
 
-    def __str__(self):
-        return (
-            super().__str__()
-            + f"""
-    **text**:\n{self.content}"""
-        )
+    # def __str__(self):
+    #     return (
+    #         super().__str__()
+    #         + f"""
+    # **text**:\n{self.content}"""
+    #     )
 
 
 class WebpageAttachment(Attachment):

@@ -19,6 +19,7 @@ from ibis_birdbrain.attachments import (
     ErrorAttachment,
 )
 from ibis_birdbrain.messages import Message, Messages, Email
+from ibis_birdbrain.utils.strings import shorten_str
 from ibis_birdbrain.utils.messages import to_message
 
 # strings
@@ -68,12 +69,13 @@ Otherwise, choose one of the flows to generate additional messages.
 """
 flow_instructions = inspect.cleandoc(flow_instructions)
 
-eda_flow_instructions = """
+sql_flow_instructions = """
 Choose the flow that makes sense for the bot given the context of the messages.
 
 Get the pre-existing code if it exists and is relevant. Fix code if an error was
 encounter. Write code if no code exists. Execute code to get the results.
 """
+sql_flow_instructions = inspect.cleandoc(sql_flow_instructions)
 
 
 # classes
@@ -139,7 +141,7 @@ class Bot:
 
     def __init__(
         self,
-        con=ibis.connect("duckdb://birdbrain.ddb"),
+        con=ibis.connect("duckdb://"),
         name="birdbrain",
         user_name="user",
         description=description,
@@ -185,11 +187,17 @@ class Bot:
         # convert user input to message
         log.info(f"Bot {self.name} called with text: {text}")
         im = to_message(text, stuff)
+        im.to_address = self.name
+        im.from_address = self.user_name
+        if self.current_subject == "":
+            self.current_subject = shorten_str(text)
+        im.subject = self.current_subject
 
         # add message to messages
         self.messages.append(im)
 
         # get the flow
+        log.info(f"Bot {self.name} selecting flow...")
         flow = marvin.classify(
             str(self.messages),
             Flows,
@@ -220,18 +228,21 @@ class Bot:
         return self.messages[-1]
 
     def sql_flow(self) -> None:
-        extract_guid_instructions = f"""
+        # extraction instructions
+        extract_attachment_guid_instructions = f"""
         Extract relevant attachment GUIDs (ONLY the ATTACHMENT GUIDs) from the messages.
 
         Options include: {self.messages.attachments()}
         """
+        extract_attachment_guid_instructions = inspect.cleandoc(
+            extract_attachment_guid_instructions
+        )
 
-        extract_guid_instructions = inspect.cleandoc(extract_guid_instructions)
-
+        # extract relevant attachment GUIDs
         guids = marvin.extract(
             self.messages,
             str,
-            instructions=extract_guid_instructions,
+            instructions=extract_attachment_guid_instructions,
         )
         log.info(f"Extracted GUIDs: {guids}")
 
@@ -259,25 +270,31 @@ class Bot:
             at = ErrorAttachment(e)
             log.error(f"SQL error: {e}")
 
-        # construct the response message
+        # construct the intermediate message
         m = Email(
             body=f"SQL attachted for query: {text_query}",
             subject="SQL code",
             attachments=[a, at],
         )
 
-        # append the message to the response messages
+        # append the message to the messages
         self.messages.append(m)
 
     def respond_flow(self) -> None:
+        # generate a response based on the messages
         response = respond(self.messages)
+
+        # construct the response message
         m = Email(
             body=response,
             subject="response",
             to_address=self.user_name,
             from_address=self.name,
         )
+
+        # append the message to the messages
         self.messages.append(m)
 
     def visualize_flow(self) -> None:
+        # TODO: implement
         pass
