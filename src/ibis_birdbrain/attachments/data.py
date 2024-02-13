@@ -73,7 +73,7 @@ class TableAttachment(Attachment):
     def __str__(self):
         return (
             super().__str__()
-            # TODO: ugh
+            # TODO: FIX this -- using Ibis reprs directly gets cut off for some reason
             + f"""
-    **table**:\n{self.content.to_pandas()}"""
+    **table**:\n{self.content.limit(20).to_pandas()}"""
         )
