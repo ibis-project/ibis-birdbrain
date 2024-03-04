@@ -5,6 +5,7 @@ set dotenv-load
 
 # aliases
 alias fmt := format
+alias pres := presentation
 alias marvin-docs := docs-marvin
 
 # list justfile recipes
@@ -17,11 +18,12 @@ ipy *args:
 
 # install
 install:
-    @pip install -e '.'
+    @uv pip install -e '.'
 
 # setup
 setup:
-    @pip install -r dev-requirements.txt
+    @pip install uv
+    @uv pip install -r dev-requirements.txt
     just install
 
 # build
@@ -71,3 +73,7 @@ docs:
 
 docs-marvin:
     @open https://www.askmarvin.ai/welcome/what_is_marvin/
+
+# presentation
+presentation:
+    @quarto preview presentation.qmd

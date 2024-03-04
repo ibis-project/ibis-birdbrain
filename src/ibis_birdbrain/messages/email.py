@@ -1,9 +1,3 @@
-"""
-Emails in Ibis Birdbrain are currently the only
-implementation of a Message, providing an email-like
-string representation for simplicity.
-"""
-
 # imports
 from ibis_birdbrain.messages import Message
 

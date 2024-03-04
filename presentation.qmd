@@ -1,0 +1,130 @@
+---
+title: "Ibis Birdbrain"
+format:
+  revealjs:
+    footer: <https://ibis-project.org>
+    #preview-links: true
+    incremental: true
+    # https://quarto.org/docs/presentations/revealjs/themes.html#using-themes
+    theme: dark
+    echo: true
+    scrollable: true
+---
+
+# why?
+
+## Ibis + LLMs = Ibis Birdbrain
+
+Why would we build this?
+
+1. it's cool
+2. marketing/sales
+3. marketing/sales
+
+## Ibis + LLMs = Ibis Birdbrain
+
+Why would we build this?
+
+::: {.nonincremental}
+1. it's cool
+2. marketing/sales (for Ibis)
+3. marketing/sales (for Theseus)
+:::
+
+## language model basics
+
+(Large) language models are neural networks trained on text to predict the next word in a sequence:
+
+- text is converted to **tokens** (numbers) so the neural network can understand it
+- providers (e.g. OpenAI) charge based on the number of tokens used
+- output tokens are more expensive than input tokens
+- response time is proportional to the number of tokens used
+- providers have a **system prompt** that instructs the language model on how to behave
+
+## text in, text out
+
+- <span style="color:cyan;">System prompt: You are ChatGPT, a language interface based on the GPT-4 model whose purpose is to...</span>
+- <span style="color:blue;">Additional system prompt: My name is Cody. I want you to concisely respond. My messages will be about...</span>
+- <span style="color:green;">User message 1: Write a new README.md for the Ibis project.</span>
+- <span style="color:purple;">System response 1: Ibis is...</span>
+- <span style="color:green;">User message 2: Adjust it to...</span>
+- <span style="color:purple;">System response 2: Ibis is...</span>
+- <span style="color:green;">User message 3: ...</span>
+
+## demo
+
+[ChatGPT](https://chat.openai.com/)
+
+## issues
+
+- text in, (unstructured) text out
+- expensive
+- slow
+- **PERSONAL OPINION ALERT**: plateau at GPT-4
+- **we need (small) task-specific language models**
+- **we need the system(s) around the language models**
+
+## task-specific example: DuckDB-NSQL
+
+MotherDuck, in collaboration with someone, trained a DuckDB-specific CodeLlama 7B variant:
+
+> In total, we generate **200k text-to-SQL training data pairs using Mixtral-8x7B-Instruct-v0.1 model for data generation. The data covers 600 different DuckDB scalar, aggregate, and table functions, more than 40 different DuckDB expressions, and 20 DuckDB extensions.**
+> 
+> To train the model, we use the base model of CodeLLama 7B and finetune over our DuckDB training dataset...on **8XA100 80G machine**.
+
+## image
+
+![](images/duckdb-nsql.png)
+
+# how?
+
+## Marvin
+
+[Marvin](https://www.askmarvin.ai/welcome/what_is_marvin/) is "The AI Engineering Toolkit" built by Prefect.
+
+- Pythonic usage of language models
+- only supports OpenAI, but could support any provider
+- very easy to use
+
+## Marvin functionality
+
+Marvin supports:
+
+- image/audio things (not important for birdbrain)
+- generating synthetic data (not important for birdbrain)
+- casting text to structured Python objects (possibly important for birdbrain)
+- extracting structured Python objects from text (possibly important for birdbrain)
+- generic language model functions (important for birdbrain)
+- classification of text (very important for birdbrain)
+
+## Classification
+
+Marvin uses [the clever logit bias trick](https://twitter.com/AAAzzam/status/1669753721574633473) to classify text with a single output token.
+
+```{.python}
+import marvin
+
+category = marvin.classify(
+    "Ibis Birdbrain is a great product name.", 
+    labels=[True, False]
+)
+category
+```
+
+Importantly, **only a single output token is used**. This makes the language model call fast and efficient. We use classification throughout Ibis Birdbrain for decision making.
+
+## Text to SQL: setup
+
+## Text to SQL: method 1
+
+We can use Marvin to convert natural language to SQL.
+
+## Text to SQL: method 2
+
+# what?
+
+# future
+
+# questions?
+
+# the end

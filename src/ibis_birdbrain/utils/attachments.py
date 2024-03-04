@@ -34,3 +34,10 @@ def to_attachment(thing: Any) -> Attachment | None:
         return ChartAttachment(thing)
 
     return None
+
+
+def to_attachments(things: list[Any]) -> list[Attachment]:
+    """Converts a list of things to a list of attachments."""
+    return [
+        to_attachment(thing) for thing in things if to_attachment(thing) is not None
+    ]
