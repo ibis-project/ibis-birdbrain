@@ -225,7 +225,7 @@ class FixSQLTask(Task):
     ) -> str:
         """Convert text to SQL."""
         return (
-            self._text_to_sql(
+            self._fix_text_to_sql(
                 text=text,
                 error=error,
                 tables=tables,
