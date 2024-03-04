@@ -1,8 +1,6 @@
-"""Ibis Birdbrain attachments."""
-
 # imports
 from uuid import uuid4
-from typing import Any
+from typing import Any, Union, List
 from datetime import datetime
 
 from ibis.expr.types.relations import Table
@@ -68,6 +66,15 @@ class Attachments:
         """Alias for add_attachment."""
         self.add_attachment(attachment)
 
+    def extend(self, attachments: Union[List[Attachment], "Attachments"]):
+        """Adds multiple attachments to the collection."""
+        if isinstance(attachments, Attachments):
+            attachments = list(attachments.attachments.values())
+        for attachment in attachments:
+            self.add_attachment(attachment)
+
+        return self
+
     def __getitem__(self, id: str | int):
         """Get an attachment from the collection."""
         if isinstance(id, int):
@@ -95,7 +102,11 @@ class Attachments:
 
 # exports
 from ibis_birdbrain.attachments.viz import ChartAttachment
-from ibis_birdbrain.attachments.data import DataAttachment, TableAttachment
+from ibis_birdbrain.attachments.data import (
+    DataAttachment,
+    DatabaseAttachment,
+    TableAttachment,
+)
 from ibis_birdbrain.attachments.text import (
     TextAttachment,
     CodeAttachment,
@@ -107,6 +118,7 @@ __all__ = [
     "Attachment",
     "Attachments",
     "DataAttachment",
+    "DatabaseAttachment",
     "TableAttachment",
     "ChartAttachment",
     "TextAttachment",

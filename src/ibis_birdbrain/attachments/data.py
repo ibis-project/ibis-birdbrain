@@ -15,6 +15,7 @@ ibis.options.repr.interactive.max_length = 20
 
 
 # classes
+# TODO: remove in favor of DatabaseAttachment below
 class DataAttachment(Attachment):
     """A database attachment."""
 
@@ -50,6 +51,47 @@ class DataAttachment(Attachment):
         )
 
 
+class DatabaseAttachment(Attachment):
+    """A database attachment."""
+
+    content: BaseBackend
+    tables: list[str]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.con = self.content  # alias
+        self.tables = self.con.list_tables()
+        if self.name is None:
+            try:
+                self.name = (
+                    self.content.current_database + "." + self.content.current_schema
+                )
+            except:
+                self.name = "unknown"
+
+        try:
+            self.sql_dialect = self.content.name
+        except:
+            self.sql_dialect = "unknown"
+        # try:
+        #     self.description = "tables:\n\t" + "\n\t".join(
+        #         [t for t in self.content.list_tables()]
+        #     )
+        # except:
+        #     self.description = "empty database\n"
+
+    # TODO: this is impressively ugly
+    def __str__(self):
+        s = (
+            super().__str__()
+            + f"""
+    **dialect**: {self.sql_dialect}"""
+        )
+        s += "\n    **tables**:\n\t- " + "\n\t- ".join([t for t in self.tables])
+
+        return s
+
+
 class TableAttachment(Attachment):
     """A table attachment."""
 
@@ -74,6 +116,6 @@ class TableAttachment(Attachment):
         return (
             super().__str__()
             # TODO: FIX this -- using Ibis reprs directly gets cut off for some reason
-            #            + f"""
-            #    **table**:\n{self.content.limit(20).to_pandas()}"""
+            + f"""
+                **table**:\n{self.content.limit(20)}"""
         )

@@ -1,7 +1,6 @@
-"""Ibis Birdbrain messages."""
-
 # imports
 from uuid import uuid4
+from typing import Union, List
 from datetime import datetime
 
 from ibis.expr.types.relations import Table
@@ -23,20 +22,20 @@ class Message:
 
     def __init__(
         self,
+        body="",
         to_address="",
         from_address="",
         subject="",
-        body="",
         attachments: Attachments | list[Attachment] = [],
     ) -> None:
         """Initialize the message."""
         self.id = str(uuid4())
         self.created_at = datetime.now()
 
+        self.body = body
         self.to_address = to_address
         self.from_address = from_address
         self.subject = subject
-        self.body = body
 
         # TODO: feels a little hacky
         if isinstance(attachments, Attachments):
@@ -84,6 +83,15 @@ class Messages:
     def append(self, message: Message):
         """Alias for add_message."""
         self.add_message(message)
+
+    def extend(self, messages: Union[List[Message], "Messages"]):
+        """Add multiple messages to the collection."""
+        if isinstance(messages, Messages):
+            messages = list(messages.messages.values())
+        for message in messages:
+            self.append(message)
+
+        return self
 
     def __getitem__(self, id: str | int):
         """Get a message from the collection."""
