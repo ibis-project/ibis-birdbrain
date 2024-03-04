@@ -182,7 +182,12 @@ class FixSQLTask(Task):
             data_description=database_attachment.description,
         )
 
-        response_message = Email()
+        response_message = Email(
+            body="fix SQL called",
+            attachments=[CodeAttachment(language="sql", content=sql)],
+            to_address=message.from_address,
+            from_address=self.name,
+        )
         return response_message
 
     @staticmethod
@@ -227,6 +232,7 @@ class FixSQLTask(Task):
         return (
             self._fix_text_to_sql(
                 text=text,
+                sql=sql,
                 error=error,
                 tables=tables,
                 data_description=data_description,
