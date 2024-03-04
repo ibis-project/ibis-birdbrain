@@ -178,6 +178,6 @@ class Bot:
         ...
 
     # TODO: for demo
-    def execuet_last_sql(self, con: BaseBackend) -> Message:
+    def execute_last_sql(self, con: BaseBackend) -> Message:
         """Execute the last SQL statement."""
         ...

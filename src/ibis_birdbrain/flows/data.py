@@ -27,6 +27,7 @@ class DataFlow(Flow):
         retries: int = 3,
     ) -> None:
         """Initialize the data flow."""
+        self.retries = retries
         super().__init__(name=name, description=description, tasks=tasks)
 
     def __call__(self, messages: Messages) -> Messages:
@@ -45,7 +46,7 @@ class DataFlow(Flow):
         database_attachment = messages[0].attachments[0]
         data_description = database_attachment.description
 
-        table_attachments = Attachments()
+        table_attachments = []
         for attachment in messages[-1].attachments:
             table_attachments.append(messages[-1].attachments[attachment])
 
@@ -53,24 +54,9 @@ class DataFlow(Flow):
         response_messages = Messages()
 
         # call the text-to-SQL task
-        # TODO: this is silly
-        body = f"""
-        query: {messages[-1].body}
-        """
-        body = inspect.cleandoc(body)
-
-        body += f"""
-        \n\ndata description: {data_description}
-        """
-        body = inspect.cleandoc(body)
-
-        body += f"""
-        \n\ntables: {table_attachments}
-        """
-        body = inspect.cleandoc(body)
-
         task_message = Email(
-            body=body,
+            body=messages[-1].body,
+            attachments=[database_attachment] + table_attachments,
             to_address=self.tasks["text-to-SQL"].name,
             from_address=self.name,
         )
@@ -105,13 +91,30 @@ class DataFlow(Flow):
         elif isinstance(task_response.attachments[0], ErrorAttachment):
             # for N retries
             for i in range(self.retries):
+                error_attachment = task_response.attachments[0]
+
+                task_message = Email(
+                    body="fix this SQL",
+                    attachments=[error_attachment, database_attachment, sql_attachment]
+                    + table_attachments,
+                    to_address=self.tasks["fix-SQL"].name,
+                    from_address=self.name,
+                )
+
                 # fix the SQL
-                task_response = self.tasks["fix-SQL"](task_response)
+                task_response = self.tasks["fix-SQL"](task_message)
                 response_messages.append(task_response)
+
+                # get the new sql_attachment
+                for attachment in task_response.attachments:
+                    if isinstance(
+                        task_response.attachments[attachment], CodeAttachment
+                    ):
+                        sql_attachment = task_response.attachments[attachment]
 
                 # try executing
                 task_response = self.tasks["execute-SQL"](
-                    Email(attachments=[sql_attachment])
+                    Email(attachments=[database_attachment, sql_attachment])
                 )
                 response_messages.append(task_response)
 
