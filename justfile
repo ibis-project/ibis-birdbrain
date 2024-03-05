@@ -77,6 +77,10 @@ docs:
 docs-marvin:
     @open https://www.askmarvin.ai/welcome/what_is_marvin/
 
+# open repo
+repo:
+    @open https://github.com/ibis-project/ibis-birdbrain
+
 # presentation
 presentation:
     @quarto preview presentation.qmd
