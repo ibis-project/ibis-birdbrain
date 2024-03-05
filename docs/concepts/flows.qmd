@@ -1,0 +1,14 @@
+# Flows
+
+Ibis Birdbrain's [`Bot`](./bot.qmd) chooses a `Flow` to execute based on [`Messages`](./messages.qmd).
+
+A Flow takes Messages as input and returns Messages as output. The details of a given Flow are specific to itself, running a series of [`Tasks`](./tasks.qmd) to accomplish its goal.
+
+## Usage
+
+```{python}
+from ibis_birdbrain.flows import Flow, Flows
+
+flow = Flow()
+flow
+```

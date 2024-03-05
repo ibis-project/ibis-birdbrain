@@ -7,6 +7,7 @@ set dotenv-load
 alias fmt := format
 alias pres := presentation
 alias marvin-docs := docs-marvin
+alias docs-preview := preview
 
 # list justfile recipes
 default:
