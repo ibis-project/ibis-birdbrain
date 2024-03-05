@@ -6,6 +6,8 @@ set dotenv-load
 # aliases
 alias fmt := format
 alias pres := presentation
+alias plan := planning
+alias project := planning
 alias marvin-docs := docs-marvin
 alias docs-preview := preview
 
@@ -78,3 +80,7 @@ docs-marvin:
 # presentation
 presentation:
     @quarto preview presentation.qmd
+
+# planning
+planning:
+    @open https://github.com/orgs/ibis-project/projects/2/views/1
