@@ -246,24 +246,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installation-and-setup" id="toc-installation-and-setup" class="nav-link active" data-scroll-target="#installation-and-setup">Installation and setup</a>
-  <ul class="collapse">
-  <li><a href="#install-from-pypi" id="toc-install-from-pypi" class="nav-link" data-scroll-target="#install-from-pypi">Install from PyPI</a></li>
+  <li><a href="#install-from-pypi" id="toc-install-from-pypi" class="nav-link active" data-scroll-target="#install-from-pypi">Install from PyPI</a></li>
   <li><a href="#data-platform-setup" id="toc-data-platform-setup" class="nav-link" data-scroll-target="#data-platform-setup">Data platform setup</a></li>
   <li><a href="#ai-platform-setup" id="toc-ai-platform-setup" class="nav-link" data-scroll-target="#ai-platform-setup">AI platform setup</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/install.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Installation and setup</h1>
+</div>
 
 
 
-<section id="installation-and-setup" class="level1">
-<h1>Installation and setup</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <p>This page describes how to install and setup Ibis Birdbrain.</p>
 <section id="install-from-pypi" class="level2">
 <h2 class="anchored" data-anchor-id="install-from-pypi">Install from PyPI</h2>
@@ -271,6 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-platform-setup" class="level2">
 <h2 class="anchored" data-anchor-id="data-platform-setup">Data platform setup</h2>
+<p>Create an Ibis connection:</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -281,25 +293,25 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Documentation coming soon!</p>
+<p>Only DuckDB is installed by default. For now, you need to install other backends manually with Ibis.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Only DuckDB supported for now. All 18+ Ibis backends coming soon.</p>
+<div id="9af055c5" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>backend <span class="op">=</span> <span class="st">"duckdb"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>backend_uri <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="ss">f"</span><span class="sc">{</span>backend<span class="sc">}</span><span class="ss">://</span><span class="sc">{</span>backend_uri<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>con</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;ibis.backends.duckdb.Backend at 0x1487a2890&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="ai-platform-setup" class="level2">
 <h2 class="anchored" data-anchor-id="ai-platform-setup">AI platform setup</h2>
+<p>See <a href="https://www.askmarvin.ai/docs/configuration/settings/">Marvin documentation for setup</a>.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -310,34 +322,15 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Documentation coming soon!</p>
+<p>Only OpenAI and Azure OpenAI are supported for now.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Only Azure OpenAI is supported for now. All Marvin providers coming soon.</p>
-</div>
-</div>
-<p>Create the <code>~/.birdbrain/.env</code> file:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_API_KEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_API_BASE="https://birdbrain.openai.azure.com"</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_DEPLOYMENT_NAME="birdbrain-4-32k"</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>MARVIN_AZURE_OPENAI_API_TYPE="azure"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
 <p><a href="./tutorials/cli.html">Learn how get started with Ibis Birdbrain’s CLI</a>.</p>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
