@@ -1,6 +1,6 @@
 ---
 title: "Ibis Birdbrain"
-description: "the portable Python AI-powered data bot"
+description: "the portable Python LM-powered data bot"
 repo-actions: false
 code-annotations: hover
 format:
@@ -13,22 +13,22 @@ about:
   links:
     - icon: info-circle
       text: Why Ibis Birdbrain?
-      href: /ibis-birdbrain/why
+      href: why.qmd
     - icon: download
       text: Installation
-      href: /ibis-birdbrain/install
+      href: install.qmd
     - icon: book
       text: "Tutorial: getting started"
-      href: /ibis-birdbrain/tutorials/cli
+      href: tutorials/python.qmd
     - icon: github
       text: GitHub
       href: https://github.com/ibis-project/ibis-birdbrain
     - icon: slack
       text: Chat
       href: https://ibis-project.zulipchat.com
-    - icon: rss
-      text: RSS
-      href: https://ibis-project.github.io/ibis-birdbrain/posts.xml
+    # - icon: rss
+    #   text: RSS
+    #   href: https://ibis-project.github.io/ibis-birdbrain/posts.xml
 ---
 
 ::: {#about}

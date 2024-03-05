@@ -53,8 +53,8 @@ website:
       #- sidebar:how-to
       #- sidebar:reference
 
-    right:
-      - posts.qmd
+    # right:
+      #- posts.qmd
       #- release_notes.md # TODO: release notes
       #- sidebar:contribute
 
@@ -74,7 +74,11 @@ website:
       collapse-level: 2
       contents:
         - why.qmd
-        - auto: concepts/*.qmd
+        - concepts/bots.qmd
+        - concepts/messages.qmd
+        - concepts/attachments.qmd
+        - concepts/flows.qmd
+        - concepts/tasks.qmd
     - id: how-to
       title: "How-to"
       style: "docked"

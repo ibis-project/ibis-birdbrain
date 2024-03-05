@@ -2,7 +2,14 @@
 
 [Ibis](https://ibis-project.org) is the portable Python dataframe library.
 
-Ibis Birdbrain is the portable Python AI-powered data bot, built on Ibis with support for all data platforms Ibis's 18+ backends support. Ibis Birdbrain is also built on [Marvin](https://github.com/PrefectHQ/marvin) with support for all AI platforms Marvin supports.
+Ibis Birdbrain is the portable Python LM-powered data bot, built on Ibis with
+support for all data platforms Ibis's 20+ backends support. Ibis Birdbrain is
+also built on [Marvin](https://github.com/PrefectHQ/marvin) with support for all
+AI platforms Marvin supports.
+
+## Language models (LMs)
+
+Langauge models have...
 
 ## Standards
 

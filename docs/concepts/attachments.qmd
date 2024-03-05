@@ -1,0 +1,43 @@
+# Attachments
+
+Ibis Birdbrain passes Python objects as `Attachments` to [`Messages`](./messages.qmd). This allows the user, itself, and (eventually) other bots to interact with data, code, and more.
+
+
+## Usage
+
+```{python}
+from ibis_birdbrain.attachments import Attachment, Attachments
+
+a1 = Attachment(content="Hello, world!")
+a1
+```
+
+## TableAttachment
+
+A `TableAttachment` contains an Ibis table:
+
+```{python}
+import ibis
+
+from ibis_birdbrain.attachments import TableAttachment
+
+ibis.options.interactive = True
+
+t = ibis.examples.penguins.fetch()
+
+a2 = TableAttachment(content=t)
+a2
+```
+
+Notice the name, description (schema), and preview are automatically populated.
+
+## CodeAttachment
+
+A `CodeAttachment` contains code -- typically Python or SQL:
+
+```{python}
+from ibis_birdbrain.attachments import CodeAttachment
+
+a3 = CodeAttachment(content="select 1 as id", language="sql")
+a3
+```

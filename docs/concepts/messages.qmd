@@ -1,0 +1,25 @@
+# Messages
+
+Ibis Birdbrain communicates with the user, itself, and (eventually) other bots through `Messages`. A `Message` is a simple wrapper around text with metadata and optional [`Attachments`](./attachments.qmd).
+
+
+## Usage
+
+```{python}
+from ibis_birdbrain.messages import Message, Messages, Email
+
+m1 = Message("Hello, world!")
+m1
+```
+
+## Emails
+
+Currently, the only implementation of `Message` that is viewable as a proper string is `Email`.
+
+```{python}
+e1 = Email("Hello")
+e2 = Email(", world!")
+
+messages = Messages([e1, e2])
+messages
+```

@@ -1,0 +1,12 @@
+# Tasks
+
+Ibis Birdbrain's [`Flow`](./flow.qmd) executes one or more `Tasks` to accomplish its goal. A `Task` is a single unit of work that takes a [`Message`](./message.qmd) as input and returns a `Message` as output.
+
+## Usage
+
+```{python}
+from ibis_birdbrain.tasks import Task, Tasks
+
+task = Task()
+task
+```

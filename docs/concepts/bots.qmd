@@ -1,0 +1,10 @@
+# Bots
+
+Ibis Birdbrain implements a `Bot` calss that can be used to instantiate one or more bots that automate various tasks.
+
+## Usage
+
+```{python}
+from ibis_birdbrain import Bot
+Bot
+```
