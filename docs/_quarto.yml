@@ -2,6 +2,9 @@
 project:
   type: website
 
+execute:
+  freeze: auto  # re-render only when source changes
+
 # website
 website:
 

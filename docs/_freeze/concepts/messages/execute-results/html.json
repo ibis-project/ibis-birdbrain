@@ -1,0 +1,12 @@
+{
+  "hash": "a1999ce28adcecc054b19196cb9fa5fb",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Messages\n---\n\n\n\nIbis Birdbrain communicates with the user, itself, and (eventually) other bots through `Messages`. A `Message` is a simple wrapper around text with metadata and optional [`Attachments`](./attachments.qmd).\n\n\n## Usage\n\n\n::: {#9c0146d7 .cell execution_count=1}\n``` {.python .cell-code}\nfrom ibis_birdbrain.messages import Message, Messages, Email\n\nm1 = Message(\"Hello, world!\")\nm1\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\nMessage(5956d627-9038-4bb4-b827-1d9ed646c75e)\n```\n:::\n:::\n\n\n## Emails\n\nCurrently, the only implementation of `Message` that is viewable as a proper string is `Email`.\n\n::: {#2e43c663 .cell execution_count=2}\n``` {.python .cell-code}\ne1 = Email(\"Hello\")\ne2 = Email(\", world!\")\n\nmessages = Messages([e1, e2])\nmessages\n```\n\n::: {.cell-output .cell-output-display execution_count=2}\n```\nTo: \nFrom: \nSubject: \nSent at: 2024-03-05 11:22:52.258182\nMessage: e855820a-eedd-4229-96d1-7ae525800995\n\nHello\n\nAttachments:\n\n\n---\nTo: \nFrom: \nSubject: \nSent at: 2024-03-05 11:22:52.258207\nMessage: 50a43477-12d3-4138-b5ff-38fd5b2b7704\n\n, world!\n\nAttachments:\n\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "messages_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "hash": "5ca217bfa5ee488df2c050375105b2a1",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Flows\n---\n\n\n\nIbis Birdbrain's [`Bot`](./bot.qmd) chooses a `Flow` to execute based on [`Messages`](./messages.qmd).\n\nA Flow takes Messages as input and returns Messages as output. The details of a given Flow are specific to itself, running a series of [`Tasks`](./tasks.qmd) to accomplish its goal.\n\n## Usage\n\n\n::: {#254b2753 .cell execution_count=1}\n``` {.python .cell-code}\nfrom ibis_birdbrain.flows import Flow, Flows\n\nflow = Flow()\nflow\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n<ibis_birdbrain.flows.Flow at 0x1090f15d0>\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "flows_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

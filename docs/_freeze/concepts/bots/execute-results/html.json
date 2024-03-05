@@ -1,0 +1,12 @@
+{
+  "hash": "bd2906497289e9de4361517b57031090",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Bots\n---\n\n\n\nIbis Birdbrain implements a `Bot` calss that can be used to instantiate one or more bots that automate various tasks.\n\n## Usage\n\n\n::: {#a5d8d0d4 .cell execution_count=1}\n``` {.python .cell-code}\nfrom ibis_birdbrain import Bot\nBot\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\nibis_birdbrain.bot.Bot\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "bots_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

@@ -10,6 +10,76 @@ You can use Ibis Birdbrain as a Python library, but it is often used through an
 interactive Python session. You can [see how to start one with the `birdbrain`
 CLI with Ibis Birdbrain ready to use](/tutorials/cli.qmd).
 
+## Setup the bot
+
+First, import relevant modules:
+
+```{python}
+import ibis
+
+from ibis_birdbrain import Bot
+```
+
+Set Ibis interactive mode:
+
+```{python}
+ibis.options.interactive = True
+```
+
+### Create an Ibis connection
+
+Create an Ibis connection to your database:
+
+::: {.callout-warning}
+We'll create a demo database for this tutorial.
+:::
+
+```{python}
+con = ibis.connect("duckdb://penguins.ddb")
+con.create_table(
+    "penguins", ibis.examples.penguins.fetch().to_pyarrow(), overwrite=True
+)
+con = ibis.connect("duckdb://penguins.ddb")
+con.list_tables()
+```
+
+### Create the bot
+
+You'll create the bot by passing in the connection:
+
+::: {.callout-tip}
+For increased accuracy, you should also pass in a `data_description` containing
+information about the dataset. This could be fetched from the database itself,
+manually created, or otherwise obtained.
+
+You should not include table names and schemas -- this will be inferred
+automatically.
+:::
+
+```{python}
+bot = Bot(con=con, data_description="the Palmer Penguins dataset")
+bot
+```
+
+### Test the bot
+
+You can ask the bot questions:
+
+```{python}
+res = bot("""give me the counts of penguins by species and island from highest
+to lowest""")
+res
+```
+
+### Get attachments
+
+You can get the table attachment back:
+
+```{python}
+t = res.attachments[-1].open()
+t
+```
+
 ## Next steps
 
 Explore some data with Ibis Birdbrain and [let us know how it

@@ -11,7 +11,7 @@ version = "0.1.0"
 authors = [
   { name="Cody", email="cody@dkdc.dev" },
 ]
-description = "the portable Python ML-powered data bot"
+description = "the portable Python LM-powered data bot"
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
@@ -41,4 +41,3 @@ dependencies = [
 
 [project.scripts]
 birdbrain = "ibis_birdbrain.cli:app"
-
