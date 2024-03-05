@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -153,29 +119,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Why Ibis Birdbrain?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/llms.html">
- <span class="dropdown-text">Large language models</span></a>
+    <a class="dropdown-item" href="../concepts/bots.html">
+ <span class="dropdown-text">Bots</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/ops.html">
- <span class="dropdown-text">LLMOps, MLOps, DevOps</span></a>
+    <a class="dropdown-item" href="../concepts/messages.html">
+ <span class="dropdown-text">Messages</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/platforms.html">
- <span class="dropdown-text">Data and AI platforms</span></a>
+    <a class="dropdown-item" href="../concepts/attachments.html">
+ <span class="dropdown-text">Attachments</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/user-interfaces.html">
- <span class="dropdown-text">User interfaces</span></a>
+    <a class="dropdown-item" href="../concepts/flows.html">
+ <span class="dropdown-text">Flows</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../concepts/tasks.html">
+ <span class="dropdown-text">Tasks</span></a>
   </li>  
     </ul>
   </li>
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../posts.html"> 
-<span class="menu-text">Posts</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -252,15 +216,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting help</a></li>
-  <li><a href="#using-a-tool" id="toc-using-a-tool" class="nav-link" data-scroll-target="#using-a-tool">Using a tool</a>
-  <ul class="collapse">
-  <li><a href="#interacting-with-a-data" id="toc-interacting-with-a-data" class="nav-link" data-scroll-target="#interacting-with-a-data">Interacting with a data</a></li>
-  <li><a href="#interacting-with-the-internet-via-search" id="toc-interacting-with-the-internet-via-search" class="nav-link" data-scroll-target="#interacting-with-the-internet-via-search">Interacting with the Internet via search</a></li>
-  <li><a href="#interacting-with-the-filesystem" id="toc-interacting-with-the-filesystem" class="nav-link" data-scroll-target="#interacting-with-the-filesystem">Interacting with the filesystem</a></li>
-  </ul></li>
-  <li><a href="#saving-and-loading-conversation-history" id="toc-saving-and-loading-conversation-history" class="nav-link" data-scroll-target="#saving-and-loading-conversation-history">Saving and loading conversation history</a></li>
-  <li><a href="#understanding-and-accessing-bot-objects" id="toc-understanding-and-accessing-bot-objects" class="nav-link" data-scroll-target="#understanding-and-accessing-bot-objects">Understanding and accessing Bot objects</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
   </ul></li>
   </ul>
@@ -276,328 +231,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Tutorial: Python</h1>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<ul>
+<ol type="1">
 <li><a href="../install.html">Install Ibis Birdbrain</a></li>
-</ul>
+</ol>
 </section>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>You can use Ibis Birdbrain as a Python library, but it is often used through an interactive Python session. You can <a href="../tutorials/cli.html">see how to start one with the <code>birdbrain</code> CLI with Ibis Birdbrain ready to use</a>.</p>
-<p>If you use the CLI, you’ll have access to the <code>ai</code>/<code>bot</code>/<code>birdbrain</code> object, which is an instance of the <code>ibis_birdbrain.ai.Bot</code> class. This bot has access to numerous tools and can be used to interact with data via Ibis.</p>
-</section>
-<section id="getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="getting-help">Getting help</h2>
-<p>You can ask the bot for help with its usage:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"how do I use you?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>I’m birdbrain, your assistant for data analysis projects using Ibis, AI, and many other data tools. Here’s how you can interact with me:</p>
-<ol type="1">
-<li><p><strong>Ask Questions</strong>: You can ask me anything related to Ibis, AI, and data analysis. For example, you can ask about how to use certain features in Ibis, how to code in Python, or ask for help in debugging your code.</p></li>
-<li><p><strong>Run Analysis</strong>: You can also ask me to run data analysis for you. You can give me instructions to query data, analyze it, and even generate visualizations.</p></li>
-<li><p><strong>Learning Resources</strong>: If you’re looking for resources to learn more about Ibis, AI, and data analysis, I can provide you with relevant links to documentation, tutorials, and more.</p></li>
-<li><p><strong>File Operations</strong>: I can help with file operations such as reading a file, writing to a file, listing files in a directory, etc.</p></li>
-<li><p><strong>Translation &amp; Summarization</strong>: If you have a large piece of text or a document that you want to summarize, or if you want to translate text from one language to another, I can help with that too.</p></li>
-</ol>
-<p>Remember, I can only provide accurate information and perform tasks based on the data I have access to. I’m here to assist you. Let’s explore the world of data together!</p>
-</blockquote>
-</section>
-<section id="using-a-tool" class="level2">
-<h2 class="anchored" data-anchor-id="using-a-tool">Using a tool</h2>
-<p>Interact via natural language to have the bot use tools on your behalf.</p>
-<section id="interacting-with-a-data" class="level3">
-<h3 class="anchored" data-anchor-id="interacting-with-a-data">Interacting with a data</h3>
-<p>Ibis Birdbrain can read data files (limited to Delta Lake tables and Excel files, currently), registering them as tables in your Ibis backend. If you connect to a data platform with existing tables via Ibis, you will have access to them through the bot.</p>
-<p>In this example, we’ll read in a local <code>penguins.xlsx</code> file and ask the bot about it:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"read in the penguins excel"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>I’ve successfully read in the penguins Excel file. Here’s a preview of the data:</p>
-<table class="table">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 8%">
-<col style="width: 17%">
-<col style="width: 16%">
-<col style="width: 20%">
-<col style="width: 14%">
-<col style="width: 5%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>species</th>
-<th>island</th>
-<th>bill_length_mm</th>
-<th>bill_depth_mm</th>
-<th>flipper_length_mm</th>
-<th>body_mass_g</th>
-<th>sex</th>
-<th>year</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Adelie</td>
-<td>Torgersen</td>
-<td>39.1</td>
-<td>18.7</td>
-<td>181</td>
-<td>3750</td>
-<td>male</td>
-<td>2007</td>
-</tr>
-<tr class="even">
-<td>Adelie</td>
-<td>Torgersen</td>
-<td>39.5</td>
-<td>17.4</td>
-<td>186</td>
-<td>3800</td>
-<td>female</td>
-<td>2007</td>
-</tr>
-<tr class="odd">
-<td>Adelie</td>
-<td>Torgersen</td>
-<td>40.3</td>
-<td>18.0</td>
-<td>195</td>
-<td>3250</td>
-<td>female</td>
-<td>2007</td>
-</tr>
-<tr class="even">
-<td>Adelie</td>
-<td>Torgersen</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>2007</td>
-</tr>
-<tr class="odd">
-<td>Adelie</td>
-<td>Torgersen</td>
-<td>36.7</td>
-<td>19.3</td>
-<td>193</td>
-<td>3450</td>
-<td>female</td>
-<td>2007</td>
-</tr>
-</tbody>
-</table>
-<p>(and so on…) ) Note: Null values are represented as NaN (Not a Number) or ‘-’ for numerical columns, and as NULL for string columns.</p>
-</blockquote>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"what tables do you have access to? give an overview of the data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>Currently, I have access to one table named ‘penguins’.</p>
-<p>Here’s an overview of the data in it:</p>
-<ol type="1">
-<li><strong>species</strong>: This is a string column that gives the species of the penguin.</li>
-<li><strong>island</strong>: This is a string column that mentions the island the penguin is from.</li>
-<li><strong>bill_length_mm</strong>: This is a float64 column that specifies the length of the penguin’s bill in millimeters. 4. <strong>bill_depth_mm</strong>: This is a float64 column that specifies the depth of the penguin’s bill in millimeters.</li>
-<li><strong>flipper_length_mm</strong>: This is an int64 column that provides the length of the penguin’s flipper in millimeters.</li>
-<li><strong>body_mass_g</strong>: This is an int64 column that gives the body mass of the penguin in grams.</li>
-<li><strong>sex</strong>: This is a string column that mentions the sex of the penguin.</li>
-<li><strong>year</strong>: This is an int64 column that gives the year of observation.</li>
-</ol>
-<p>Please note that a string field can contain text, a float64 field can contain any real number (including decimal values), and an int64 field can contain any integer.</p>
-</blockquote>
-</section>
-<section id="interacting-with-the-internet-via-search" class="level3">
-<h3 class="anchored" data-anchor-id="interacting-with-the-internet-via-search">Interacting with the Internet via search</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"what is this dataset? search the internet and find out more about its origin for me"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>The penguins dataset, a possible alternative to the classic Iris dataset, contains data on three species of penguins from three islands in the Palmer Archipelago, Antarctica [1][2][3].</p>
-<p>The data comprises measurements such as bill length, bill depth, flipper length, body mass, along with categorical data such as species, island, and sex [3]. It provides a good mix of numeric and categorical data for various data exploration and machine learning tasks.</p>
-<p>The dataset was originally collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica, Long Term Ecological Research (LTER) [2].</p>
-<p>The purpose of the Palmer LTER is to study the marine ecosystem in the western Antarctic Peninsula region as a microcosm of global ocean ecosystems, focusing on the processes that link the extent of annual sea ice to the biological dynamics of different trophic levels [2].</p>
-<p>Sources: [1] <a href="https://www.kaggle.com/code/parulpandey/penguin-dataset-the-new-iris">Penguin dataset : The new Iris | Kaggle</a> [2] (https://allisonhorst.github.io/palmerpenguins/) [3] <a href="https://towardsdatascience.com/penguins-dataset-overview-iris-alternative-9453bb8c8d95">Penguins Dataset Overview — iris alternative | by AbdulMajedRaja RS | Towards Data Science</a></p>
-</blockquote>
-</section>
-<section id="interacting-with-the-filesystem" class="level3">
-<h3 class="anchored">Interacting with the filesystem</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"read in the readme; I don't think it contians much, draft a better version for me based on this session"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>The ‘penguins’ project now has a new and improved README:</p>
-<h1 id="penguins-data-analysis-project">Penguins Data Analysis Project</h1>
-<p>This repository contains an exploration and analysis of the <code>penguins</code> dataset. The data was originally collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica, Long Term Ecological Research (LTER).</p>
-<p>The <code>penguins</code> dataset provides detailed data on three species of penguins from three islands in the Palmer Archipelago, Antarctica. It includes measurements such as bill length, bill depth, flipper length, body mass, along with categorical data such as species, island, and sex. The dataset presents a rich mix of numeric and categorical data, making it an excellent resource for various data exploration and machine learning tasks.</p>
-<h2 id="data" class="anchored" data-anchor-id="interacting-with-the-filesystem">Data</h2>
-<p>The data for this project is stored in an Excel file named ‘penguins.xlsx’ and is loaded into the project using Python. The data is then available for analysis and visualization.</p>
-<h2 id="analysis" class="anchored">Analysis</h2>
-<p>Detailed analysis on this data is yet to be performed. The objective is to derive meaningful insights about penguin species, their physical characteristics, and their distribution across the islands.</p>
-<h2 id="contributing" class="anchored">Contributing</h2>
-<p>Contributions are welcome. Please read the CONTRIBUTING.md for details.</p>
-<h2 id="license" class="anchored">License</h2>
-<p>This project is licensed under the terms of the MIT License.</p>
-<p>This summary gives a good overview of the data involved in the project, the purpose of the project, and how others can contribute.</p>
-</blockquote>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"only capitalize the first word in headings; remove the contributing/license stuff, this is buried deep in a repo. simplify and just include basic info, then write the file out for me"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>Here’s a simplified version of the README:</p>
-<h1 id="penguins-data-analysis-project-1">Penguins data analysis project</h1>
-<p>This project involves an exploration and analysis of the <code>penguins</code> dataset. The dataset, originally collected by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica, Long Term Ecological Research (LTER), provides detailed data on three species of penguins from three islands in the Palmer Archipelago, Antarctica.</p>
-<h2 id="dataset" class="anchored">Dataset</h2>
-<p>The <code>penguins</code> dataset includes measurements such as bill length, bill depth, flipper length, body mass, and categorical data such as species, island, and sex. The data is stored in an Excel file named ‘penguins.xlsx’ and is loaded into the project using Python.</p>
-<h2 id="analysis-1" class="anchored">Analysis</h2>
-<p>The project aims to use this data to derive meaningful insights about penguin species, their physical characteristics, and their distribution across the islands.</p>
-<p>I’ll now write this content to the README file.</p>
-</blockquote>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bot(<span class="st">"write away!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>I’ve successfully written the updated README to the file <code>./README.md</code>.</p>
-</blockquote>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<h1 id="penguins-data-analysis-project-2">Penguins data analysis project</h1>
-<p>This project involves an exploration and analysis of the <code>penguins</code> dataset. The dataset, originally collected by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica, Long Term Ecological Research (LTER), provides detailed data on three species of penguins from three islands in the Palmer Archipelago, Antarctica.</p>
-<h2 id="dataset-1" class="anchored">Dataset</h2>
-<p>The <code>penguins</code> dataset includes measurements such as bill length, bill depth, flipper length, body mass, and categorical data such as species, island, and sex. The data is stored in an Excel file named ‘penguins.xlsx’ and is loaded into the project using Python.</p>
-<h2 id="analysis-2" class="anchored">Analysis</h2>
-<p>The project aims to use this data to derive meaningful insights about penguin species, their physical characteristics, and their distribution across the islands.</p>
-</blockquote>
-</section>
-</section>
-<section id="saving-and-loading-conversation-history" class="level2">
-<h2 class="anchored" data-anchor-id="saving-and-loading-conversation-history">Saving and loading conversation history</h2>
-<p>From a new session:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>[ins] In [<span class="dv">1</span>]: bot(<span class="st">"read in the readme"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>birdbrain:</p>
-<p>The README file contains information about a data analysis project involving the <code>penguins</code> dataset. This dataset, collected by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica, Long Term Ecological Research (LTER), includes details on three species of penguins from three islands in the Palmer Archipelago, Antarctica.</p>
-<p>The dataset contains measurements such as bill length, bill depth, flipper length, body mass, and categorical data such as species, island, and sex. The data is stored in an Excel file named ‘penguins.xlsx’ and is loaded into the project using Python.</p>
-<p>The project aims to use this data to derive meaningful insights about the penguin species, their physical characteristics, and their distribution across the islands.</p>
-</blockquote>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>[ins] In [<span class="dv">2</span>]: bot.save_history()</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>[ins] In [<span class="dv">3</span>]: bb_con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="st">"duckdb://birdbrain.ddb"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>[ins] In [<span class="dv">4</span>]: bb_con.list_tables()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Out[<span class="dv">4</span>]: [<span class="st">'history'</span>]</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>[ins] In [<span class="dv">5</span>]: t <span class="op">=</span> bb_con.table(<span class="st">"history"</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>[ins] In [<span class="dv">6</span>]: t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Out[6]:</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┓</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>┃ convo_id                   ┃ convo_timestamp            ┃ bot_name  ┃ message_content           ┃ message_timestamp                ┃ function_name       ┃</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━┩</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>│ string                     │ timestamp                  │ string    │ string                    │ timestamp('UTC')                 │ string              │</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>├────────────────────────────┼────────────────────────────┼───────────┼───────────────────────────┼──────────────────────────────────┼─────────────────────┤</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>│ cc25b8fd-74b0-4184-bfde-7… │ 2023-10-01 09:40:47.736675 │ birdbrain │ read in the readme        │ 2023-10-01 16:40:31.961856+00:00 │ ~                   │</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>│ cc25b8fd-74b0-4184-bfde-7… │ 2023-10-01 09:40:47.736675 │ birdbrain │ ['./requirements.txt', '… │ 2023-10-01 16:40:34.391470+00:00 │ list_files_and_dirs │</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>│ cc25b8fd-74b0-4184-bfde-7… │ 2023-10-01 09:40:47.736675 │ birdbrain │ # Penguins data analysis… │ 2023-10-01 16:40:36.201490+00:00 │ read_file           │</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>│ cc25b8fd-74b0-4184-bfde-7… │ 2023-10-01 09:40:47.736675 │ birdbrain │ The README file contains… │ 2023-10-01 16:40:43.166277+00:00 │ ~                   │</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>└────────────────────────────┴────────────────────────────┴───────────┴───────────────────────────┴──────────────────────────────────┴─────────────────────┘</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="understanding-and-accessing-bot-objects" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-and-accessing-bot-objects">Understanding and accessing Bot objects</h2>
-<p>You can ask the bot what tools it has access to and you should get an accurate answer, but you can also directly check. The <code>Bot</code> object is a very thin wrapper around a <a href="https://www.askmarvin.ai/components/ai_application">Marvin AI Application</a>. You can access the <code>Bot.ai</code> attribute to get the underlying <code>AIApplication</code> object.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[ins] In [<span class="dv">1</span>]: <span class="bu">print</span>(bot.ai.tools)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>[</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'open_browser'</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Opens the URL in a web browser.'</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function open_browser at <span class="bn">0x11f22fc40</span><span class="op">&gt;</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'search_internet'</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Searches the internet for the given query.'</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function search_internet at <span class="bn">0x104890400</span><span class="op">&gt;</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'webpage_to_str'</span>,</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Reads a webpage link into a string. Useful for summarizing</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="er">webpages.',</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function webpage_to_str at <span class="bn">0x11f22fba0</span><span class="op">&gt;</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'summarize_text'</span>,</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Summarizes text'</span>,</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function summarize_text at <span class="bn">0x11f22fe20</span><span class="op">&gt;</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'translate_text'</span>,</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Translates text'</span>,</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function translate_text at <span class="bn">0x11f22fec0</span><span class="op">&gt;</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'read_file'</span>,</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Reads a file and returns its content.'</span>,</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function read_file at <span class="bn">0x11f25d260</span><span class="op">&gt;</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'list_files_and_dirs'</span>,</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Lists all files and directories in a directory.'</span>,</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function list_files_and_dirs at <span class="bn">0x11f25d440</span><span class="op">&gt;</span></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'write_file'</span>,</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Writes a file.'</span>,</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function write_file at <span class="bn">0x11f25d4e0</span><span class="op">&gt;</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'text_to_python'</span>,</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Returns a Python code given text.'</span>,</span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function text_to_python at <span class="bn">0x11f22e3e0</span><span class="op">&gt;</span></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'fix_python_error'</span>,</span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Fixes a Python error in the code.'</span>,</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function fix_python_error at <span class="bn">0x11f25cb80</span><span class="op">&gt;</span></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'run_python_code'</span>,</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Execute Python code as a string and return the output'</span>,</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function run_python_code at <span class="bn">0x11f25ce00</span><span class="op">&gt;</span></span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'list_tables'</span>,</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Returns a list of available tables to query'</span>,</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function list_tables at <span class="bn">0x12a16e840</span><span class="op">&gt;</span></span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'query_table'</span>,</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Queries the table in the database to answer the question'</span>,</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function query_table at <span class="bn">0x12a16e980</span><span class="op">&gt;</span></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'get_table_schema'</span>,</span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Returns the schema of a table'</span>,</span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function get_table_schema at <span class="bn">0x12a16e5c0</span><span class="op">&gt;</span></span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'read_delta_table'</span>,</span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Reads a Delta Lake table directory from the full filepath</span><span class="ch">\n\n</span></span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="er">filepath should be of the form: &lt;path&gt;/&lt;table_name&gt;\n    ',</span></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function read_delta_table at <span class="bn">0x12a16e7a0</span><span class="op">&gt;</span></span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'read_excel_file'</span>,</span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Reads an Excel file from the full filepath</span><span class="ch">\n\n</span><span class="st">    filepath</span></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="er">should be of the form: &lt;path&gt;/&lt;table_name&gt;.&lt;extension&gt;\n    ',</span></span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function read_excel_file at <span class="bn">0x12a16e8e0</span><span class="op">&gt;</span></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'read_files_and_summarize'</span>,</span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Read a list of files and summarize them.'</span>,</span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function read_files_and_summarize at <span class="bn">0x12a16eb60</span><span class="op">&gt;</span></span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>    Tool(</span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">'read_webpage_and_summarize'</span>,</span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'Read a webpage and summarize it.'</span>,</span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>        fn<span class="op">=&lt;</span>function read_webpage_and_summarize at <span class="bn">0x12a16ea20</span><span class="op">&gt;</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>

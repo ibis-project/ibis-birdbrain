@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ibis Birdbrain – user-interfaces</title>
+<title>Ibis Birdbrain – attachments</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,10 +20,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -65,6 +99,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -119,29 +156,27 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Why Ibis Birdbrain?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/llms.html">
- <span class="dropdown-text">Large language models</span></a>
+    <a class="dropdown-item" href="../concepts/bots.html">
+ <span class="dropdown-text">Bots</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/ops.html">
- <span class="dropdown-text">LLMOps, MLOps, DevOps</span></a>
+    <a class="dropdown-item" href="../concepts/messages.html">
+ <span class="dropdown-text">Messages</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/platforms.html">
- <span class="dropdown-text">Data and AI platforms</span></a>
+    <a class="dropdown-item" href="../concepts/attachments.html">
+ <span class="dropdown-text">Attachments</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/user-interfaces.html">
- <span class="dropdown-text">User interfaces</span></a>
+    <a class="dropdown-item" href="../concepts/flows.html">
+ <span class="dropdown-text">Flows</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../concepts/tasks.html">
+ <span class="dropdown-text">Tasks</span></a>
   </li>  
     </ul>
   </li>
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../posts.html"> 
-<span class="menu-text">Posts</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -174,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../concepts/user-interfaces.html">User interfaces</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../concepts/attachments.html">Attachments</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -194,26 +229,32 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/llms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large language models</span></a>
+  <a href="../concepts/bots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bots</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/ops.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LLMOps, MLOps, DevOps</span></a>
+  <a href="../concepts/messages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Messages</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/platforms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data and AI platforms</span></a>
+  <a href="../concepts/attachments.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Attachments</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/user-interfaces.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">User interfaces</span></a>
+  <a href="../concepts/flows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Flows</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../concepts/tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tasks</span></a>
   </div>
 </li>
     </ul>
@@ -226,52 +267,135 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#user-interfaces" id="toc-user-interfaces" class="nav-link active" data-scroll-target="#user-interfaces">User interfaces</a>
-  <ul class="collapse">
-  <li><a href="#command-line-interface" id="toc-command-line-interface" class="nav-link" data-scroll-target="#command-line-interface">Command-line interface</a></li>
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
-  <li><a href="#language-user-interface" id="toc-language-user-interface" class="nav-link" data-scroll-target="#language-user-interface">Language user interface</a></li>
-  </ul></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link active" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#tableattachment" id="toc-tableattachment" class="nav-link" data-scroll-target="#tableattachment">TableAttachment</a></li>
+  <li><a href="#codeattachment" id="toc-codeattachment" class="nav-link" data-scroll-target="#codeattachment">CodeAttachment</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/concepts/user-interfaces.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/concepts/attachments.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Attachments</h1>
+</div>
 
 
 
-<section id="user-interfaces" class="level1">
-<h1>User interfaces</h1>
-<p>A user interface (UI) in our context is the mechanism by which a human interacts with software.</p>
-<section id="command-line-interface" class="level2">
-<h2 class="anchored" data-anchor-id="command-line-interface">Command-line interface</h2>
-<p>A command-line interface (CLI) is a UI for interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). CLIs are great for automating tasks and often user-friendly, with a short learning curve (if designed well).</p>
-<p>CLIs are great for containing common data analysis tasks expressed in a single, configurable command. However, remembering the exact syntax of a command can be difficult, especially if the command is not used frequently.</p>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Ibis Birdbrain passes Python objects as <code>Attachments</code> to <a href="../concepts/messages.html"><code>Messages</code></a>. This allows the user, itself, and (eventually) other bots to interact with data, code, and more.</p>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<div id="15003ae9" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.attachments <span class="im">import</span> Attachment, Attachments</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> Attachment(content<span class="op">=</span><span class="st">"Hello, world!"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>a1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>Attachment
+    **guid**: c339eed1-225e-4c1a-a7d4-2b99546ef07a
+    **time**: 2024-03-05 15:11:04.784220
+    **name**: None
+    **desc**: None</code></pre>
+</div>
+</div>
 </section>
-<section id="python" class="level2">
-<h2 class="anchored" data-anchor-id="python">Python</h2>
-<p>Python can be an interactive UI in a terminal, notebook, IDE, or other setup to serve as a user-interface for data analytics.</p>
+<section id="tableattachment" class="level2">
+<h2 class="anchored" data-anchor-id="tableattachment">TableAttachment</h2>
+<p>A <code>TableAttachment</code> contains an Ibis table:</p>
+<div id="b8280f28" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.attachments <span class="im">import</span> TableAttachment</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ibis.options.interactive <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> ibis.examples.penguins.fetch()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>a2 <span class="op">=</span> TableAttachment(content<span class="op">=</span>t)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>a2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/data.txt
+INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/data.txt
+INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/penguins.csv.gz
+INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/penguins.csv.gz</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="ansi-escaped-output">
+<pre>TableAttachment
+    **guid**: 3850c2bb-2887-4a4d-a4cd-fa87e331e3fa
+    **time**: 2024-03-05 15:11:05.521195
+    **name**: penguins
+    **desc**: 
+ibis.Schema {
+  species            string
+  island             string
+  bill_length_mm     float64
+  bill_depth_mm      float64
+  flipper_length_mm  int64
+  body_mass_g        int64
+  sex                string
+  year               int64
+}
+                **table**:
+┏━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┓
+┃<span class="ansi-bold"> </span><span class="ansi-bold">species</span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">island</span><span class="ansi-bold">   </span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">bill_length_mm</span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">bill_depth_mm</span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">flipper_length_mm</span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">body_mass_g</span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">sex</span><span class="ansi-bold">   </span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">year</span><span class="ansi-bold"> </span><span class="ansi-bold"> </span>┃
+┡━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━┩
+│ string  │ string    │ float64        │ float64       │ int64             │ int64       │ string │ int64 │
+├─────────┼───────────┼────────────────┼───────────────┼───────────────────┼─────────────┼────────┼───────┤
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">39.1</span> │          <span class="ansi-cyan-fg ansi-bold">18.7</span> │               <span class="ansi-cyan-fg ansi-bold">181</span> │        <span class="ansi-cyan-fg ansi-bold">3750</span> │ <span class="ansi-green-fg">male  </span> │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">39.5</span> │          <span class="ansi-cyan-fg ansi-bold">17.4</span> │               <span class="ansi-cyan-fg ansi-bold">186</span> │        <span class="ansi-cyan-fg ansi-bold">3800</span> │ <span class="ansi-green-fg">female</span> │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">40.3</span> │          <span class="ansi-cyan-fg ansi-bold">18.0</span> │               <span class="ansi-cyan-fg ansi-bold">195</span> │        <span class="ansi-cyan-fg ansi-bold">3250</span> │ <span class="ansi-green-fg">female</span> │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           NULL │          NULL │              NULL │        NULL │ NULL   │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">36.7</span> │          <span class="ansi-cyan-fg ansi-bold">19.3</span> │               <span class="ansi-cyan-fg ansi-bold">193</span> │        <span class="ansi-cyan-fg ansi-bold">3450</span> │ <span class="ansi-green-fg">female</span> │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">39.3</span> │          <span class="ansi-cyan-fg ansi-bold">20.6</span> │               <span class="ansi-cyan-fg ansi-bold">190</span> │        <span class="ansi-cyan-fg ansi-bold">3650</span> │ <span class="ansi-green-fg">male  </span> │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">38.9</span> │          <span class="ansi-cyan-fg ansi-bold">17.8</span> │               <span class="ansi-cyan-fg ansi-bold">181</span> │        <span class="ansi-cyan-fg ansi-bold">3625</span> │ <span class="ansi-green-fg">female</span> │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">39.2</span> │          <span class="ansi-cyan-fg ansi-bold">19.6</span> │               <span class="ansi-cyan-fg ansi-bold">195</span> │        <span class="ansi-cyan-fg ansi-bold">4675</span> │ <span class="ansi-green-fg">male  </span> │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">34.1</span> │          <span class="ansi-cyan-fg ansi-bold">18.1</span> │               <span class="ansi-cyan-fg ansi-bold">193</span> │        <span class="ansi-cyan-fg ansi-bold">3475</span> │ NULL   │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ <span class="ansi-green-fg">Adelie </span> │ <span class="ansi-green-fg">Torgersen</span> │           <span class="ansi-cyan-fg ansi-bold">42.0</span> │          <span class="ansi-cyan-fg ansi-bold">20.2</span> │               <span class="ansi-cyan-fg ansi-bold">190</span> │        <span class="ansi-cyan-fg ansi-bold">4250</span> │ NULL   │  <span class="ansi-cyan-fg ansi-bold">2007</span> │
+│ …       │ …         │              … │             … │                 … │           … │ …      │     … │
+└─────────┴───────────┴────────────────┴───────────────┴───────────────────┴─────────────┴────────┴───────┘</pre>
+</div>
+</div>
+</div>
+<p>Notice the name, description (schema), and preview are automatically populated.</p>
 </section>
-<section id="language-user-interface" class="level2">
-<h2 class="anchored" data-anchor-id="language-user-interface">Language user interface</h2>
-<p>Ibis Birdbrain aims to implement a language user interface (LUI) for data analytics, providing additional AI assistance in both a CLI and Python interface. This enables users to interact with a bot through natural language that can perform tasks on their behalf.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This LUI paradigm is highly experimental and should be put in production (automated) with caution.</p>
+<section id="codeattachment" class="level2">
+<h2 class="anchored" data-anchor-id="codeattachment">CodeAttachment</h2>
+<p>A <code>CodeAttachment</code> contains code – typically Python or SQL:</p>
+<div id="179f60a0" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.attachments <span class="im">import</span> CodeAttachment</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>a3 <span class="op">=</span> CodeAttachment(content<span class="op">=</span><span class="st">"select 1 as id"</span>, language<span class="op">=</span><span class="st">"sql"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>a3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>CodeAttachment
+    **guid**: 0e1d88eb-37dc-44cf-9468-0f8e25df733e
+    **time**: 2024-03-05 15:11:05.566415
+    **name**: None
+    **desc**: None
+    **language**: sql
+    **code**:
+select 1 as id</code></pre>
 </div>
 </div>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->

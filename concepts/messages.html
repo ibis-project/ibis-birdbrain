@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ibis Birdbrain – platforms</title>
+<title>Ibis Birdbrain – messages</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -119,29 +153,27 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Why Ibis Birdbrain?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/llms.html">
- <span class="dropdown-text">Large language models</span></a>
+    <a class="dropdown-item" href="../concepts/bots.html">
+ <span class="dropdown-text">Bots</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/ops.html">
- <span class="dropdown-text">LLMOps, MLOps, DevOps</span></a>
+    <a class="dropdown-item" href="../concepts/messages.html">
+ <span class="dropdown-text">Messages</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/platforms.html">
- <span class="dropdown-text">Data and AI platforms</span></a>
+    <a class="dropdown-item" href="../concepts/attachments.html">
+ <span class="dropdown-text">Attachments</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../concepts/user-interfaces.html">
- <span class="dropdown-text">User interfaces</span></a>
+    <a class="dropdown-item" href="../concepts/flows.html">
+ <span class="dropdown-text">Flows</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../concepts/tasks.html">
+ <span class="dropdown-text">Tasks</span></a>
   </li>  
     </ul>
   </li>
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../posts.html"> 
-<span class="menu-text">Posts</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -174,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../concepts/platforms.html">Data and AI platforms</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../concepts/messages.html">Messages</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -194,26 +226,32 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/llms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large language models</span></a>
+  <a href="../concepts/bots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bots</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/ops.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LLMOps, MLOps, DevOps</span></a>
+  <a href="../concepts/messages.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Messages</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/platforms.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Data and AI platforms</span></a>
+  <a href="../concepts/attachments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attachments</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../concepts/user-interfaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">User interfaces</span></a>
+  <a href="../concepts/flows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Flows</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../concepts/tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tasks</span></a>
   </div>
 </li>
     </ul>
@@ -226,31 +264,82 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-and-ai-platforms" id="toc-data-and-ai-platforms" class="nav-link active" data-scroll-target="#data-and-ai-platforms">Data and AI platforms</a>
-  <ul class="collapse">
-  <li><a href="#data-platforms" id="toc-data-platforms" class="nav-link" data-scroll-target="#data-platforms">Data platforms</a></li>
-  <li><a href="#ai-platforms" id="toc-ai-platforms" class="nav-link" data-scroll-target="#ai-platforms">AI platforms</a></li>
-  </ul></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link active" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#emails" id="toc-emails" class="nav-link" data-scroll-target="#emails">Emails</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/concepts/platforms.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/concepts/messages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Messages</h1>
+</div>
 
 
 
-<section id="data-and-ai-platforms" class="level1">
-<h1>Data and AI platforms</h1>
-<p>Data and AI platforms are…</p>
-<section id="data-platforms" class="level2">
-<h2 class="anchored" data-anchor-id="data-platforms">Data platforms</h2>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Ibis Birdbrain communicates with the user, itself, and (eventually) other bots through <code>Messages</code>. A <code>Message</code> is a simple wrapper around text with metadata and optional <a href="../concepts/attachments.html"><code>Attachments</code></a>.</p>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<div id="5e5d2fac" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.messages <span class="im">import</span> Message, Messages, Email</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> Message(<span class="st">"Hello, world!"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>m1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>Message(d6d2c9ed-4602-4632-9bc9-9490b2fa2623)</code></pre>
+</div>
+</div>
 </section>
-<section id="ai-platforms" class="level2">
-<h2 class="anchored" data-anchor-id="ai-platforms">AI platforms</h2>
+<section id="emails" class="level2">
+<h2 class="anchored" data-anchor-id="emails">Emails</h2>
+<p>Currently, the only implementation of <code>Message</code> that is viewable as a proper string is <code>Email</code>.</p>
+<div id="f5fbfea5" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>e1 <span class="op">=</span> Email(<span class="st">"Hello"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>e2 <span class="op">=</span> Email(<span class="st">", world!"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> Messages([e1, e2])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>messages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>To: 
+From: 
+Subject: 
+Sent at: 2024-03-05 15:11:09.502653
+Message: 209359f3-63dd-43e2-894d-1d808cb83b40
+
+Hello
+
+Attachments:
 
 
-</section>
+---
+To: 
+From: 
+Subject: 
+Sent at: 2024-03-05 15:11:09.502705
+Message: 71fc783b-4382-425e-ac57-729bc0456c94
+
+, world!
+
+Attachments:
+</code></pre>
+</div>
+</div>
+
+
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
