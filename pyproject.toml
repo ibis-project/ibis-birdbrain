@@ -7,7 +7,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ibis-birdbrain"
-version = "0.1.0"
+version = "0.2.0"
 authors = [
   { name="Cody", email="cody@dkdc.dev" },
 ]
