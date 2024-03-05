@@ -83,7 +83,7 @@ repo:
 
 # presentation
 presentation:
-    @quarto preview presentation.qmd
+    @quarto preview presentation/index.qmd
 
 # planning
 planning:
