@@ -1,0 +1,12 @@
+{
+  "hash": "5d2f1ac330c63e71709868d483412e5f",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Installation and setup\n---\n\n\n\nThis page describes how to install and setup Ibis Birdbrain.\n\n## Install from PyPI\n\n```bash\npip install ibis-birdbrain\n```\n\n## Data platform setup\n\nCreate an Ibis connection:\n\n:::{.callout-warning}\nOnly DuckDB is installed by default. For now, you need to install other backends\nmanually with Ibis.\n:::\n\n\n::: {#9af055c5 .cell execution_count=1}\n``` {.python .cell-code}\nimport ibis\n\nbackend = \"duckdb\"\nbackend_uri = \"\"\n\ncon = ibis.connect(f\"{backend}://{backend_uri}\")\ncon\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n<ibis.backends.duckdb.Backend at 0x1487a2890>\n```\n:::\n:::\n\n\n## AI platform setup\n\nSee [Marvin documentation for\nsetup](https://www.askmarvin.ai/docs/configuration/settings/).\n\n:::{.callout-warning}\nOnly OpenAI and Azure OpenAI are supported for now.\n:::\n\n## Next steps\n\n[Learn how get started with Ibis Birdbrain's CLI](tutorials/cli.qmd).\n\n",
+    "supporting": [
+      "install_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

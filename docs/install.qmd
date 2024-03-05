@@ -10,32 +10,31 @@ pip install ibis-birdbrain
 
 ## Data platform setup
 
-:::{.callout-warning}
-Documentation coming soon!
-:::
+Create an Ibis connection:
 
 :::{.callout-warning}
-Only DuckDB supported for now. All 18+ Ibis backends coming soon.
+Only DuckDB is installed by default. For now, you need to install other backends
+manually with Ibis.
 :::
+
+```{python}
+import ibis
+
+backend = "duckdb"
+backend_uri = ""
+
+con = ibis.connect(f"{backend}://{backend_uri}")
+con
+```
 
 ## AI platform setup
 
-:::{.callout-warning}
-Documentation coming soon!
-:::
+See [Marvin documentation for
+setup](https://www.askmarvin.ai/docs/configuration/settings/).
 
 :::{.callout-warning}
-Only Azure OpenAI is supported for now. All Marvin providers coming soon.
+Only OpenAI and Azure OpenAI are supported for now.
 :::
-
-Create the `~/.birdbrain/.env` file:
-
-```txt
-MARVIN_AZURE_OPENAI_API_KEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-MARVIN_AZURE_OPENAI_API_BASE="https://birdbrain.openai.azure.com"
-MARVIN_AZURE_OPENAI_DEPLOYMENT_NAME="birdbrain-4-32k"
-MARVIN_AZURE_OPENAI_API_TYPE="azure"
-```
 
 ## Next steps
 

@@ -6,9 +6,7 @@
 
 ## Overview
 
-You can use Ibis Birdbrain as a Python library, but it is often used through an
-interactive Python session. You can [see how to start one with the `birdbrain`
-CLI with Ibis Birdbrain ready to use](/tutorials/cli.qmd).
+You can use Ibis Birdbrain in Python.
 
 ## Setup the bot
 
