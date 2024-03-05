@@ -297,13 +297,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setup-the-bot" class="level2">
 <h2 class="anchored" data-anchor-id="setup-the-bot">Setup the bot</h2>
 <p>First, import relevant modules:</p>
-<div id="c610da97" class="cell" data-execution_count="1">
+<div id="713fdb0b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain <span class="im">import</span> Bot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Set Ibis interactive mode:</p>
-<div id="da2b0df7" class="cell" data-execution_count="2">
+<div id="dd1db426" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ibis.options.interactive <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="create-an-ibis-connection" class="level3">
@@ -322,7 +322,7 @@ Warning
 <p>We’ll create a demo database for this tutorial.</p>
 </div>
 </div>
-<div id="08ede976" class="cell" data-execution_count="3">
+<div id="23220e86" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="st">"duckdb://penguins.ddb"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>con.create_table(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"penguins"</span>, ibis.examples.penguins.fetch().to_pyarrow(), overwrite<span class="op">=</span><span class="va">True</span></span>
@@ -355,21 +355,21 @@ Tip
 <p>You should not include table names and schemas – this will be inferred automatically.</p>
 </div>
 </div>
-<div id="19399376" class="cell" data-execution_count="4">
+<div id="d1a29af2" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bot <span class="op">=</span> Bot(con<span class="op">=</span>con, data_description<span class="op">=</span><span class="st">"the Palmer Penguins dataset"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>INFO:root:Bot birdbrain initialized...</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>&lt;ibis_birdbrain.bot.Bot at 0x111bf95d0&gt;</code></pre>
+<pre><code>&lt;ibis_birdbrain.bot.Bot at 0x282385090&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="test-the-bot" class="level3">
 <h3 class="anchored" data-anchor-id="test-the-bot">Test the bot</h3>
 <p>You can ask the bot questions:</p>
-<div id="b3a365db" class="cell" data-execution_count="5">
+<div id="ac5bbc96" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> bot(<span class="st">"""give me the counts of penguins by species and island from highest</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">to lowest"""</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -393,21 +393,24 @@ INFO:root:Executing the SQL task</code></pre>
 <pre>To: user
 From: birdbrain
 Subject: give me the counts of pengu...
-Sent at: 2024-03-05 11:23:48.370476
-Message: a6dff0f1-8fa5-4fe6-a14d-7576736d88e3
+Sent at: 2024-03-05 11:31:58.342810
+Message: 0da2fb4c-30f7-4c2d-a646-ed500e3f99a6
 Ibis Birdbrain has attached the results.
 Attachments:
 CodeAttachment
-    **guid**: 3a358f68-357b-44a2-800e-4d96fb3b9a10
-    **time**: 2024-03-05 11:23:48.368303
+    **guid**: 14125164-2a86-479b-ba97-9847e894d7a7
+    **time**: 2024-03-05 11:31:58.340826
     **name**: None
     **desc**: None
     **language**: sql
     **code**:
-SELECT species, island, COUNT(*) AS count FROM penguins GROUP BY species, island ORDER BY count DESC
+SELECT species, island, COUNT(*) AS count 
+FROM penguins 
+GROUP BY species, island 
+ORDER BY count DESC
 TableAttachment
-    **guid**: d1345277-18aa-46d7-ab71-f026d71cfb19
-    **time**: 2024-03-05 11:23:48.370386
+    **guid**: 537a8847-568d-45c8-b306-4f5363ad5ca1
+    **time**: 2024-03-05 11:31:58.342725
     **name**: None
     **desc**: 
 ibis.Schema {
@@ -433,8 +436,8 @@ ibis.Schema {
 </section>
 <section id="get-attachments" class="level3">
 <h3 class="anchored" data-anchor-id="get-attachments">Get attachments</h3>
-<p>You can get the table attachment back:</p>
-<div id="ad930927" class="cell" data-execution_count="6">
+<p>You can get the table from the attachment:</p>
+<div id="d6a24b26" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> res.attachments[<span class="op">-</span><span class="dv">1</span>].<span class="bu">open</span>()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -448,6 +451,24 @@ ibis.Schema {
 │ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">56</span> │
 │ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">52</span> │
 │ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">44</span> │
+└───────────┴───────────┴───────┘
+</pre>
+</div>
+</div>
+<p>And do whatever you want with it:</p>
+<div id="4895d869" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>t.order_by(ibis._[<span class="st">"count"</span>].asc())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓
+┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃<span style="font-weight: bold"> count </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span> │
+├───────────┼───────────┼───────┤
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">44</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">52</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">56</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Chinstrap</span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">68</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Gentoo   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">124</span> │
 └───────────┴───────────┴───────┘
 </pre>
 </div>
