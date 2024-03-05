@@ -73,11 +73,17 @@ res
 
 ### Get attachments
 
-You can get the table attachment back:
+You can get the table from the attachment:
 
 ```{python}
 t = res.attachments[-1].open()
 t
+```
+
+And do whatever you want with it:
+
+```{python}
+t.order_by(ibis._["count"].asc())
 ```
 
 ## Next steps
