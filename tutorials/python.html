@@ -20,10 +20,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -65,6 +99,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -212,23 +249,41 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tutorial-python" id="toc-tutorial-python" class="nav-link active" data-scroll-target="#tutorial-python">Tutorial: Python</a>
-  <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
+  <li><a href="#setup-the-bot" id="toc-setup-the-bot" class="nav-link" data-scroll-target="#setup-the-bot">Setup the bot</a>
+  <ul class="collapse">
+  <li><a href="#create-an-ibis-connection" id="toc-create-an-ibis-connection" class="nav-link" data-scroll-target="#create-an-ibis-connection">Create an Ibis connection</a></li>
+  <li><a href="#create-the-bot" id="toc-create-the-bot" class="nav-link" data-scroll-target="#create-the-bot">Create the bot</a></li>
+  <li><a href="#test-the-bot" id="toc-test-the-bot" class="nav-link" data-scroll-target="#test-the-bot">Test the bot</a></li>
+  <li><a href="#get-attachments" id="toc-get-attachments" class="nav-link" data-scroll-target="#get-attachments">Get attachments</a></li>
   </ul></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ibis-project/ibis-birdbrain/edit/main/docs/tutorials/python.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ibis-project/ibis-birdbrain/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Tutorial: Python</h1>
+</div>
 
 
 
-<section id="tutorial-python" class="level1">
-<h1>Tutorial: Python</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
 <ol type="1">
@@ -239,12 +294,171 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>You can use Ibis Birdbrain as a Python library, but it is often used through an interactive Python session. You can <a href="../tutorials/cli.html">see how to start one with the <code>birdbrain</code> CLI with Ibis Birdbrain ready to use</a>.</p>
 </section>
+<section id="setup-the-bot" class="level2">
+<h2 class="anchored" data-anchor-id="setup-the-bot">Setup the bot</h2>
+<p>First, import relevant modules:</p>
+<div id="c610da97" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain <span class="im">import</span> Bot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Set Ibis interactive mode:</p>
+<div id="da2b0df7" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ibis.options.interactive <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="create-an-ibis-connection" class="level3">
+<h3 class="anchored" data-anchor-id="create-an-ibis-connection">Create an Ibis connection</h3>
+<p>Create an Ibis connection to your database:</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We’ll create a demo database for this tutorial.</p>
+</div>
+</div>
+<div id="08ede976" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="st">"duckdb://penguins.ddb"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>con.create_table(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"penguins"</span>, ibis.examples.penguins.fetch().to_pyarrow(), overwrite<span class="op">=</span><span class="va">True</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.<span class="ex">connect</span>(<span class="st">"duckdb://penguins.ddb"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>con.list_tables()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:pins.cache:cache file: /Users/cody/Library/Caches/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/data.txt
+INFO:pins.cache:cache file: /Users/cody/Library/Caches/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/penguins.csv.gz</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>['penguins']</code></pre>
+</div>
+</div>
+</section>
+<section id="create-the-bot" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-bot">Create the bot</h3>
+<p>You’ll create the bot by passing in the connection:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For increased accuracy, you should also pass in a <code>data_description</code> containing information about the dataset. This could be fetched from the database itself, manually created, or otherwise obtained.</p>
+<p>You should not include table names and schemas – this will be inferred automatically.</p>
+</div>
+</div>
+<div id="19399376" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bot <span class="op">=</span> Bot(con<span class="op">=</span>con, data_description<span class="op">=</span><span class="st">"the Palmer Penguins dataset"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:root:Bot birdbrain initialized...</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>&lt;ibis_birdbrain.bot.Bot at 0x111bf95d0&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="test-the-bot" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-bot">Test the bot</h3>
+<p>You can ask the bot questions:</p>
+<div id="b3a365db" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> bot(<span class="st">"""give me the counts of penguins by species and island from highest</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">to lowest"""</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:root:Bot birdbrain called with text: give me the counts of penguins by species and island from highest
+to lowest
+INFO:root:Selected flow: data
+INFO:root:Executing the data flow
+INFO:root:Text to SQL task
+INFO:httpx:HTTP Request: POST https://birdbrain-eh.openai.azure.com/openai/deployments/gpt-4-turbo/chat/completions?api-version=2023-12-01-preview "HTTP/1.1 200 OK"
+INFO:root:Executing the SQL task</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="ansi-escaped-output">
+<pre>To: user
+From: birdbrain
+Subject: give me the counts of pengu...
+Sent at: 2024-03-05 11:23:48.370476
+Message: a6dff0f1-8fa5-4fe6-a14d-7576736d88e3
+Ibis Birdbrain has attached the results.
+Attachments:
+CodeAttachment
+    **guid**: 3a358f68-357b-44a2-800e-4d96fb3b9a10
+    **time**: 2024-03-05 11:23:48.368303
+    **name**: None
+    **desc**: None
+    **language**: sql
+    **code**:
+SELECT species, island, COUNT(*) AS count FROM penguins GROUP BY species, island ORDER BY count DESC
+TableAttachment
+    **guid**: d1345277-18aa-46d7-ab71-f026d71cfb19
+    **time**: 2024-03-05 11:23:48.370386
+    **name**: None
+    **desc**: 
+ibis.Schema {
+  species  string
+  island   string
+  count    int64
+}
+                **table**:
+┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓
+┃<span class="ansi-bold"> </span><span class="ansi-bold">species</span><span class="ansi-bold">  </span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">island</span><span class="ansi-bold">   </span><span class="ansi-bold"> </span>┃<span class="ansi-bold"> </span><span class="ansi-bold">count</span><span class="ansi-bold"> </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩
+│ string    │ string    │ int64 │
+├───────────┼───────────┼───────┤
+│ <span class="ansi-green-fg">Gentoo   </span> │ <span class="ansi-green-fg">Biscoe   </span> │   <span class="ansi-cyan-fg ansi-bold">124</span> │
+│ <span class="ansi-green-fg">Chinstrap</span> │ <span class="ansi-green-fg">Dream    </span> │    <span class="ansi-cyan-fg ansi-bold">68</span> │
+│ <span class="ansi-green-fg">Adelie   </span> │ <span class="ansi-green-fg">Dream    </span> │    <span class="ansi-cyan-fg ansi-bold">56</span> │
+│ <span class="ansi-green-fg">Adelie   </span> │ <span class="ansi-green-fg">Torgersen</span> │    <span class="ansi-cyan-fg ansi-bold">52</span> │
+│ <span class="ansi-green-fg">Adelie   </span> │ <span class="ansi-green-fg">Biscoe   </span> │    <span class="ansi-cyan-fg ansi-bold">44</span> │
+└───────────┴───────────┴───────┘</pre>
+</div>
+</div>
+</div>
+</section>
+<section id="get-attachments" class="level3">
+<h3 class="anchored" data-anchor-id="get-attachments">Get attachments</h3>
+<p>You can get the table attachment back:</p>
+<div id="ad930927" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> res.attachments[<span class="op">-</span><span class="dv">1</span>].<span class="bu">open</span>()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┓
+┃<span style="font-weight: bold"> species   </span>┃<span style="font-weight: bold"> island    </span>┃<span style="font-weight: bold"> count </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━┩
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">string</span>    │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">int64</span> │
+├───────────┼───────────┼───────┤
+│ <span style="color: #008000; text-decoration-color: #008000">Gentoo   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">124</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Chinstrap</span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">68</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Dream    </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">56</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Torgersen</span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">52</span> │
+│ <span style="color: #008000; text-decoration-color: #008000">Adelie   </span> │ <span style="color: #008000; text-decoration-color: #008000">Biscoe   </span> │    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">44</span> │
+└───────────┴───────────┴───────┘
+</pre>
+</div>
+</div>
+</section>
+</section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
 <p>Explore some data with Ibis Birdbrain and <a href="https://github.com/ibis-project/ibis-birdbrain/issues/new">let us know how it goes!</a></p>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->

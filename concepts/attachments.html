@@ -298,15 +298,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ibis Birdbrain passes Python objects as <code>Attachments</code> to <a href="../concepts/messages.html"><code>Messages</code></a>. This allows the user, itself, and (eventually) other bots to interact with data, code, and more.</p>
 <section id="usage" class="level2">
 <h2 class="anchored" data-anchor-id="usage">Usage</h2>
-<div id="15003ae9" class="cell" data-execution_count="1">
+<div id="77a9f256" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.attachments <span class="im">import</span> Attachment, Attachments</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> Attachment(content<span class="op">=</span><span class="st">"Hello, world!"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>a1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>Attachment
-    **guid**: c339eed1-225e-4c1a-a7d4-2b99546ef07a
-    **time**: 2024-03-05 15:11:04.784220
+    **guid**: aefa7dd8-1504-466e-afa8-fa0053ef087e
+    **time**: 2024-03-05 11:22:38.343515
     **name**: None
     **desc**: None</code></pre>
 </div>
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="tableattachment" class="level2">
 <h2 class="anchored" data-anchor-id="tableattachment">TableAttachment</h2>
 <p>A <code>TableAttachment</code> contains an Ibis table:</p>
-<div id="b8280f28" class="cell" data-execution_count="2">
+<div id="9a87d9f6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.attachments <span class="im">import</span> TableAttachment</span>
@@ -327,10 +327,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>a2 <span class="op">=</span> TableAttachment(content<span class="op">=</span>t)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>a2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/data.txt
-INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/data.txt
-INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/penguins.csv.gz
-INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/penguins.csv.gz</code></pre>
+<pre><code>INFO:pins.cache:cache file: /Users/cody/Library/Caches/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/data.txt
+INFO:pins.cache:cache file: /Users/cody/Library/Caches/pins-py/gcs_332a30997e141da0e08f15fbfae8b3c3ec90463922d117a96fa3b1bef85a2a4c/penguins/20230905T090411Z-9aae2/penguins.csv.gz</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -338,8 +336,8 @@ INFO:pins.cache:cache file: /home/runner/.cache/pins-py/gcs_332a30997e141da0e08f
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div class="ansi-escaped-output">
 <pre>TableAttachment
-    **guid**: 3850c2bb-2887-4a4d-a4cd-fa87e331e3fa
-    **time**: 2024-03-05 15:11:05.521195
+    **guid**: 5992ed9a-8a14-46c6-9da8-afdb3644a23d
+    **time**: 2024-03-05 11:22:40.051587
     **name**: penguins
     **desc**: 
 ibis.Schema {
@@ -378,15 +376,15 @@ ibis.Schema {
 <section id="codeattachment" class="level2">
 <h2 class="anchored" data-anchor-id="codeattachment">CodeAttachment</h2>
 <p>A <code>CodeAttachment</code> contains code – typically Python or SQL:</p>
-<div id="179f60a0" class="cell" data-execution_count="3">
+<div id="89ecfbf6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.attachments <span class="im">import</span> CodeAttachment</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>a3 <span class="op">=</span> CodeAttachment(content<span class="op">=</span><span class="st">"select 1 as id"</span>, language<span class="op">=</span><span class="st">"sql"</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>a3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>CodeAttachment
-    **guid**: 0e1d88eb-37dc-44cf-9468-0f8e25df733e
-    **time**: 2024-03-05 15:11:05.566415
+    **guid**: 8138742b-dcef-4735-b452-8481468e12da
+    **time**: 2024-03-05 11:22:40.087917
     **name**: None
     **desc**: None
     **language**: sql

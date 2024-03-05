@@ -294,20 +294,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ibis Birdbrain communicates with the user, itself, and (eventually) other bots through <code>Messages</code>. A <code>Message</code> is a simple wrapper around text with metadata and optional <a href="../concepts/attachments.html"><code>Attachments</code></a>.</p>
 <section id="usage" class="level2">
 <h2 class="anchored" data-anchor-id="usage">Usage</h2>
-<div id="5e5d2fac" class="cell" data-execution_count="1">
+<div id="9c0146d7" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis_birdbrain.messages <span class="im">import</span> Message, Messages, Email</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> Message(<span class="st">"Hello, world!"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>m1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Message(d6d2c9ed-4602-4632-9bc9-9490b2fa2623)</code></pre>
+<pre><code>Message(5956d627-9038-4bb4-b827-1d9ed646c75e)</code></pre>
 </div>
 </div>
 </section>
 <section id="emails" class="level2">
 <h2 class="anchored" data-anchor-id="emails">Emails</h2>
 <p>Currently, the only implementation of <code>Message</code> that is viewable as a proper string is <code>Email</code>.</p>
-<div id="f5fbfea5" class="cell" data-execution_count="2">
+<div id="2e43c663" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>e1 <span class="op">=</span> Email(<span class="st">"Hello"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>e2 <span class="op">=</span> Email(<span class="st">", world!"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -317,8 +317,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>To: 
 From: 
 Subject: 
-Sent at: 2024-03-05 15:11:09.502653
-Message: 209359f3-63dd-43e2-894d-1d808cb83b40
+Sent at: 2024-03-05 11:22:52.258182
+Message: e855820a-eedd-4229-96d1-7ae525800995
 
 Hello
 
@@ -329,8 +329,8 @@ Attachments:
 To: 
 From: 
 Subject: 
-Sent at: 2024-03-05 15:11:09.502705
-Message: 71fc783b-4382-425e-ac57-729bc0456c94
+Sent at: 2024-03-05 11:22:52.258207
+Message: 50a43477-12d3-4138-b5ff-38fd5b2b7704
 
 , world!
 
