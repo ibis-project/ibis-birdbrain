@@ -54,8 +54,8 @@ def process_message(message, include_attachments=False):
         for attachment in message.attachments:
             a = message.attachments[attachment]  # TODO: hack
             if isinstance(a, CodeAttachment):
-                expander = st.expander(label=a.language, expanded=False)
-                results.append(expander.markdown(f"```{a.language}\n{a.open()}"))
+                expander = st.expander(label=a.dialect, expanded=False)
+                results.append(expander.markdown(f"```{a.dialect}\n{a.open()}"))
             # elif isinstance(a, TextAttachment):
             #     results.append(st.markdown(a.open()))
             # elif isinstance(a, ErrorAttachment):
