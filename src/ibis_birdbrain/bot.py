@@ -1,5 +1,6 @@
 # imports
 import ibis
+import sqlglot as sg
 
 from uuid import uuid4
 from typing import Any
@@ -12,12 +13,14 @@ from ibis_birdbrain.attachments import (
     Attachments,
     TableAttachment,
     DatabaseAttachment,
+    CodeAttachment,
 )
 from ibis_birdbrain.flows import Flows
 from ibis_birdbrain.strings import bot_description
 from ibis_birdbrain.messages import Message, Messages, Email
 from ibis_birdbrain.utils.strings import shorten_str
 from ibis_birdbrain.utils.attachments import to_attachments
+from ibis_birdbrain.tasks.sql import ExecuteSQLTask
 
 from ibis_birdbrain.flows.data import DataFlow
 
@@ -172,12 +175,42 @@ class Bot:
         """Respond to the messages."""
         ...
 
-    # TODO: for demo
-    def translate_sql(self, sql: str, dialect_to: str, dialect_from: str) -> str:
+    def transpile_sql(self, sql: str, dialect_from: str, dialect_to: str) -> str:
         """Translate SQL from one dialect to another."""
-        ...
+        
+        return sg.transpile(sql, read=dialect_from, write=dialect_to, identity=False)[0]
 
-    # TODO: for demo
     def execute_last_sql(self, con: BaseBackend) -> Message:
         """Execute the last SQL statement."""
-        ...
+
+        sql_attachment = None
+        for i in range(1, len(self.messages)):
+            message = self.messages[-i]
+            for attachment in message.attachments:
+                if isinstance(message.attachments[attachment], CodeAttachment):
+                    sql_attachment = message.attachments[attachment]
+                if isinstance(message.attachments[attachment], TableAttachment):
+                    table_attachment = message.attachments[attachment]
+            if sql_attachment and table_attachment:
+                # Only execute last succefully executed sql query who has a table attachment
+                break
+            else:
+                sql_attachment = None
+                table_attachment = None
+
+        if sql_attachment:
+            database_attachment = DatabaseAttachment(con)
+            task_message = Email(
+                body="execute this SQL on the {con.name}",
+                attachments=[database_attachment, sql_attachment],
+                to_address="execute-SQL",
+                from_address=self.name,
+            )
+            return ExecuteSQLTask("execute-SQL")(task_message)
+
+
+        return Email(
+                body=f"No Sql query executed",
+                to_address=self.messages[-1].from_address,
+                from_address=self.name,
+            )
