@@ -67,7 +67,7 @@ class DataFlow(Flow):
         # check the response
         assert len(task_response.attachments) == 1
         assert isinstance(task_response.attachments[0], CodeAttachment)
-        assert task_response.attachments[0].language == "sql"
+        # assert task_response.attachments[0].language == "sql"
 
         # extract the SQL attachment
         sql_attachment = task_response.attachments[0]
@@ -83,7 +83,7 @@ class DataFlow(Flow):
         task_response = self.tasks["execute-SQL"](task_message)
         response_messages.append(task_response)
 
-        assert len(task_response.attachments) == 1
+        assert len(task_response.attachments) == 2
 
         # check the response
         if isinstance(task_response.attachments[0], TableAttachment):

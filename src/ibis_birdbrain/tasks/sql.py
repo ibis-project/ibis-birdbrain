@@ -32,9 +32,11 @@ class TextToSQLTask(Task):
         # TODO: add proper methods for this
         table_attachments = Attachments()
         database_attachment = None
+        dialect = "duckdb"
         for attachment in message.attachments:
             if isinstance(message.attachments[attachment], DatabaseAttachment):
                 database_attachment = message.attachments[attachment]
+                dialect = database_attachment.open().name
             elif isinstance(message.attachments[attachment], TableAttachment):
                 table_attachments.append(message.attachments[attachment])
 
@@ -46,8 +48,9 @@ class TextToSQLTask(Task):
             text=message.body,
             tables=table_attachments,
             data_description=database_attachment.description,
+            dialect=dialect,
         )
-        code_attachment = CodeAttachment(language="sql", content=sql)
+        code_attachment = CodeAttachment(dialect=dialect, content=sql)
 
         # generate the response message
         response_message = Email(
@@ -133,7 +136,7 @@ class ExecuteSQLTask(Task):
 
         response_message = Email(
             body="execute SQL called",
-            attachments=[attachment],
+            attachments=[attachment, sql_attachment],
             to_address=message.from_address,
             from_address=self.name,
         )
@@ -180,11 +183,12 @@ class FixSQLTask(Task):
             error=error_attachment.open(),
             tables=table_attachments,
             data_description=database_attachment.description,
+            dialect=sql_attachment.dialect
         )
 
         response_message = Email(
             body="fix SQL called",
-            attachments=[CodeAttachment(language="sql", content=sql)],
+            attachments=[CodeAttachment(dialect=sql_attachment.dialect, content=sql)],
             to_address=message.from_address,
             from_address=self.name,
         )
