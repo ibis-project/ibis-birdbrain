@@ -13,7 +13,7 @@ from ibis_birdbrain.attachments import (
     Attachments,
     TableAttachment,
     DatabaseAttachment,
-    CodeAttachment,
+    SQLAttachment,
 )
 from ibis_birdbrain.flows import Flows
 from ibis_birdbrain.strings import bot_description
@@ -178,25 +178,22 @@ class Bot:
     def transpile_sql(self, sql: str, dialect_from: str, dialect_to: str) -> str:
         """Translate SQL from one dialect to another."""
         
-        return sg.transpile(sql, read=dialect_from, write=dialect_to, identity=False)[0]
+        return sg.transpile(
+            sql=sql,
+            read=dialect_from,
+            write=dialect_to,
+            identity=False,
+            pretty=True,
+        )[0]
 
     def execute_last_sql(self, con: BaseBackend) -> Message:
-        """Execute the last SQL statement."""
+        """Execute the last successfully executed SQL statement."""
 
         sql_attachment = None
-        for i in range(1, len(self.messages)):
-            message = self.messages[-i]
-            for attachment in message.attachments:
-                if isinstance(message.attachments[attachment], CodeAttachment):
-                    sql_attachment = message.attachments[attachment]
-                if isinstance(message.attachments[attachment], TableAttachment):
-                    table_attachment = message.attachments[attachment]
-            if sql_attachment and table_attachment:
-                # Only execute last succefully executed sql query who has a table attachment
-                break
-            else:
-                sql_attachment = None
-                table_attachment = None
+        for m in reversed(self.messages):
+            if sql_attachment := m.attachments.get_attachment_by_type(SQLAttachment):
+                if m.attachments.get_attachment_by_type(TableAttachment):
+                    break
 
         if sql_attachment:
             database_attachment = DatabaseAttachment(con)

@@ -8,7 +8,7 @@ from ibis_birdbrain.messages import Email, Message
 from ibis_birdbrain.attachments import (
     Attachments,
     TableAttachment,
-    CodeAttachment,
+    SQLAttachment,
     ErrorAttachment,
     DatabaseAttachment,
 )
@@ -50,7 +50,7 @@ class TextToSQLTask(Task):
             data_description=database_attachment.description,
             dialect=dialect,
         )
-        code_attachment = CodeAttachment(dialect=dialect, content=sql)
+        code_attachment = SQLAttachment(dialect=dialect, content=sql)
 
         # generate the response message
         response_message = Email(
@@ -114,12 +114,8 @@ class ExecuteSQLTask(Task):
         log.info("Executing the SQL task")
 
         # get the database attachment and sql attachments
-        # TODO: add proper methods for this
-        for attachment in message.attachments:
-            if isinstance(message.attachments[attachment], CodeAttachment):
-                sql_attachment = message.attachments[attachment]
-            elif isinstance(message.attachments[attachment], DatabaseAttachment):
-                database_attachment = message.attachments[attachment]
+        sql_attachment = message.attachments.get_attachment_by_type(SQLAttachment)
+        database_attachment = message.attachments.get_attachment_by_type(DatabaseAttachment)
 
         con = database_attachment.open()
         sql = sql_attachment.open()
@@ -156,21 +152,10 @@ class FixSQLTask(Task):
         """Fix the SQL task."""
         log.info("Fixing the SQL task")
 
-        # hackily get the database attachment, table attachments, sql attachment, and error attachment
-
-        database_attachment = None
-        table_attachments = None
-        sql_attachment = None
-        error_attachment = None
-        for attachment in message.attachments:
-            if isinstance(message.attachments[attachment], DatabaseAttachment):
-                database_attachment = message.attachments[attachment]
-            elif isinstance(message.attachments[attachment], TableAttachment):
-                table_attachments = message.attachments[attachment]
-            elif isinstance(message.attachments[attachment], CodeAttachment):
-                sql_attachment = message.attachments[attachment]
-            elif isinstance(message.attachments[attachment], ErrorAttachment):
-                error_attachment = message.attachments[attachment]
+        database_attachment = message.attachments.get_attachment_by_type(DatabaseAttachment)
+        table_attachments = message.attachments.get_attachment_by_type(TableAttachment)
+        sql_attachment = message.attachments.get_attachment_by_type(SQLAttachment)
+        error_attachment = message.attachments.get_attachment_by_type(ErrorAttachment)
 
         assert database_attachment is not None, "No database attachment found"
         assert table_attachments is not None, "No table attachments found"
@@ -188,7 +173,7 @@ class FixSQLTask(Task):
 
         response_message = Email(
             body="fix SQL called",
-            attachments=[CodeAttachment(dialect=sql_attachment.dialect, content=sql)],
+            attachments=[SQLAttachment(dialect=sql_attachment.dialect, content=sql)],
             to_address=message.from_address,
             from_address=self.name,
         )
