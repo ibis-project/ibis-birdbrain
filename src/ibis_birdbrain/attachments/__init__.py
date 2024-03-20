@@ -1,6 +1,6 @@
 # imports
 from uuid import uuid4
-from typing import Any, Union, List
+from typing import Any, Union, List, Type
 from datetime import datetime
 
 from ibis.expr.types.relations import Table
@@ -53,14 +53,18 @@ class Attachments:
     """Ibis Birdbrain attachments."""
 
     attachments: dict[str, Attachment]
+    type_id_map: dict[Type[Attachment], str]
 
     def __init__(self, attachments: list[Attachment] = []) -> None:
         """Initialize the attachments."""
         self.attachments = {a.id: a for a in attachments}
+        self.type_id_map = {type(a): a.id for a in attachments}
+
 
     def add_attachment(self, attachment: Attachment):
         """Add an attachment to the collection."""
         self.attachments[attachment.id] = attachment
+        self.type_id_map[type(attachment)] = attachment.id
 
     def append(self, attachment: Attachment):
         """Alias for add_attachment."""
@@ -75,6 +79,12 @@ class Attachments:
 
         return self
 
+    def get_attachment_by_type(self, attachment_type: Type[Attachment]):
+        """Get attachments of a specific type."""
+        if attachment_type not in self.type_id_map:
+            return None
+        return self.attachments[self.type_id_map[attachment_type]]
+
     def __getitem__(self, id: str | int):
         """Get an attachment from the collection."""
         if isinstance(id, int):
@@ -84,6 +94,7 @@ class Attachments:
     def __setitem__(self, id: str, attachment: Attachment):
         """Set an attachment in the collection."""
         self.attachments[id] = attachment
+        self.type_id_map[type(attachment)] = id
 
     def __len__(self) -> int:
         """Get the length of the collection."""
@@ -109,7 +120,7 @@ from ibis_birdbrain.attachments.data import (
 )
 from ibis_birdbrain.attachments.text import (
     TextAttachment,
-    CodeAttachment,
+    SQLAttachment,
     ErrorAttachment,
     WebpageAttachment,
 )
@@ -122,7 +133,7 @@ __all__ = [
     "TableAttachment",
     "ChartAttachment",
     "TextAttachment",
-    "CodeAttachment",
+    "SQLAttachment",
     "ErrorAttachment",
     "WebpageAttachment",
 ]
