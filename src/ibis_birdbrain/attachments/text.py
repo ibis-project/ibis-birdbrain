@@ -74,7 +74,8 @@ class WebpageAttachment(Attachment):
             return self.url
 
 
-class CodeAttachment(TextAttachment):
+# TODO: add CodeAttachment
+class SQLAttachment(TextAttachment):
     """A code attachment."""
 
     content: str
