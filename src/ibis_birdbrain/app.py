@@ -51,14 +51,15 @@ def process_message(message, include_attachments=False):
     results = []
     results.append(st.markdown(message.body))
     if include_attachments:
-        if sql_attachment := message.attachments.get_attachment_by_type(SQLAttachment)
+        if sql_attachment := message.attachments.get_attachment_by_type(SQLAttachment):
             expander = st.expander(label=a.dialect, expanded=False)
             results.append(expander.markdown(f"```{sql_attachment.dialect}\n{sql_attachment.open()}"))
 
-        if table_attachment := message.attachments.get_attachment_by_type(TableAttachment)
+        if table_attachments := message.attachments.get_attachment_by_type(TableAttachment):
+            # only have 1 table
             results.append(
                     st.dataframe(
-                        a.open().limit(1000).to_pandas(), use_container_width=True
+                        table_attachments[0].open().limit(1000).to_pandas(), use_container_width=True
                     )
             )
 

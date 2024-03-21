@@ -191,9 +191,9 @@ class Bot:
 
         sql_attachment = None
         for m in reversed(self.messages):
-            if sql_attachment := m.attachments.get_attachment_by_type(SQLAttachment):
-                if m.attachments.get_attachment_by_type(TableAttachment):
-                    break
+            if m.attachments.get_attachment_by_type(SQLAttachment) and m.attachments.get_attachment_by_type(TableAttachment):
+                sql_attachment = m.attachments.get_attachment_by_type(SQLAttachment)
+                break
 
         if sql_attachment:
             database_attachment = DatabaseAttachment(con)
