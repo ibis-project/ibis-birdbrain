@@ -6,7 +6,7 @@ from ibis_birdbrain.logging import log
 from ibis_birdbrain.messages import Email, Messages
 from ibis_birdbrain.attachments import (
     TableAttachment,
-    CodeAttachment,
+    SQLAttachment,
     ErrorAttachment,
     Attachments,
 )
@@ -66,8 +66,8 @@ class DataFlow(Flow):
 
         # check the response
         assert len(task_response.attachments) == 1
-        assert isinstance(task_response.attachments[0], CodeAttachment)
-        assert task_response.attachments[0].language == "sql"
+        assert isinstance(task_response.attachments[0], SQLAttachment)
+        # assert task_response.attachments[0].language == "sql"
 
         # extract the SQL attachment
         sql_attachment = task_response.attachments[0]
@@ -83,7 +83,7 @@ class DataFlow(Flow):
         task_response = self.tasks["execute-SQL"](task_message)
         response_messages.append(task_response)
 
-        assert len(task_response.attachments) == 1
+        assert len(task_response.attachments) == 2
 
         # check the response
         if isinstance(task_response.attachments[0], TableAttachment):
@@ -106,11 +106,7 @@ class DataFlow(Flow):
                 response_messages.append(task_response)
 
                 # get the new sql_attachment
-                for attachment in task_response.attachments:
-                    if isinstance(
-                        task_response.attachments[attachment], CodeAttachment
-                    ):
-                        sql_attachment = task_response.attachments[attachment]
+                sql_attachment = task_response.attachments.get_attachment_by_type(SQLAttachment)
 
                 # try executing
                 task_response = self.tasks["execute-SQL"](

@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 from ibis_birdbrain.bot import Bot
 from ibis_birdbrain.attachments import (
-    CodeAttachment,
+    SQLAttachment,
     ErrorAttachment,
     TextAttachment,
     WebpageAttachment,
@@ -51,11 +51,23 @@ def process_message(message, include_attachments=False):
     results = []
     results.append(st.markdown(message.body))
     if include_attachments:
-        for attachment in message.attachments:
-            a = message.attachments[attachment]  # TODO: hack
-            if isinstance(a, CodeAttachment):
-                expander = st.expander(label=a.language, expanded=False)
-                results.append(expander.markdown(f"```{a.language}\n{a.open()}"))
+        if sql_attachment := message.attachments.get_attachment_by_type(SQLAttachment):
+            expander = st.expander(label=a.dialect, expanded=False)
+            results.append(expander.markdown(f"```{sql_attachment.dialect}\n{sql_attachment.open()}"))
+
+        if table_attachments := message.attachments.get_attachment_by_type(TableAttachment):
+            # only have 1 table
+            results.append(
+                    st.dataframe(
+                        table_attachments[0].open().limit(1000).to_pandas(), use_container_width=True
+                    )
+            )
+
+        # for attachment in message.attachments:
+        #     a = message.attachments[attachment]  # TODO: hack
+        #     if isinstance(a, SQLAttachment):
+        #         expander = st.expander(label=a.dialect, expanded=False)
+        #         results.append(expander.markdown(f"```{a.dialect}\n{a.open()}"))
             # elif isinstance(a, TextAttachment):
             #     results.append(st.markdown(a.open()))
             # elif isinstance(a, ErrorAttachment):
@@ -64,12 +76,12 @@ def process_message(message, include_attachments=False):
             #     results.append(st.markdown(a.open()))  # TODO: better?
             # elif isinstance(a, DataAttachment):
             # results.append(st.markdown(a.open()))
-            elif isinstance(a, TableAttachment):
-                results.append(
-                    st.dataframe(
-                        a.open().limit(1000).to_pandas(), use_container_width=True
-                    )
-                )
+            # elif isinstance(a, TableAttachment):
+            #     results.append(
+            #         st.dataframe(
+            #             a.open().limit(1000).to_pandas(), use_container_width=True
+            #         )
+            #     )
             # elif isinstance(a, ChartAttachment):
             #     results.append(st.plotly_chart(a.open(), use_container_width=True))
             # else:

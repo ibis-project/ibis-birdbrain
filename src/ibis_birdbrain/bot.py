@@ -1,5 +1,6 @@
 # imports
 import ibis
+import sqlglot as sg
 
 from uuid import uuid4
 from typing import Any
@@ -12,12 +13,14 @@ from ibis_birdbrain.attachments import (
     Attachments,
     TableAttachment,
     DatabaseAttachment,
+    SQLAttachment,
 )
 from ibis_birdbrain.flows import Flows
 from ibis_birdbrain.strings import bot_description
 from ibis_birdbrain.messages import Message, Messages, Email
 from ibis_birdbrain.utils.strings import shorten_str
 from ibis_birdbrain.utils.attachments import to_attachments
+from ibis_birdbrain.tasks.sql import ExecuteSQLTask
 
 from ibis_birdbrain.flows.data import DataFlow
 
@@ -172,12 +175,39 @@ class Bot:
         """Respond to the messages."""
         ...
 
-    # TODO: for demo
-    def translate_sql(self, sql: str, dialect_to: str, dialect_from: str) -> str:
+    def transpile_sql(self, sql: str, dialect_from: str, dialect_to: str) -> str:
         """Translate SQL from one dialect to another."""
-        ...
+        
+        return sg.transpile(
+            sql=sql,
+            read=dialect_from,
+            write=dialect_to,
+            identity=False,
+            pretty=True,
+        )[0]
 
-    # TODO: for demo
     def execute_last_sql(self, con: BaseBackend) -> Message:
-        """Execute the last SQL statement."""
-        ...
+        """Execute the last successfully executed SQL statement."""
+
+        sql_attachment = None
+        for m in reversed(self.messages):
+            if m.attachments.get_attachment_by_type(SQLAttachment) and m.attachments.get_attachment_by_type(TableAttachment):
+                sql_attachment = m.attachments.get_attachment_by_type(SQLAttachment)
+                break
+
+        if sql_attachment:
+            database_attachment = DatabaseAttachment(con)
+            task_message = Email(
+                body="execute this SQL on the {con.name}",
+                attachments=[database_attachment, sql_attachment],
+                to_address="execute-SQL",
+                from_address=self.name,
+            )
+            return ExecuteSQLTask("execute-SQL")(task_message)
+
+
+        return Email(
+                body=f"No Sql query executed",
+                to_address=self.messages[-1].from_address,
+                from_address=self.name,
+            )

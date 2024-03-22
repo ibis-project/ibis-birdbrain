@@ -74,15 +74,16 @@ class WebpageAttachment(Attachment):
             return self.url
 
 
-class CodeAttachment(TextAttachment):
+# TODO: add CodeAttachment
+class SQLAttachment(TextAttachment):
     """A code attachment."""
 
     content: str
-    language: str
+    dialect: str
 
-    def __init__(self, language="python", *args, **kwargs):
+    def __init__(self, dialect="duckdb", *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.language = language
+        self.dialect = dialect
 
     def encode(self):
         ...
@@ -94,7 +95,7 @@ class CodeAttachment(TextAttachment):
         return (
             super().__str__()
             + f"""
-    **language**: {self.language}
+    **dialect**: {self.dialect}
     **code**:\n{self.content}"""
         )
 

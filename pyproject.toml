@@ -33,6 +33,7 @@ dependencies = [
   'ibis-framework[duckdb,examples]', # @ git+https://github.com/ibis-project/ibis',
   'plotly',
   'streamlit',
+  'sqlglot',
 ]
 
 [project.urls]
