@@ -29,19 +29,13 @@ class TextToSQLTask(Task):
         log.info("Text to SQL task")
 
         # get the database attachment and table attachments
-        # TODO: add proper methods for this
-        table_attachments = Attachments()
-        database_attachment = None
-        dialect = "duckdb"
-        for attachment in message.attachments:
-            if isinstance(message.attachments[attachment], DatabaseAttachment):
-                database_attachment = message.attachments[attachment]
-                dialect = database_attachment.open().name
-            elif isinstance(message.attachments[attachment], TableAttachment):
-                table_attachments.append(message.attachments[attachment])
+        table_attachments = message.attachments.get_attachment_by_type(TableAttachment)
+        database_attachment = message.attachments.get_attachment_by_type(DatabaseAttachment)
 
-        assert len(table_attachments) > 0, "No table attachments found"
+        assert table_attachments is not None, "No table attachments found"
         assert database_attachment is not None, "No database attachment found"
+
+        dialect = database_attachment.open().name
 
         # generate the SQL
         sql = self.text_to_sql(
