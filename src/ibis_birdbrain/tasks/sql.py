@@ -2,9 +2,11 @@
 import ibis
 import marvin
 
+from Levenshtein import ratio
+
 from ibis_birdbrain.tasks import Task
 from ibis_birdbrain.logging import log
-from ibis_birdbrain.messages import Email, Message
+from ibis_birdbrain.messages import Email, Message, Messages
 from ibis_birdbrain.attachments import (
     Attachments,
     TableAttachment,
@@ -14,7 +16,57 @@ from ibis_birdbrain.attachments import (
 )
 
 
+@ibis.udf.scalar.python
+def levenshtein_ratio(text1: str, text2: str) -> float:
+    return ratio(text1, text2)
+
 # tasks
+class SearchTextTask(Task):
+    """Ibis Birdbrain task to search cached text and SQL pair."""
+
+    def __init__(
+        self, name: str = "search-cahced-question", description: str = "Ibis Birdbrain search task"
+    ) -> None:
+        """Initialize the searchtask."""
+        super().__init__(name=name, description=description)
+
+    def __call__(self, messages: Messages) -> Message:
+        """Search text task."""
+        log.info("Search text task.")
+
+        try:
+            cached_table = messages[0].attachments.get_attachment_by_type(TableAttachment)[0].open()
+            question = messages[-1].body
+            matched_res = cached_table.mutate(
+                similarity=levenshtein_ratio(ibis._.question, question)
+            ).filter(
+                ibis._.similarity > 0.75 # Threshold
+            ).order_by(
+                ibis._.similarity.desc()
+            ).limit(1).to_pandas()
+
+            log.info(f"similarity = {matched_res.iloc[0]['similarity']}")
+            log.info(f"sql = {matched_res.iloc[0]['sql']}")
+
+            sql_attachment = SQLAttachment(
+                dialect=matched_res.iloc[0]['dialect'],
+                content=matched_res.iloc[0]['sql']
+            )
+            
+            return Email(
+                body="search cached question called",
+                attachments=[sql_attachment],
+                to_address=messages[-1].from_address,
+                from_address=self.name,
+            )
+        except Exception as e:
+            return Email(
+                body=f"No similar question found",
+                to_address=messages[-1].from_address,
+                from_address=self.name,
+            )
+    
+
 class TextToSQLTask(Task):
     """Ibis Birdbrain task to turn text into SQL."""
 
@@ -50,12 +102,12 @@ class TextToSQLTask(Task):
             data_description=database_attachment.description,
             dialect=dialect,
         )
-        code_attachment = SQLAttachment(dialect=dialect, content=sql)
+        sql_attachment = SQLAttachment(dialect=dialect, content=sql)
 
         # generate the response message
         response_message = Email(
             body="text to sql called",
-            attachments=[code_attachment],
+            attachments=[sql_attachment],
             to_address=message.from_address,
             from_address=self.name,
         )

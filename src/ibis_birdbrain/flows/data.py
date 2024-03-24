@@ -9,10 +9,11 @@ from ibis_birdbrain.attachments import (
     SQLAttachment,
     ErrorAttachment,
     Attachments,
+    DatabaseAttachment,
 )
 
 from ibis_birdbrain.tasks import Tasks
-from ibis_birdbrain.tasks.sql import TextToSQLTask, ExecuteSQLTask, FixSQLTask
+from ibis_birdbrain.tasks.sql import TextToSQLTask, ExecuteSQLTask, FixSQLTask, SearchTextTask
 
 
 # flows
@@ -23,7 +24,12 @@ class DataFlow(Flow):
         self,
         name: str = "data",
         description: str = "Ibis Birdbrain data flow",
-        tasks=Tasks([TextToSQLTask(), ExecuteSQLTask(), FixSQLTask()]),
+        tasks=Tasks([
+            TextToSQLTask(),
+            ExecuteSQLTask(),
+            FixSQLTask(),
+            SearchTextTask(),
+        ]),
         retries: int = 3,
     ) -> None:
         """Initialize the data flow."""
@@ -42,35 +48,32 @@ class DataFlow(Flow):
         # - turn the DatabaseAttachment + SQLAttachment into a TableAttachment (or ErrorAttachment)
         # - finally, return the SQLAttachment + TableAttachment as results
 
-        # TODO: proper method for this type of stuff
-        database_attachment = messages[0].attachments[0]
-        data_description = database_attachment.description
+        database_attachment = messages[0].attachments.get_attachment_by_type(DatabaseAttachment)
+        table_attachments = messages[-1].attachments.get_attachment_by_type(TableAttachment)  
 
-        table_attachments = []
-        for attachment in messages[-1].attachments:
-            table_attachments.append(messages[-1].attachments[attachment])
-
+        # check if question is found in cached table
+        search_task_response = self.tasks["search-cahced-question"](messages)
+        sql_attachment = search_task_response.attachments.get_attachment_by_type(SQLAttachment)
         # initialize response messages
         response_messages = Messages()
+        if not sql_attachment:
+            # If not existing question and sql found in the cache table
+            # call the text-to-SQL task
+            task_message = Email(
+                body=messages[-1].body,
+                attachments=[database_attachment] + list(table_attachments.attachments.values()),
+                to_address=self.tasks["text-to-SQL"].name,
+                from_address=self.name,
+            )
 
-        # call the text-to-SQL task
-        task_message = Email(
-            body=messages[-1].body,
-            attachments=[database_attachment] + table_attachments,
-            to_address=self.tasks["text-to-SQL"].name,
-            from_address=self.name,
-        )
+            task_response = self.tasks["text-to-SQL"](task_message)
+            response_messages.append(task_response)
 
-        task_response = self.tasks["text-to-SQL"](task_message)
-        response_messages.append(task_response)
+            # check the response
+            assert task_response.attachments.get_attachment_by_type(SQLAttachment) is not None
 
-        # check the response
-        assert len(task_response.attachments) == 1
-        assert isinstance(task_response.attachments[0], SQLAttachment)
-        # assert task_response.attachments[0].language == "sql"
-
-        # extract the SQL attachment
-        sql_attachment = task_response.attachments[0]
+            # extract the SQL attachment
+            sql_attachment = task_response.attachments.get_attachment_by_type(SQLAttachment)
 
         # try executing
         task_message = Email(
@@ -86,9 +89,9 @@ class DataFlow(Flow):
         assert len(task_response.attachments) == 2
 
         # check the response
-        if isinstance(task_response.attachments[0], TableAttachment):
+        if task_response.attachments.get_attachment_by_type(TableAttachment):
             return response_messages
-        elif isinstance(task_response.attachments[0], ErrorAttachment):
+        elif task_response.attachments.get_attachment_by_type(ErrorAttachment):
             # for N retries
             for i in range(self.retries):
                 error_attachment = task_response.attachments[0]
@@ -96,7 +99,7 @@ class DataFlow(Flow):
                 task_message = Email(
                     body="fix this SQL",
                     attachments=[error_attachment, database_attachment, sql_attachment]
-                    + table_attachments,
+                    + list(table_attachments.attachments.values()),
                     to_address=self.tasks["fix-SQL"].name,
                     from_address=self.name,
                 )
