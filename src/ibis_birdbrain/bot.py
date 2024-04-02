@@ -49,6 +49,7 @@ class Bot:
     def __init__(
         self,
         con=ibis.connect("duckdb://"),
+        cached_table=None,
         name="birdbrain",
         user_name="user",
         description=bot_description,
@@ -89,12 +90,20 @@ class Bot:
         body = """TODO"""  # noqa
 
         # system initialization message
+        attachments = [
+                DatabaseAttachment(con, description=self.data_description),
+        ]
+
+        if cached_table is not None:
+            attachments.append(
+                TableAttachment(cached_table)
+            )    
         system_message = Email(
             body=self.description,
             subject="system initialization",
             to_address=self.name,
             from_address=self.name,
-            attachments=[DatabaseAttachment(con, description=self.data_description)],
+            attachments=attachments,
         )
         self.messages.append(system_message)
         log.info(f"Bot {self.name} initialized...")
