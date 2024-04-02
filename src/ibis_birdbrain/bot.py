@@ -1,5 +1,6 @@
 # imports
 import ibis
+import marvin
 import sqlglot as sg
 
 from uuid import uuid4
@@ -168,7 +169,7 @@ class Bot:
 
         # update the response body
         if self.lm_response:
-            response_message.body = self.respond(self.messages)
+            response_message.body = self.respond(text, self.messages)
         else:
             response_message.body = "Ibis Birdbrain has attached the results."
 
@@ -180,9 +181,25 @@ class Bot:
         self.messages[-1].from_address = self.name
         return self.messages[-1]
 
-    def respond(self, messages: Messages) -> Message:
+    def respond(self, text: str, messages: Messages) -> Message:
         """Respond to the messages."""
-        ...
+        table_attachments = self.messages[-1].attachments.get_attachment_by_type(TableAttachment)
+        return self._lm_response(text, table_attachments, self.data_description)
+
+    @staticmethod
+    @marvin.fn
+    def _lm_response(question: str, data: Attachments, data_description: str) -> str:
+        """
+        Generates correct, simple, and human-readable response to the question
+        based on the input `question`, `data`, and `data_description`,
+        returns human readble response to the question
+
+        The `question` contain a query in natural language to be answered.
+
+        The `data` contain data returned by sql query
+
+        The `data_description` contain the description of the source data against which the SQL query was run.
+        """
 
     def transpile_sql(self, sql: str, dialect_from: str, dialect_to: str) -> str:
         """Translate SQL from one dialect to another."""
