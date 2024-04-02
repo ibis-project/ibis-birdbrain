@@ -52,7 +52,7 @@ class DataFlow(Flow):
         table_attachments = messages[-1].attachments.get_attachment_by_type(TableAttachment)  
 
         # check if question is found in cached table
-        search_task_response = self.tasks["search-cahced-question"](messages)
+        search_task_response = self.tasks["search-cached-question"](messages)
         sql_attachment = search_task_response.attachments.get_attachment_by_type(SQLAttachment)
         # initialize response messages
         response_messages = Messages()

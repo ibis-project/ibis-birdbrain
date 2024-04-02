@@ -93,8 +93,8 @@ class Bot:
         attachments = [
                 DatabaseAttachment(con, description=self.data_description),
         ]
-        # need a better way to handle this
-        if str(cached_table) != "None":
+
+        if cached_table is not None:
             attachments.append(
                 TableAttachment(cached_table)
             )    
