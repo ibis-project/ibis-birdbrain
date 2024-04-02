@@ -1,6 +1,7 @@
 # imports
 import ibis
 import marvin
+import sqlglot as sg
 
 from Levenshtein import ratio
 
@@ -96,6 +97,24 @@ class TextToSQLTask(Task):
             data_description=database_attachment.description,
             dialect=dialect,
         )
+
+        max_rewrites = 3  # Maximum number of transpilation attempts
+        for _ in range(max_rewrites):
+            try:
+                sql = sg.transpile(sql=sql, identity=True, pretty=True)[0]
+                break
+            except sg.errors.ParseError as e:
+                # Regenerate sql based on sqlglot parsing error
+                sql = self.text_to_sql(
+                    text=self.generate_sql_fix_prompt(message.body, sql, e),
+                    tables=table_attachments,
+                    data_description=database_attachment.description,
+                    dialect=dialect,
+                )
+        else:
+            # The loop completed without a successful transpilation
+            log.info(f"Max number of rewrites reached, unable to transpile SQL:\n'{sql}'")
+        
         sql_attachment = SQLAttachment(dialect=dialect, content=sql)
 
         # generate the response message
@@ -144,6 +163,29 @@ class TextToSQLTask(Task):
             .strip()
             .strip(";")
         )
+    
+    def generate_sql_fix_prompt(self, question: str, original_sql: str, error_message: str) -> str:
+        """Generate a prompt to fix SQL based on errors from sqlglot.
+
+        Args:
+            question (str): The original question.
+            original_sql (str): The original SQL query.
+            error_message (str): The error message from sqlglot.
+
+        Returns:
+            str: A prompt to fix SQL based on the provided information.
+        """
+        return f"""Fix the SQL query based on errors reported by sqlglot:
+
+Question:
+{question}
+
+Original SQL:
+{original_sql}
+
+Error Message:
+{error_message}
+"""
 
 
 class ExecuteSQLTask(Task):
